@@ -3,6 +3,23 @@
 Kompletny zestaw materiałów: pytania, jakie realnie padają na egzaminie przed komisją
 kwalifikacyjną SEP, wraz z rozwiniętymi odpowiedziami i wyjaśnieniami.
 
+## 📖 Wersja do czytania w przeglądarce
+
+**→ [littlelover47.github.io/papir](https://littlelover47.github.io/papir/)**
+
+Wygodniejsza niż pliki na GitHubie — zwłaszcza na telefonie:
+
+- spis rozdziałów, nawigacja i spis treści każdego rozdziału,
+- **wyszukiwanie** w całości materiału (nie wymaga polskich znaków: „petla” znajdzie „pętla”),
+- **tryb nauki** w rozdziałach 05 i 06 — zasłania odpowiedzi, odkrywasz je dotknięciem,
+- znacznik przeczytanych rozdziałów i pasek postępu,
+- **działa bez internetu** — dodaj stronę do ekranu głównego telefonu, treść zapisze się
+  na urządzeniu,
+- widok „cała książka na jednej stronie” do wydrukowania albo zapisania jako PDF.
+
+Stronę tworzą pliki `index.html`, `assets/` i `sw.js`; treścią są te same pliki `.md`, więc
+poprawka w materiale od razu widać na stronie.
+
 ## Spis materiałów
 
 | Plik | Zawartość |
