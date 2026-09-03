@@ -88,6 +88,16 @@ function bezOgonkow(tekst) {
     .toLowerCase();
 }
 
+/**
+ * Rdzeń słowa — obcina końcówkę, żeby szukanie radziło sobie z polską odmianą:
+ * „pętla” znajdzie „pętli” i „pętlę”, „zwarciowa” znajdzie „zwarciowej”.
+ */
+function rdzen(slowo) {
+  if (slowo.length <= 4) return slowo;
+  if (slowo.length <= 6) return slowo.slice(0, -1);
+  return slowo.slice(0, -2);
+}
+
 /** Zamienia nagłówek na identyfikator do adresu (bez ogonków i znaków specjalnych). */
 function naIdentyfikator(tekst) {
   return bezOgonkow(tekst)
@@ -677,50 +687,112 @@ window.addEventListener('hashchange', obsluzTrase);
 let wskaznik = null;   // indeks: [{ plik, tytul, numer, wiersze: [{ tekst, naglowek, id }] }]
 let wybranyWynik = -1;
 
+/**
+ * Buduje indeks wyszukiwania. Pliki są zawijane na ~95 znaków, więc szukamy
+ * w całych akapitach (linie łączone), a nie w pojedynczych liniach — inaczej
+ * fraza rozbita na dwie linie nigdy by się nie znalazła.
+ */
 async function zbudujWskaznik() {
   if (wskaznik) return wskaznik;
 
   const tresci = await Promise.all(WSZYSTKIE.map(poz => wezPlik(poz.plik)));
+
   wskaznik = WSZYSTKIE.map((poz, i) => {
     const wiersze = [];
     let naglowek = poz.tytul;
     let id = '';
     let wKodzie = false;
+    let bufor = [];
+
+    const dodaj = tekst => {
+      const czysty = tekst
+        .replace(/\|/g, ' · ')
+        .replace(/[*`>]/g, '')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/^[\s·\-+]+/, '')
+        .trim();
+      if (czysty.length < 10) return;
+      wiersze.push({ tekst: czysty, bez: bezOgonkow(czysty), naglowek, id });
+    };
+
+    const zamknijAkapit = () => {
+      if (bufor.length) { dodaj(bufor.join(' ')); bufor = []; }
+    };
 
     for (const linia of tresci[i].split('\n')) {
-      if (linia.startsWith('```')) { wKodzie = !wKodzie; continue; }
+      if (linia.startsWith('```')) { zamknijAkapit(); wKodzie = !wKodzie; continue; }
       if (wKodzie) continue;
 
-      const trafienie = linia.match(/^(#{2,4})\s+(.*)$/);
-      if (trafienie) {
-        naglowek = trafienie[2].replace(/[*`]/g, '').trim();
-        id = naIdentyfikator(naglowek);
+      const naglowekTrafienie = linia.match(/^(#{1,4})\s+(.*)$/);
+      if (naglowekTrafienie) {
+        zamknijAkapit();
+        naglowek = naglowekTrafienie[2].replace(/[*`]/g, '').trim();
+        id = naglowekTrafienie[1].length >= 2 ? naIdentyfikator(naglowek) : '';
         continue;
       }
-      const czysta = linia.replace(/^[>\-*+\d.\s|]+/, '').replace(/[*`|]/g, ' ').trim();
-      if (czysta.length < 8) continue;
-      wiersze.push({ tekst: czysta, bez: bezOgonkow(czysta), naglowek, id });
+
+      if (!linia.trim() || /^\s*[-=|]{3,}\s*$/.test(linia)) { zamknijAkapit(); continue; }
+
+      // wiersze tabel są samodzielne — nie łączymy ich z akapitem
+      if (linia.trim().startsWith('|')) { zamknijAkapit(); dodaj(linia); continue; }
+
+      bufor.push(linia.trim());
     }
+    zamknijAkapit();
+
     return { ...poz, wiersze };
   });
+
   return wskaznik;
 }
 
-function podswietl(tekst, fraza) {
+/** Wycina fragment wokół pierwszego trafienia i podświetla wszystkie szukane słowa. */
+function podswietl(tekst, slowa) {
   const bez = bezOgonkow(tekst);
-  const poz = bez.indexOf(fraza);
-  if (poz === -1) return ucieczkaHtml(tekst.slice(0, 150));
 
-  const od = Math.max(0, poz - 55);
-  const wycinek = tekst.slice(od, poz + fraza.length + 95);
+  let pierwsze = Infinity;
+  for (const slowo of slowa) {
+    const poz = bez.indexOf(slowo);
+    if (poz !== -1 && poz < pierwsze) pierwsze = poz;
+  }
+  if (pierwsze === Infinity) return ucieczkaHtml(tekst.slice(0, 160));
+
+  const od = Math.max(0, pierwsze - 60);
+  const doo = Math.min(tekst.length, pierwsze + 150);
+  const wycinek = tekst.slice(od, doo);
   const bezWycinka = bezOgonkow(wycinek);
-  const wPoz = bezWycinka.indexOf(fraza);
 
-  return (od > 0 ? '… ' : '')
-    + ucieczkaHtml(wycinek.slice(0, wPoz))
-    + '<mark>' + ucieczkaHtml(wycinek.slice(wPoz, wPoz + fraza.length)) + '</mark>'
-    + ucieczkaHtml(wycinek.slice(wPoz + fraza.length))
-    + (poz + fraza.length + 95 < tekst.length ? ' …' : '');
+  // wszystkie zakresy do podświetlenia, posortowane i scalone
+  const zakresy = [];
+  for (const slowo of slowa) {
+    let poz = bezWycinka.indexOf(slowo);
+    while (poz !== -1) {
+      // podświetlamy całe słowo, nie tylko jego rdzeń
+      let koniec = poz + slowo.length;
+      while (koniec < bezWycinka.length && /[a-z0-9]/.test(bezWycinka[koniec])) koniec++;
+      zakresy.push([poz, koniec]);
+      poz = bezWycinka.indexOf(slowo, koniec);
+    }
+  }
+  zakresy.sort((a, b) => a[0] - b[0]);
+
+  const scalone = [];
+  for (const zakres of zakresy) {
+    const ostatni = scalone[scalone.length - 1];
+    if (ostatni && zakres[0] <= ostatni[1]) ostatni[1] = Math.max(ostatni[1], zakres[1]);
+    else scalone.push([...zakres]);
+  }
+
+  let wynik = '';
+  let kursor = 0;
+  for (const [poczatek, koniec] of scalone) {
+    wynik += ucieczkaHtml(wycinek.slice(kursor, poczatek))
+      + '<mark>' + ucieczkaHtml(wycinek.slice(poczatek, koniec)) + '</mark>';
+    kursor = koniec;
+  }
+  wynik += ucieczkaHtml(wycinek.slice(kursor));
+
+  return (od > 0 ? '… ' : '') + wynik + (doo < tekst.length ? ' …' : '');
 }
 
 async function szukaj(zapytanie) {
@@ -735,9 +807,14 @@ async function szukaj(zapytanie) {
   const dane = await zbudujWskaznik();
   const wyniki = [];
 
+  // wiele słów = wszystkie muszą wystąpić w akapicie (kolejność nie ma znaczenia);
+  // szukamy rdzeni, więc odmiana wyrazów nie przeszkadza
+  const slowa = (fraza.split(/\s+/).filter(s => s.length >= 2).map(rdzen)) || [];
+  if (!slowa.length) slowa.push(rdzen(fraza));
+
   for (const rozdzial of dane) {
     for (const wiersz of rozdzial.wiersze) {
-      if (!wiersz.bez.includes(fraza)) continue;
+      if (!slowa.every(slowo => wiersz.bez.includes(slowo))) continue;
       wyniki.push({ rozdzial, wiersz });
       if (wyniki.length >= 60) break;
     }
@@ -754,7 +831,7 @@ async function szukaj(zapytanie) {
     wyniki.map(({ rozdzial, wiersz }) => `
       <a class="wynik" href="#/${rozdzial.plik}${wiersz.id ? '/' + wiersz.id : ''}">
         <div class="wynik-gdzie">${rozdzial.numer} · ${ucieczkaHtml(rozdzial.tytul)} › ${ucieczkaHtml(wiersz.naglowek)}</div>
-        <div class="wynik-tekst">${podswietl(wiersz.tekst, fraza)}</div>
+        <div class="wynik-tekst">${podswietl(wiersz.tekst, slowa)}</div>
       </a>`).join('');
 
   wybranyWynik = -1;

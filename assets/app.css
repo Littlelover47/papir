@@ -328,6 +328,7 @@ main {
 }
 
 .wczytywanie { display: flex; align-items: center; gap: 10px; color: var(--atrament-3); padding: 30px 0; font-size: 14px; }
+.wczytywanie[hidden] { display: none; }   /* atrybut hidden musi wygrać z display:flex */
 .kregiel {
   width: 15px; height: 15px; border-radius: 50%;
   border: 2px solid var(--kreska-2); border-top-color: var(--roz);
