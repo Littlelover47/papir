@@ -42,11 +42,13 @@ Sprawdzenie:
 2. **Rezystancja izolacji** instalacji,
 3. Ochrona przez **separację** obwodów (SELV/PELV/separacja elektryczna),
 4. **Rezystancja/impedancja podłogi i ścian** (gdy stosowana jako środek ochrony),
-5. **Samoczynne wyłączenie zasilania** (impedancja pętli zwarciowej, sprawdzenie RCD),
-6. **Ochrona uzupełniająca** (RCD 30 mA),
+5. **Samoczynne wyłączenie zasilania** (impedancja pętli zwarciowej, sprawdzenie wyłączników
+   różnicowoprądowych),
+6. **Ochrona uzupełniająca** (wyłącznik różnicowoprądowy 30 mA),
 7. **Sprawdzenie biegunowości** (czy nie wstawiono łącznika w przewód neutralny),
 8. **Sprawdzenie kolejności faz**,
-9. **Próby funkcjonalne** (aparaty, blokady, sterowanie, RCD przyciskiem TEST),
+9. **Próby funkcjonalne** (aparaty, blokady, sterowanie, wyłączniki różnicowoprądowe
+   przyciskiem kontrolnym TEST),
 10. **Spadek napięcia** (jeśli wymagany),
 11. Sprawdzenie skutków cieplnych / obciążalności.
 
@@ -98,8 +100,9 @@ Odczyt po ustabilizowaniu, zwykle po **60 s**.
 
 ### 11. Jak wykonać pomiar rezystancji izolacji?
 - Instalacja **wyłączona spod napięcia**, zabezpieczona przed załączeniem.
-- **Odłączyć odbiorniki** oraz elementy wrażliwe (elektronika, SPD, RCD, oświetlenie LED,
-  falowniki, sterowniki), albo mierzyć fragmentami. Nieodłączenie SPD → zaniżony wynik i
+- **Odłączyć odbiorniki** oraz elementy wrażliwe (elektronika, **ograniczniki przepięć**,
+  wyłączniki różnicowoprądowe, oświetlenie LED, falowniki, sterowniki), albo mierzyć
+  fragmentami. Nieodłączenie ogranicznika przepięć → zaniżony wynik i
   ryzyko uszkodzenia.
 - Mierzy się:
   - między **każdym przewodem czynnym (L1, L2, L3, N) a PE/ziemią**,
@@ -138,8 +141,8 @@ załącza znane obciążenie (rezystor) i mierzy U₂ oraz prąd I; wtedy
 $$Z_s = \frac{U_1 - U_2}{I}$$
 Pomiar wykonuje się **przy załączonym napięciu**, w najbardziej niekorzystnym (najdalszym)
 punkcie obwodu. Warianty mierników: pomiar pełnoprądowy (duży prąd, krótki czas), pomiar
-z małym prądem i filtracją — **konieczny w obwodach z RCD**, aby ich nie wyzwolić
-(funkcja „bez wyzwalania RCD").
+z małym prądem i filtracją — **konieczny w obwodach z wyłącznikiem różnicowoprądowym**, aby go
+nie wyzwolić (funkcja „bez wyzwalania wyłącznika różnicowoprądowego").
 
 ### 16. Jak ocenia się wynik?
 Oblicza się prąd zwarciowy:
@@ -158,7 +161,7 @@ przez współczynnik ≈ 1,5 dla 70 °C, oraz uwzględnia współczynnik napięc
   **B → 5·I_n**, **C → 10·I_n**, **D → 20·I_n** (dla wyłączenia w czasie < 0,1 s).
 - **Bezpiecznik gG**: z charakterystyki czasowo-prądowej dla wymaganego czasu (0,4 s lub 5 s),
   typowo I_a ≈ (4–10)·I_n zależnie od wielkości wkładki.
-- **RCD**: I_a = I_Δn (przy ochronie realizowanej przez RCD).
+- **Wyłącznik różnicowoprądowy**: I_a = I_Δn (gdy ochronę realizuje ten wyłącznik).
 
 **Przykład:** obwód z wyłącznikiem B16, TN, U₀ = 230 V, wymagane 0,4 s.
 I_a = 5 × 16 = 80 A ⇒ Z_s ≤ 230/80 = **2,88 Ω**; z regułą 2/3: zmierzona **≤ 1,92 Ω**.
@@ -166,8 +169,9 @@ I_a = 5 × 16 = 80 A ⇒ Z_s ≤ 230/80 = **2,88 Ω**; z regułą 2/3: zmierzona
 **Przykład 2:** C16 → I_a = 160 A ⇒ Z_s ≤ 230/160 = **1,44 Ω**; zmierzona ≤ **0,96 Ω**.
 
 ### 18. Kiedy pomiar pętli nie jest wystarczający i co wtedy?
-W układzie **TT** i **IT** — ochronę zapewnia RCD i uziemienie, więc mierzy się **rezystancję
-uziemienia R_A** i sprawdza RCD. W obwodach zasilanych przez falowniki, UPS, agregaty —
+W układzie **TT** i **IT** — ochronę zapewnia wyłącznik różnicowoprądowy i uziemienie, więc
+mierzy się **rezystancję uziemienia R_A** i sprawdza ten wyłącznik. W obwodach zasilanych przez
+falowniki, zasilacze bezprzerwowe, agregaty —
 pomiar może być niemiarodajny (ograniczenie prądu przez elektronikę) → ocena obliczeniowa
 i sprawdzenie zabezpieczeń.
 
@@ -179,38 +183,40 @@ sprawdzenie zdolności zwarciowej). Mierzy się między L i N. Podobnie L–L dl
 
 ## E. Sprawdzanie wyłączników różnicowoprądowych
 
-### 20. Co się mierzy w RCD?
+### 20. Co się mierzy w wyłączniku różnicowoprądowym?
 1. **Prąd wyłączający I_Δ** (rzeczywisty prąd zadziałania) — narastający prąd różnicowy;
    wymagane: **0,5·I_Δn ≤ I_Δ ≤ I_Δn** (dla typu AC).
 2. **Czas wyłączenia t_a** przy I_Δn, 2·I_Δn, 5·I_Δn.
-3. **Napięcie dotykowe** (funkcja niektórych mierników) i rezystancja uziemienia z RCD.
-4. **Próba przyciskiem TEST** — sprawdzenie mechanizmu (nie zastępuje pomiaru!).
+3. **Napięcie dotykowe** (funkcja niektórych mierników) i rezystancja uziemienia mierzona
+   z wykorzystaniem wyłącznika różnicowoprądowego.
+4. **Próba przyciskiem kontrolnym TEST** — sprawdzenie mechanizmu (nie zastępuje pomiaru!).
 
-### 21. Dopuszczalne czasy wyłączenia RCD (wg PN-EN 61008/61009)
-| Krotność | RCD **bezzwłoczny (ogólny)** | RCD **selektywny (S)** |
+### 21. Dopuszczalne czasy wyłączenia wyłącznika różnicowoprądowego (wg PN-EN 61008/61009)
+| Krotność | Wyłącznik **bezzwłoczny (ogólny)** | Wyłącznik **selektywny (S)** |
 |---|---|---|
 | **I_Δn** | ≤ 300 ms | 130–500 ms |
 | **2·I_Δn** | ≤ 150 ms | 60–200 ms |
 | **5·I_Δn** | ≤ 40 ms | 50–150 ms |
 
 W instalacji dodatkowo musi być spełniony **wymagany czas wyłączenia obwodu** (np. 0,4 s w TN) —
-RCD 30 mA praktycznie zawsze go spełnia.
+wyłącznik różnicowoprądowy 30 mA praktycznie zawsze go spełnia.
 
-### 22. Jak wykonać pomiar RCD?
-Miernik podłącza się **za** RCD (L, N, PE) — najlepiej w gniazdku obwodu chronionego. Pomiar dla
+### 22. Jak wykonać pomiar wyłącznika różnicowoprądowego?
+Miernik podłącza się **za** wyłącznikiem (L, N, PE) — najlepiej w gniazdku obwodu chronionego.
+Pomiar dla
 **obu połówek okresu** (0° i 180°) — przyjmuje się **wynik najbardziej niekorzystny (najdłuższy
 czas / najwyższy prąd)**. Dla typu A dodatkowo pomiar prądem pulsującym; dla typu B — prądem
 stałym. Trzeba uwzględnić prądy upływowe odbiorników (odłączyć odbiorniki, by nie zafałszowały
 wyniku i nie sumowały się z prądem miernika).
 
-### 23. Najczęstsze przyczyny „samoczynnego" wyzwalania RCD
-Sumowanie prądów upływowych wielu odbiorników (filtry EMC, falowniki, zasilacze), zawilgocenie
-izolacji, uszkodzony grzejnik/pralka, połączenie N z PE za RCD (błąd instalacyjny!), przepięcia
-atmosferyczne, niewłaściwy typ RCD (AC przy odbiornikach z prądem pulsującym), zbyt małe
-I_Δn dla długiego obwodu.
+### 23. Najczęstsze przyczyny „samoczynnego" wyzwalania wyłącznika różnicowoprądowego
+Sumowanie prądów upływowych wielu odbiorników (filtry przeciwzakłóceniowe, falowniki, zasilacze),
+zawilgocenie izolacji, uszkodzony grzejnik/pralka, połączenie N z PE za wyłącznikiem
+(błąd instalacyjny!), przepięcia atmosferyczne, niewłaściwy typ wyłącznika (typ AC przy
+odbiornikach z prądem pulsującym), zbyt małe I_Δn dla długiego obwodu.
 
 ### 24. Jak sprawdzić błąd „N połączone z PE za wyłącznikiem różnicowym"?
-Objaw: RCD wyzwala natychmiast po załączeniu lub przy obciążeniu. Diagnostyka: pomiar rezystancji
+Objaw: wyłącznik wyzwala natychmiast po załączeniu lub przy obciążeniu. Diagnostyka: pomiar rezystancji
 izolacji N–PE (będzie ~0), rozłączanie obwodów kolejno, pomiar prądu w N.
 
 ---
@@ -285,13 +291,17 @@ i **ograniczenie olśnienia UGR**.
 
 ### 33. Pomiar prądów upływowych i obciążenia
 Cęgi z rdzeniem dzielonym o dużej czułości (mA), obejmując wszystkie przewody czynne obwodu —
-zmierzy się sumę (prąd różnicowy). Pomiar obciążenia: cęgi True RMS, pomiar w obwodach z
-odkształceniami; ważny wskaźnik **THD** i prąd w przewodzie N (3. harmoniczna sumuje się w N!).
+zmierzy się sumę (prąd różnicowy). Pomiar obciążenia: cęgi mierzące **rzeczywistą wartość
+skuteczną**, pomiar w obwodach z
+odkształceniami; ważny jest **współczynnik odkształcenia harmonicznymi** oraz prąd w przewodzie
+neutralnym (trzecia harmoniczna sumuje się w przewodzie neutralnym!).
 
 ### 34. Jakie pomiary wykonuje się przy urządzeniach SN?
-Rezystancja izolacji (megomierz 2,5–5 kV), próba napięciowa kabli (VLF/DAC), **tgδ**,
+Rezystancja izolacji (megomierz 2,5–5 kV), próba napięciowa kabli (napięciem o bardzo niskiej
+częstotliwości albo napięciem tłumionym), **współczynnik strat dielektrycznych tgδ**,
 diagnostyka **wyładowań niezupełnych**, rezystancja uzwojeń i przekładnia transformatora,
-badanie oleju (przebicie, wilgotność, DGA), rezystancja styków (mikroomomierz),
+badanie oleju (przebicie, wilgotność, **analiza gazów rozpuszczonych**), rezystancja styków
+(mikroomomierz),
 **czas własny i jednoczesność łączenia wyłącznika** (analizator wyłączników),
 badanie przekładników (przekładnia, błąd kątowy, obciążenie),
 sprawdzenie i nastawy **zabezpieczeń** (testery przekaźników — próba prądowo-czasowa),
@@ -321,12 +331,13 @@ i aparatów.
 | Pomieszczenia o wyziewach żrących | 1 rok | 1 rok |
 | Zagrożone wybuchem (strefy Ex) | 1 rok | 1 rok |
 | Otwarta przestrzeń, place budowy | 1 rok | 1 rok |
-| Bardzo wilgotne (RH ~100 %) i gorące (> 35 °C) | 1 rok | 1 rok |
+| Bardzo wilgotne (wilgotność ~100 %) i gorące (> 35 °C) | 1 rok | 1 rok |
 | Zagrożone pożarem | 1 rok | 5 lat |
 | Zapylone | — | 1 rok |
 | Pozostałe (biura, mieszkania, przemysł typowy) | 5 lat | 5 lat |
 
-RCD: zaleca się sprawdzanie **przyciskiem TEST** co miesiąc (przez użytkownika) i pomiar
+Wyłączniki różnicowoprądowe: zaleca się sprawdzanie **przyciskiem kontrolnym TEST** co miesiąc
+(przez użytkownika) i pomiar
 parametrów wraz z badaniami okresowymi (a w obiektach wymagających — co roku).
 
 ### 37. Co powinien zawierać protokół pomiarów?

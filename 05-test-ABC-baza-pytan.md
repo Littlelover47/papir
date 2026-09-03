@@ -159,14 +159,15 @@ A) 25 V B) **50 V** C) 120 V
 A) oparzenie skóry B) **migotanie komór serca** C) skurcz mięśni
 > **B.**
 
-**31.** Wartość prądu przemiennego uznawana za progową dla zaburzeń oddychania (podstawa dla RCD):
+**31.** Wartość prądu przemiennego uznawana za progową dla zaburzeń oddychania (podstawa dla
+wyłączników różnicowoprądowych):
 A) 5 mA B) **30 mA** C) 300 mA
 > **B.**
 
 **32.** W układzie TN-C:
 A) można stosować wyłączniki różnicowoprądowe
 B) **nie wolno stosować wyłączników różnicowoprądowych**
-C) RCD są obowiązkowe
+C) wyłączniki różnicowoprądowe są obowiązkowe
 > **B.** Przewód PEN przechodzi przez rdzeń, więc prąd powrotny fałszuje pomiar.
 
 **33.** Minimalny przekrój przewodu PEN wykonanego z miedzi wynosi:
@@ -216,9 +217,10 @@ C) przed przepięciami
 A) tak, natychmiast B) **nie zadziała** C) zadziała po 300 ms
 > **B.** Suma prądów w rdzeniu pozostaje zerowa.
 
-**43.** Do ochrony obwodu z falownikiem trójfazowym (ładowarka EV, PV) należy zastosować RCD typu:
-A) AC B) A C) **B (lub A z zabezpieczeniem DC 6 mA wg wymagań urządzenia)**
-> **C.** Typ AC/A nie wykrywa gładkiego prądu różnicowego stałego.
+**43.** Do ochrony obwodu z falownikiem trójfazowym (ładowarka pojazdów elektrycznych,
+instalacja fotowoltaiczna) należy zastosować wyłącznik różnicowoprądowy typu:
+A) AC B) A C) **B (lub A z członem wykrywającym prąd stały 6 mA wg wymagań urządzenia)**
+> **C.** Typ AC i typ A nie wykrywają gładkiego prądu różnicowego stałego.
 
 **44.** Wyłącznik nadprądowy o charakterystyce C wyzwala magnetycznie przy prądzie:
 A) 3–5 I_n B) **5–10 I_n** C) 10–20 I_n
@@ -248,7 +250,7 @@ A) IP20 / IP2X B) IP44 C) IP65
 > **A.** IP2X (IPXXB) — ochrona przed dostępem palcem.
 
 **50.** W strefie 0 w łazience dopuszczalne jest zasilanie napięciem:
-A) 230 V przez RCD 30 mA B) **SELV 12 V AC** C) 24 V AC bez separacji
+A) 230 V przez wyłącznik różnicowoprądowy 30 mA B) **SELV 12 V AC** C) 24 V AC bez separacji
 > **B.**
 
 **51.** Główne połączenia wyrównawcze łączą ze sobą m.in.:
@@ -411,7 +413,8 @@ A) niska cena B) **selektywność, szybkość, czułość i niezawodność** C) 
 > **B.**
 
 **80.** Kabli z izolacją XLPE nie należy badać:
-A) napięciem VLF 0,1 Hz B) **wysokim napięciem stałym (DC)** C) metodą DAC
+A) napięciem przemiennym o bardzo niskiej częstotliwości 0,1 Hz
+B) **wysokim napięciem stałym** C) napięciem tłumionym
 > **B.** DC powoduje gromadzenie ładunku przestrzennego i drzewienie wodne.
 
 **81.** Nad kablem SN w ziemi układa się folię ostrzegawczą w kolorze:
@@ -517,7 +520,8 @@ A) **0,5 MΩ** B) 1,0 MΩ C) 2,0 MΩ
 
 **100.** Przed pomiarem rezystancji izolacji należy:
 A) załączyć wszystkie odbiorniki
-B) **odłączyć odbiorniki oraz elementy wrażliwe: SPD, elektronikę, RCD, oprawy LED**
+B) **odłączyć odbiorniki oraz elementy wrażliwe: ograniczniki przepięć, elektronikę,
+wyłączniki różnicowoprądowe, oprawy LED**
 C) zwiększyć obciążenie obwodu
 > **B.** Nieodłączony ogranicznik przepięć zaniża wynik i może zostać uszkodzony.
 
@@ -539,9 +543,9 @@ B) **przy załączonym napięciu, w najdalszym punkcie obwodu**
 C) po odłączeniu przewodu PE
 > **B.**
 
-**105.** W obwodzie chronionym RCD pomiar pętli zwarciowej wykonuje się:
-A) po zmostkowaniu RCD
-B) **miernikiem z funkcją pomiaru bez wyzwalania RCD (małym prądem)**
+**105.** W obwodzie chronionym wyłącznikiem różnicowoprądowym pomiar pętli zwarciowej wykonuje się:
+A) po zmostkowaniu tego wyłącznika
+B) **miernikiem z funkcją pomiaru bez wyzwalania wyłącznika różnicowoprądowego (małym prądem)**
 C) po odłączeniu przewodu ochronnego
 > **B.** Mostkowanie i odłączanie PE jest niedopuszczalne.
 
@@ -561,25 +565,28 @@ B) **wzrost rezystancji przewodów wskutek nagrzania i spadek napięcia zasilani
 C) rezystancję ciała człowieka
 > **B.**
 
-**109.** Prąd wyłączający RCD (typu AC) powinien mieścić się w granicach:
+**109.** Prąd wyłączający wyłącznika różnicowoprądowego (typu AC) powinien mieścić się
+w granicach:
 A) 0,1–0,5 I_Δn B) **0,5–1,0 I_Δn** C) 1,0–2,0 I_Δn
 > **B.**
 
-**110.** Czas wyłączenia RCD bezzwłocznego przy prądzie I_Δn nie powinien przekraczać:
+**110.** Czas wyłączenia bezzwłocznego wyłącznika różnicowoprądowego przy prądzie I_Δn
+nie powinien przekraczać:
 A) 40 ms B) 150 ms C) **300 ms**
 > **C.** Przy 5·I_Δn — 40 ms.
 
-**111.** Czas wyłączenia RCD bezzwłocznego przy 5·I_Δn nie powinien przekraczać:
+**111.** Czas wyłączenia bezzwłocznego wyłącznika różnicowoprądowego przy 5·I_Δn nie powinien
+przekraczać:
 A) **40 ms** B) 150 ms C) 300 ms
 > **A.**
 
-**112.** Sprawdzenie RCD przyciskiem TEST:
+**112.** Sprawdzenie wyłącznika różnicowoprądowego przyciskiem kontrolnym TEST:
 A) zastępuje pomiar parametrów
 B) **sprawdza tylko mechanizm wyzwalania, nie zastępuje pomiaru**
 C) mierzy prąd wyłączający
 > **B.**
 
-**113.** Pomiar RCD wykonuje się dla:
+**113.** Pomiar wyłącznika różnicowoprądowego wykonuje się dla:
 A) tylko jednej połówki okresu
 B) **obu połówek (0° i 180°), przyjmując wynik najbardziej niekorzystny**
 C) prądu stałego

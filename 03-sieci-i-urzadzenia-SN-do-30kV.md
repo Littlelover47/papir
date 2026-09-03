@@ -40,7 +40,7 @@ Podział:
 - wg funkcji: **transformatorowa**, **rozdzielcza (łącznikowa)**, **przekształtnikowa**,
 - wg konstrukcji: **wnętrzowa (budynek, kontenerowa, wbudowana, podziemna)**, **napowietrzna**
   (słupowa: STSa/STSp, ITS — na żerdziach wirowanych, dawniej „małogabarytowa"),
-- wg izolacji rozdzielnicy: **powietrzna (AIS)**, **w izolacji SF₆ (GIS)**, **hybrydowa**,
+- wg izolacji rozdzielnicy: **w izolacji powietrznej**, **w izolacji gazowej SF₆**, **hybrydowa**,
 - wg obsługi: **z obsługą stałą**, **bez obsługi (zdalnie sterowana)**.
 
 ### 6. Z jakich elementów składa się stacja SN/nn?
@@ -83,7 +83,7 @@ prądami: prądy jałowe małych transformatorów, prądy ładowania krótkich o
 gdy dopuszcza instrukcja).
 
 ### 10. Jakie są rodzaje wyłączników SN i jak gaszą łuk?
-- **próżniowy (VCB)** — łuk gaszony w komorze próżniowej; najpopularniejszy do 36 kV; duża
+- **próżniowy** — łuk gaszony w komorze próżniowej; najpopularniejszy do 36 kV; duża
   trwałość łączeniowa, mała energia napędu, mała konserwacja; wada — możliwość przepięć przy
   łączeniu obwodów indukcyjnych (stąd ograniczniki przepięć).
 - **z izolacją SF₆** — gaz o dużej wytrzymałości elektrycznej i doskonałych właściwościach
@@ -96,11 +96,11 @@ gdy dopuszcza instrukcja).
   z wyzwalaczami: **wybijakowym (zanikowym/napięciowym)**, **prądowym**, **cewką wyłączającą**.
 
 ### 11. Rola przekładników w rozdzielni SN
-- **Przekładnik prądowy (CT)**: przetwarza duży prąd na 5 A lub 1 A; oddziela obwody wtórne od
+- **Przekładnik prądowy**: przetwarza duży prąd na 5 A lub 1 A; oddziela obwody wtórne od
   wysokiego napięcia. **Uzwojenia wtórnego nigdy nie wolno rozwierać** pod prądem — powstaje
   bardzo wysokie napięcie i zniszczenie przekładnika (zwierać zaciski!). Uzwojenie wtórne
   i rdzeń są **uziemione**.
-- **Przekładnik napięciowy (VT)**: przetwarza napięcie na 100 V / 100/√3 V; **nie wolno zwierać**
+- **Przekładnik napięciowy**: przetwarza napięcie na 100 V / 100/√3 V; **nie wolno zwierać**
   uzwojenia wtórnego (zwarcie = zniszczenie); zabezpieczany bezpiecznikami z obu stron.
   Uzwojenie wtórne uziemione w jednym punkcie. Uwaga BHP: **przekładnik napięciowy może być
   źródłem napięcia zwrotnego** — przy pracach trzeba go odłączyć również od strony wtórnej.
@@ -123,8 +123,9 @@ przy załączonym uziemniku. Rodzaje: **mechaniczne**, **elektromagnetyczne (zam
 odblokowanie awaryjne tylko wg instrukcji, przez osobę upoważnioną, z zapisem.
 
 ### 14. Wskaźniki napięcia i uzgadnianie faz
-- Wskaźniki: **pojemnościowe (na drążku)** dla SN, **wskaźniki na przedziale (LRM)** — układy
-  sygnalizacji obecności napięcia w rozdzielnicach.
+- Wskaźniki: **pojemnościowe (na drążku)** dla SN, **wskaźniki wbudowane w przedział
+  rozdzielnicy** — układy sygnalizacji obecności napięcia (zasilane z dzielników
+  pojemnościowych w przepustach).
 - Przed sprawdzeniem braku napięcia trzeba **sprawdzić działanie wskaźnika** (na źródle
   kontrolnym lub części pod napięciem) — i powtórzyć sprawdzenie po pomiarze.
 - **Uzgadnianie faz** (fazowanie) — sprawdzenie zgodności faz przed zamknięciem połączenia
@@ -171,7 +172,8 @@ przed załączeniem; 3. sprawdzić brak napięcia po obu stronach; 4. **uziemić
 i przekładniki napięciowe; 6. wygrodzić i oznakować strefę pracy.
 
 ### 20. Dlaczego przy pracach przy transformatorze uziemia się z obu stron?
-Bo napięcie może pojawić się od strony nn (praca równoległa, agregat, instalacja PV odbiorcy,
+Bo napięcie może pojawić się od strony nn (praca równoległa, agregat, instalacja fotowoltaiczna
+odbiorcy,
 zasilanie rezerwowe) i wtedy transformator działa jako podwyższający — na stronie SN wystąpi pełne
 napięcie SN.
 
@@ -188,7 +190,7 @@ Oględziny (poziom i szczelność oleju, silikażel, izolatory, przekaźnik Buch
 temperatura), pomiar **rezystancji izolacji uzwojeń** (i współczynnika absorpcji R60/R15,
 polaryzacji PI = R600/R60), pomiar **rezystancji uzwojeń** prądem stałym, sprawdzenie
 **przekładni i grupy połączeń**, **pomiar tgδ i pojemności**, **badanie oleju** (napięcie
-przebicia, zawartość wody, liczba kwasowa, DGA — analiza gazów rozpuszczonych), próba
+przebicia, zawartość wody, liczba kwasowa, **analiza gazów rozpuszczonych w oleju**), próba
 napięciowa, pomiar prądu i strat jałowych, pomiar napięcia i strat zwarcia, sprawdzenie
 zabezpieczeń i uziemienia. Częstotliwość — wg instrukcji eksploatacji / zaleceń producenta.
 
@@ -224,14 +226,16 @@ próba napięciowa i pomiary po ułożeniu.
 
 ### 26. Pomiary i próby kabla SN
 Rezystancja izolacji (megomierzem, zwykle 5 kV), **próba napięciowa** — dla XLPE napięciem
-**przemiennym o bardzo niskiej częstotliwości (VLF 0,1 Hz)** lub napięciem tłumionym (DAC),
-dla kabli papierowych dopuszczalne DC; pomiar **tgδ** (ocena zawilgocenia i starzenia),
-**diagnostyka wyładowań niezupełnych (PD)**, lokalizacja uszkodzeń: **reflektometria TDR**,
-metoda udarowa (ICM), metoda akustyczna, metoda krokowa (dla uszkodzeń powłoki), pomiar
+**przemiennym o bardzo niskiej częstotliwości (0,1 Hz)** lub **napięciem tłumionym**,
+dla kabli papierowych dopuszczalne napięcie stałe; pomiar **tgδ** (**współczynnik strat
+dielektrycznych** — ocena zawilgocenia i starzenia),
+**diagnostyka wyładowań niezupełnych**, lokalizacja uszkodzeń: **metoda reflektometryczna
+(echometryczna)**,
+**metoda udarowa**, **metoda akustyczna**, **metoda krokowa** (dla uszkodzeń powłoki), pomiar
 ciągłości i rezystancji żył, sprawdzenie ciągłości i rezystancji ekranu, sprawdzenie kolejności
 i zgodności faz.
 
-> **Uwaga:** kabli z izolacją XLPE **nie należy** badać wysokim napięciem stałym — DC powoduje
+> **Uwaga:** kabli z izolacją XLPE **nie należy** badać wysokim napięciem stałym — powoduje ono
 > gromadzenie ładunku przestrzennego i przyspiesza degradację (drzewienie wodne).
 
 ---
@@ -392,4 +396,4 @@ do atmosfery.
 Zadziałanie sygnalizacji Buchholza — sprawdzić poziom oleju, pobrać próbkę gazu, ocenić
 (gaz palny → uszkodzenie wewnętrzne). Przy zadziałaniu członu wyłączającego lub sygnałach
 uszkodzenia **nie wolno ponownie załączać** transformatora bez badań; zgłosić do służb
-utrzymania, wykonać pomiary diagnostyczne i DGA.
+utrzymania, wykonać pomiary diagnostyczne i analizę gazów rozpuszczonych w oleju.

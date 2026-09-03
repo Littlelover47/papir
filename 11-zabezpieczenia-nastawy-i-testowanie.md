@@ -1,259 +1,328 @@
-# 11. Zabezpieczenia SN — funkcje, nastawy i metodyka testowania
+# 11. Zabezpieczenia SN — funkcje, nastawy i metodyka badania
 
 > Nastawy podane są jako **typowe punkty wyjścia**. Obowiązuje **karta nastaw** zatwierdzona
-> przez projektanta/OSD i uzgodniona z zabezpieczeniami nadrzędnymi.
+> przez projektanta i uzgodniona z zabezpieczeniami nadrzędnymi.
+
+Symbole w nawiasach (np. „I>", „U₀>") to **oznaczenia stosowane na schematach polskich**
+i na wyświetlaczach zabezpieczeń. Tabelę przeliczeniową na numery amerykańskie (które bywają
+na obcych schematach i w menu zabezpieczeń) znajdziesz w **załączniku na końcu pliku**.
 
 ---
 
-## A. Katalog funkcji (kody ANSI/IEEE) — co robi i jak testować
+## A. Katalog zabezpieczeń — funkcja, nastawa, sposób badania
 
-### A.1 Nadprądowe
+### A.1 Zabezpieczenia nadprądowe
 
-| Kod | Funkcja | Typowa nastawa | Jak testować |
+| Zabezpieczenie | Symbol | Typowa nastawa | Jak badać |
 |---|---|---|---|
-| **50** | Nadprądowe bezzwłoczne (zwarciowe) | 6–10 × I_n odpływu; **poniżej** I_k min, **powyżej** prądów rozruchowych/inrush | Wstrzyk 3-faz.: 0,9× nastawy (brak zadziałania) i 1,1× (zadziałanie); pomiar czasu własnego (typ. 20–40 ms) |
-| **51** | Nadprądowe zwłoczne (przeciążeniowe) | 1,2–1,4 × I_obc; charakterystyka DT lub IDMT (IEC NI/VI/EI) | Sprawdź **próg** (1,05–1,3× pickup) + **min. 3 punkty krzywej** (np. 2×, 5×, 10× nastawy) i porównaj z obliczonym czasem |
-| **50N/51N** | Ziemnozwarciowe (składowa zerowa) | Sieć z NER: 10–20 % I_E; sieć izolowana: czułe, 1–5 A pierwotnie | Wstrzyk **jednofazowy** (lub w wejście CT sumującego); sprawdź, czy nie ma przeniku od prądu fazowego |
-| **67 / 67N** | Kierunkowe nadprądowe / ziemnozwarciowe | kąt charakterystyczny: 67N w sieci z rezystorem ≈ 0° (kryterium czynnomocowe), w izolowanej ≈ −90° (biernomocowe) | Wstrzyk **I + U** z regulacją kąta; sprawdź granice strefy zadziałania (±(85–88)° od kąta charakt.) i brak zadziałania w kierunku przeciwnym |
-| **51V** | Nadprądowe z hamowaniem/blokadą napięciową | dla generatorów | Wstrzyk I przy zmiennym U — sprawdź przesunięcie progu |
-| **46** | Asymetria / składowa przeciwna | 10–20 % I_n, t = 2–10 s | Wstrzyk asymetrycznego układu 3-faz. (obniżona jedna faza) |
-| **49** | Obraz cieplny | I_b = 1,0–1,05 × I_n, τ z DTR | Wstrzyk skokowy prądu i pomiar czasu do zadziałania; porównaj z modelem `t = τ·ln((I²−Ip²)/(I²−k²Ib²))`; sprawdź **pamięć cieplną** i reset |
-| **37** | Podprądowe | 30–60 % I_n, z blokadą na czas rozruchu | Wstrzyk prądu i obniżanie poniżej progu |
-| **48 / 51LR** | Zbyt długi rozruch / utyk | t_rozruchu × 1,2–1,5 | Wstrzyk prądu rozruchowego dłużej niż nastawa |
-| **66** | Liczba rozruchów | 2 gorące / 3 zimne na godzinę | Symulacja kolejnych rozruchów, sprawdzenie blokady i licznika |
+| **Nadprądowe zwarciowe bezzwłoczne** | I≫ | 6–10 × prąd znamionowy odpływu; **poniżej** najmniejszego prądu zwarciowego, **powyżej** prądów rozruchowych i prądu włączania transformatora | Podaj prąd trójfazowy: 0,9 × nastawy (brak zadziałania) i 1,1 × (zadziałanie); zmierz czas własny (typowo 20–40 ms) |
+| **Nadprądowe zwłoczne przeciążeniowe** | I> | 1,2–1,4 × prąd obciążenia; charakterystyka niezależna (stałoczasowa) lub zależna | Sprawdź **próg rozruchowy** oraz **co najmniej trzy punkty charakterystyki** (np. 2×, 5×, 10× nastawy) i porównaj z czasem obliczonym |
+| **Ziemnozwarciowe zerowoprądowe** | I₀> | Sieć z rezystorem uziemiającym: 10–20 % prądu zwarcia doziemnego. Sieć izolowana: czułe, 1–5 A pierwotnie | Podaj prąd **jednofazowy** albo wprost w obwód przekładnika sumującego; sprawdź brak przeniku od prądów fazowych |
+| **Ziemnozwarciowe kierunkowe** | I₀> ⟶ | Kąt charakterystyczny: sieć z rezystorem ≈ 0° (kryterium czynnomocowe), sieć izolowana ≈ −90° (biernomocowe) | Podaj **prąd i napięcie** z regulacją kąta; sprawdź granice strefy zadziałania (±85–88° od kąta charakterystycznego) i **brak zadziałania w kierunku przeciwnym** |
+| **Nadprądowe kierunkowe** | I> ⟶ | jak nadprądowe, z kierunkiem | jak wyżej, dla składowych fazowych |
+| **Nadprądowe z blokadą napięciową** | I>/U< | Dla generatorów | Podaj prąd przy zmiennym napięciu — sprawdź przesunięcie progu |
+| **Od asymetrii prądów (składowej przeciwnej)** | I₂> | 10–20 % prądu znamionowego, czas 2–10 s | Podaj asymetryczny układ trójfazowy (jedna faza obniżona) |
+| **Cieplne (obraz cieplny)** | ϑ> | Prąd bazowy 1,0–1,05 × znamionowego, stała czasowa z DTR | Podaj skokowo prąd i zmierz czas do zadziałania; porównaj z modelem cieplnym; sprawdź **pamięć cieplną** i sposób kasowania |
+| **Podprądowe** | I< | 30–60 % prądu znamionowego, z blokadą na czas rozruchu | Podaj prąd i obniżaj poniżej progu |
+| **Od zbyt długiego rozruchu** | — | Czas rozruchu × 1,2–1,5 | Podaj prąd rozruchowy dłużej niż nastawiony czas |
+| **Od utyku (zablokowania) wirnika** | — | Prąd rozruchowy przy braku spadku | Podaj prąd rozruchowy bez zaniku |
+| **Od zbyt częstych rozruchów** | — | 2 rozruchy gorące / 3 zimne na godzinę | Symulacja kolejnych rozruchów; sprawdź blokadę i licznik |
 
-### A.2 Napięciowe i częstotliwościowe
+### A.2 Zabezpieczenia napięciowe i częstotliwościowe
 
-| Kod | Funkcja | Typowa nastawa | Jak testować |
+| Zabezpieczenie | Symbol | Typowa nastawa | Jak badać |
 |---|---|---|---|
-| **27** | Podnapięciowe | 70–85 % U_n, t = 0,5–3 s (dla SZR krócej) | Obniżanie napięcia 3-faz.; sprawdź blokadę przy „bus dead" (żeby nie działało przy wyłączonej sekcji) |
-| **59** | Nadnapięciowe | 110–120 % U_n | Podnoszenie napięcia |
-| **59N / 64** | Napięcie zerowe (3U₀) | 10–30 % (sieć skompensowana), niżej dla czułych | Wstrzyk w obwód broken delta lub asymetria 3-faz. |
-| **47** | Kolejność / asymetria faz | — | Zamiana kolejności faz na teście |
-| **81U / 81O** | Podczęstotliwościowe / nadczęstotliwościowe | 47,5–49,5 Hz / 50,5–52 Hz | Rampa częstotliwości z testera |
-| **81R** | ROCOF (df/dt) | 0,5–2 Hz/s | Rampa z zadanym nachyleniem |
-| **60 / VTS** | Nadzór obwodów napięciowych | logika: 3U₀ bez 3I₀ | Wyjęcie jednego bezpiecznika VT / wstrzyk asymetrii U bez I → musi być alarm + **blokada 67/21/51V/27** |
-| **25** | Synchro-check | ΔU ≤ 5–10 %, Δf ≤ 0,1–0,2 Hz, Δφ ≤ 10–20° | Dwa źródła napięcia z testera z regulacją kąta i częstotliwości; sprawdź **każdy warunek osobno** oraz tryby dead-bus/dead-line |
+| **Podnapięciowe** | U< | 70–85 % napięcia znamionowego, czas 0,5–3 s (dla automatyki SZR krócej) | Obniżaj napięcie trójfazowe; sprawdź blokadę przy „szynach bez napięcia", żeby nie działało przy wyłączonej sekcji |
+| **Nadnapięciowe** | U> | 110–120 % napięcia znamionowego | Podnoś napięcie |
+| **Od składowej zerowej napięcia** | U₀> | 10–30 % (sieć skompensowana); niżej dla układów czułych | Podaj napięcie w obwód otwartego trójkąta albo wywołaj asymetrię trójfazową |
+| **Od niezgodnej kolejności faz / asymetrii napięć** | — | — | Zamień kolejność faz na przyrządzie probierczym |
+| **Podczęstotliwościowe** | f< | 47,5–49,5 Hz | Płynna zmiana (rampa) częstotliwości |
+| **Nadczęstotliwościowe** | f> | 50,5–52 Hz | jak wyżej |
+| **Od szybkości zmian częstotliwości** | df/dt | 0,5–2 Hz/s | Rampa z zadanym nachyleniem |
+| **Nadzór obwodów napięciowych** (od zaniku napięcia przekładnika) | — | Logika: składowa zerowa napięcia bez składowej zerowej prądu | **Wyjmij jeden bezpiecznik przekładnika** albo podaj asymetrię napięć bez prądu → musi być alarm **i blokada zabezpieczeń kierunkowych, odległościowych i podnapięciowego** |
+| **Kontrola synchronizmu** (zgodności napięć) | — | Różnica napięć ≤ 5–10 %, różnica częstotliwości ≤ 0,1–0,2 Hz, różnica kątów ≤ 10–20° | Dwa źródła napięcia z regulacją kąta i częstotliwości; sprawdź **każdy warunek osobno** oraz tryby zezwolenia przy braku napięcia na jednej stronie |
 
-### A.3 Różnicowe i strefowe
+### A.3 Zabezpieczenia strefowe i różnicowe
 
-| Kod | Funkcja | Jak testować |
-|---|---|---|
-| **87T** | Różnicowe transformatora | Sprawdź: dopasowanie przekładni i grupy połączeń, próg (I_d>), **nachylenie charakterystyki hamowania** (min. 2 punkty na każdym odcinku), **blokada 2. harmoniczną** (inrush) i **5. harmoniczną** (przewzbudzenie), strefa nieczułości; wstrzyk z obu stron jednocześnie |
-| **87B** | Różnicowe szyn | Wstrzyk w każdy zestaw CT osobno (sprawdzenie polaryzacji i przypisania do strefy), potem sumarycznie; sprawdź **check zone** i dynamiczne łączenie strefy przy zamkniętym sprzęgle |
-| **64REF** | Ziemnozwarciowe stabilizowane (REF) | Wstrzyk w CT punktu neutralnego i w CT fazowe w przeciwfazie — sprawdzenie stabilności; potem tylko neutralny — zadziałanie |
-| **87M / 87L** | Różnicowe silnika / linii | jak 87T, dla 87L dodatkowo test kanału komunikacyjnego i opóźnienia |
-| **50BF** | Niezadziałanie wyłącznika | Symuluj trip + utrzymaj prąd → po nastawionym czasie musi wyjść komenda na INC/BC + blokada SZR |
-| **Arc-flash** | Łukoochronne | Źródło światła (latarka/testowa dioda na czujnik) + wstrzyk prądu; zmierz czas detekcji i całkowity czas wyłączenia |
+| Zabezpieczenie | Jak badać |
+|---|---|
+| **Różnicowe transformatora** | Sprawdź: dopasowanie przekładni i grupy połączeń, próg rozruchowy, **nachylenie charakterystyki hamowania** (min. dwa punkty na każdym odcinku), **blokadę od drugiej harmonicznej** (prąd włączania) i **od piątej harmonicznej** (przewzbudzenie). Podawaj prąd z obu stron jednocześnie |
+| **Różnicowe szyn zbiorczych** | Podaj prąd w każdy zestaw przekładników **osobno** (sprawdzenie biegunowości i przypisania do strefy), potem sumarycznie; sprawdź **strefę kontrolną** i dynamiczne łączenie stref przy zamkniętym sprzęgle |
+| **Ziemnozwarciowe stabilizowane** (obejmujące uzwojenie w gwiazdę) | Podaj prąd w przekładnik punktu neutralnego **i** w przekładniki fazowe w przeciwfazie — sprawdzenie stabilności; potem tylko w neutralny — musi zadziałać |
+| **Różnicowe silnika / linii** | Jak dla transformatora; dla linii dodatkowo test kanału transmisji i jego opóźnienia |
+| **Lokalne rezerwowanie wyłącznika (LRW)** | Wywołaj wyzwolenie i **utrzymaj prąd** → po nastawionym czasie musi wyjść komenda na pole zasilające i sprzęgło + blokada automatyki SZR |
+| **Łukoochronne** | Oświetl każdy czujnik osobno (źródło światła) razem z podaniem prądu; zmierz czas wykrycia i całkowity czas wyłączenia |
 
-### A.4 Wejścia od obiektu (nie wymagają wstrzyku prądu)
+### A.4 Sygnały z obiektu (nie wymagają podawania prądu)
 
-| Kod | Sygnał | Test |
-|---|---|---|
-| **63** | Buchholz — gaz (alarm) / przepływ (wyłączenie) | Zwarcie odpowiednich zacisków w skrzynce transformatora (nie w szafie!) — sprawdza **cały tor** |
-| **71** | Poziom oleju | jak wyżej |
-| **26 / 49T** | Temperatura oleju / uzwojeń (PT100, PTC) | Symulator rezystancji (dekada) — sprawdzenie progów alarm/trip |
-| **Zawór nadciśnieniowy** | — | zwarcie zacisków |
-| **SF₆ density** | 2 progi: alarm / blokada | zwarcie zacisków presostatu; sprawdź, że **blokada** faktycznie blokuje operacje |
+| Sygnał | Sposób badania |
+|---|---|
+| **Przekaźnik gazowo-przepływowy (Buchholza)** — gaz (sygnał) / przepływ (wyłączenie) | Zewrzyj odpowiednie zaciski **w skrzynce transformatora**, nie w szafie — wtedy sprawdzasz cały tor |
+| **Kontrola poziomu oleju** | jak wyżej |
+| **Kontrola temperatury oleju i uzwojeń** (PT100, termistory) | Symulator rezystancji (dekada oporowa) — sprawdzenie progów sygnału i wyłączenia |
+| **Zawór nadciśnieniowy** | Zwarcie zacisków |
+| **Kontrola ciśnienia (gęstości) SF₆** — dwa progi: sygnał i blokada | Zwarcie zacisków czujnika; sprawdź, że **blokada faktycznie blokuje** operacje łączeniowe |
 
 ---
 
 ## B. Nastawy — zasady doboru i weryfikacji
 
 ### B.1 Warunki, które nastawa musi spełnić jednocześnie
-1. **Czułość:** `I_k min / I_nastawy ≥ 1,5` (rezerwowo ≥ 1,2)
+1. **Czułość:** najmniejszy prąd zwarciowy / prąd nastawiony ≥ **1,5** (rezerwowo ≥ 1,2)
 2. **Nieczułość na stany normalne:** powyżej prądu obciążenia, prądu rozruchowego silników,
-   prądu inrush transformatora (typowo 6–12 × I_n trafo, zanikający w 0,1–0,3 s),
-   prądu załączania baterii kondensatorów
+   **prądu włączania transformatora** (udar magnesujący: 6–12 × prąd znamionowy, zanikający
+   w 0,1–0,3 s), prądu załączania baterii kondensatorów
 3. **Selektywność:** stopień czasowy do zabezpieczenia nadrzędnego i podrzędnego
-4. **Wytrzymałość cieplna:** czas wyłączenia < wytrzymałość zwarciowa kabla `I²t ≤ k²S²`
-   i uzwojeń transformatora
-5. **Ochrona ludzi:** dla stacji — czas wyłączenia zgodny z dopuszczalnym napięciem rażeniowym
-   (PN-EN 50522); dla łuku — energia incydentu w granicach ŚOI
+4. **Wytrzymałość cieplna:** czas wyłączenia krótszy od wytrzymałości zwarciowej kabla
+   (warunek `I²t ≤ k²S²`) i uzwojeń transformatora
+5. **Ochrona ludzi:** czas wyłączenia zgodny z dopuszczalnym napięciem rażeniowym
+   (PN-EN 50522); energia łuku w granicach odporności odzieży ochronnej
 
-### B.2 Stopień czasowy (grading margin)
+### B.2 Stopień czasowy
 ```
-Δt = t_wyłącznika + t_resetu przekaźnika + błąd pomiaru czasu + margines bezpieczeństwa
-Δt ≈ 60 ms + 40 ms + 30 ms + 70 ms ≈ 200 ms  (przekaźniki cyfrowe)
+Δt = czas własny wyłącznika + czas powrotu zabezpieczenia
+     + błąd pomiaru czasu + margines bezpieczeństwa
+Δt ≈ 60 ms + 40 ms + 30 ms + 70 ms ≈ 200 ms   (zabezpieczenia cyfrowe)
 ```
-Dla przekaźników elektromechanicznych przyjmuje się **0,3–0,4 s**.
+Dla zabezpieczeń elektromechanicznych przyjmuje się **0,3–0,4 s**.
 
-### B.3 Weryfikacja dokumentacyjna przed testem
+### B.3 Weryfikacja dokumentacyjna przed badaniem
 - karta nastaw **zatwierdzona** (podpis projektanta), zgodna z aktualnym schematem
-- **plik nastaw z IED** wyeksportowany i porównany z kartą **linia po linii**
-  (to wykrywa najwięcej błędów — częściej niż testy wstrzykowe)
-- weryfikacja **przekładni CT/VT** wprowadzonych w IED względem tabliczek
-- sprawdzenie wersji firmware i konfiguracji logiki (PLC/GOOSE)
-- **zapis „as-found"** przed zmianami i **„as-left"** po testach
+- **plik nastaw wyeksportowany z zabezpieczenia** i porównany z kartą **linia po linii** —
+  to wykrywa więcej błędów niż same próby prądowe
+- weryfikacja **przekładni przekładników** wprowadzonych w zabezpieczeniu względem tabliczek
+- sprawdzenie wersji oprogramowania i konfiguracji logiki
+- **zapis stanu zastanego** przed zmianami i **stanu pozostawionego** po badaniach
 
 ---
 
-## C. Metodyka testowania — od czego zacząć
+## C. Metodyka badania — kolejność
 
-### C.1 Piramida testów
+### C.1 Piramida badań
 ```
-1. Testy elementów (CT, VT, wyłącznik, cewki, przekaźniki)        ← bez napięcia
-2. Kontrola połączeń punkt-punkt (point-to-point wiring check)     ← bez napięcia
-3. Testy sekundarne zabezpieczeń (secondary injection)             ← bez napięcia SN
-4. Testy pierwotne (primary injection) — przekładnie, polaryzacja  ← bez napięcia SN
-5. Próby funkcjonalne sterowania i blokad                          ← bez napięcia SN
-6. Testy logiki i komunikacji (scheme test, GOOSE, SCADA)          ← bez napięcia SN
-7. Test zintegrowany / end-to-end (trip matrix)                    ← bez napięcia SN
-8. Próby po podaniu napięcia (stabilność 87, kierunkowość, pomiary)← pod napięciem
+1. Badania elementów (przekładniki, wyłącznik, cewki, przekaźniki)      ← bez napięcia
+2. Kontrola połączeń zacisk–zacisk (żyła po żyle)                       ← bez napięcia
+3. Próby zabezpieczeń prądem wtórnym                                    ← bez napięcia SN
+4. Próby prądem pierwotnym — przekładnie, biegunowość                   ← bez napięcia SN
+5. Próby funkcjonalne sterowania i blokad                               ← bez napięcia SN
+6. Próby logiki i komunikacji                                           ← bez napięcia SN
+7. Próba zintegrowana na rzeczywistym torze (macierz wyzwalania)        ← bez napięcia SN
+8. Próby po podaniu napięcia (stabilność różnicowego, kierunkowość)     ← pod napięciem
 ```
 
 ### C.2 Sprzęt pomiarowy
 | Zadanie | Przyrząd |
 |---|---|
-| Wstrzyk sekundarny (I, U, kąt, f) | Omicron CMC 256/356, Megger SMRT, Doble F6150, ISA DRTS |
-| Wstrzyk pierwotny | źródło prądowe 500–2000 A (np. Omicron CPC 100, DV Power, Raytech) |
-| Badanie CT (przekładnia, kąt, krzywa magnesowania, ALF) | Omicron CT Analyzer, CPC 100 |
-| Rezystancja styków | mikroomomierz 100–600 A (DLRO, MOM2, DV Power) |
-| Czasy i droga styków wyłącznika | analizator wyłączników (Megger TM1800/EGIL, Omicron CIBANO 500) |
+| Podawanie prądu i napięcia wtórnego (z regulacją kąta i częstotliwości) | zestaw probierczy do zabezpieczeń |
+| Podawanie prądu pierwotnego | źródło prądowe 500–2000 A |
+| Badanie przekładników prądowych (przekładnia, kąt, charakterystyka magnesowania) | analizator przekładników |
+| Rezystancja styków | mikroomomierz 100–600 A |
+| Czasy i droga styków wyłącznika | analizator wyłączników |
 | Rezystancja izolacji | megomierz 2,5 / 5 kV |
-| Próba napięciowa AC | zestaw AC hipot (rezonansowy) |
-| Próba kabli SN | VLF 0,1 Hz / DAC (BAUR, Megger, Omicron) |
-| Wyładowania niezupełne | Omicron MPD, BAUR, Megger PD |
-| Termowizja | kamera IR (po obciążeniu) |
+| Próba napięciowa przemienna | zestaw probierczy napięciowy (rezonansowy) |
+| Próba kabli SN | zestaw napięcia o bardzo niskiej częstotliwości (0,1 Hz) lub napięcia tłumionego |
+| Wyładowania niezupełne | zestaw do pomiaru wyładowań niezupełnych |
+| Kontrola termowizyjna | kamera termowizyjna (pod obciążeniem) |
 
 ### C.3 Zasada „izoluj, nie rozkręcaj"
-- obwody **CT** — izoluj bloczkiem probierczym ze **zwieraniem** (RTXP/RTXH); nigdy nie rozwieraj
-- obwody **VT** — izoluj bloczkiem rozłącznym; **wyjmij bezpieczniki pierwotne VT**
-- wyjścia **trip** — na czas testów progów wyprowadź na **styki testowe** albo odizoluj cewkę,
-  ale **końcowy test zintegrowany musi być wykonany na realnym torze** aż do cewki wyłącznika
-- **SCADA w trybie test/blokada alarmów** — żeby nie generować fałszywych zgłoszeń u dyspozytora
-- czerwone kreślenie (*red-lining*) schematów w trakcie testu; każda rozbieżność → punch list
+- obwody **prądowe** — izoluj bloczkiem probierczym ze **zwieraniem**; nigdy nie rozwieraj
+- obwody **napięciowe** — izoluj bloczkiem rozłącznym i **wyjmij bezpieczniki pierwotne
+  przekładników napięciowych**
+- **wyjścia wyzwalające** — na czas badania progów można je odizolować, ale **próba końcowa
+  musi być wykonana na rzeczywistym torze** aż do cewki wyłącznika
+- **system nadzoru w trybie próbnym / z zablokowanymi alarmami** — żeby nie generować fałszywych
+  zgłoszeń u dyspozytora
+- nanoś zmiany na schematach na bieżąco; każda rozbieżność → **lista usterek**
 
 ---
 
-## D. Testy elementów pierwotnych
+## D. Badania elementów pierwotnych
 
-### D.1 Przekładniki prądowe (CT)
-| Test | Metoda | Kryterium (typowe) |
+### D.1 Przekładniki prądowe
+| Badanie | Metoda | Kryterium (typowe) |
 |---|---|---|
-| Rezystancja izolacji | 1 kV DC uzwojenie wtórne–ziemia; 5 kV pierwotne–wtórne | > 100 MΩ (wtórne), > 1 GΩ (pierwotne) |
-| Ciągłość i rezystancja uzwojenia | mikroomomierz / DC | zgodna z DTR, symetria między fazami |
-| **Przekładnia** | wstrzyk pierwotny lub CT Analyzer | błąd w granicach klasy (0,5 / 5P) |
-| **Polaryzacja (biegunowość)** | metoda impulsowa (bateria + mV-metr) lub analizator | zgodna z oznaczeniem P1/P2, S1/S2 |
-| Krzywa magnesowania, punkt kolanowy, ALF | CT Analyzer | zgodna z klasą 5P20 / PX |
-| Obciążenie wtórne (burden) | pomiar rezystancji pętli | poniżej znamionowego VA |
+| Rezystancja izolacji | 1 kV — uzwojenie wtórne względem ziemi; 5 kV — pierwotne względem wtórnego | > 100 MΩ (wtórne), > 1 GΩ (pierwotne) |
+| Ciągłość i rezystancja uzwojenia | mikroomomierz | zgodna z DTR, symetria między fazami |
+| **Przekładnia** | prąd pierwotny lub analizator | błąd w granicach klasy |
+| **Biegunowość** | metoda impulsowa (bateria + miliwoltomierz) lub analizator | zgodna z oznaczeniem zacisków |
+| Charakterystyka magnesowania, napięcie kolanowe, graniczny współczynnik dokładności | analizator przekładników | zgodna z klasą |
+| Obciążenie wtórne | pomiar rezystancji pętli | poniżej znamionowej moc pozornej |
 
-**Polaryzacja CT to najczęstsza przyczyna błędnego działania 87 i 67.** Sprawdzaj ją zawsze,
-także po każdej ingerencji w obwody.
+**Błędna biegunowość przekładnika prądowego to najczęstsza przyczyna wadliwego działania
+zabezpieczeń różnicowych i kierunkowych.** Sprawdzaj ją zawsze, także po każdej ingerencji
+w obwody.
 
-### D.2 Przekładniki napięciowe (VT)
-- rezystancja izolacji, przekładnia, polaryzacja, **sprawdzenie jednego punktu uziemienia**
-- sprawdzenie bezpieczników pierwotnych i MCB wtórnych (selektywność, oznaczenie)
-- **sprawdzenie obwodu broken delta** (3U₀ = 0 przy symetrii)
-- test **rezystora tłumiącego ferrorezonans** (obecność i wartość)
+### D.2 Przekładniki napięciowe
+- rezystancja izolacji, przekładnia, biegunowość, **sprawdzenie uziemienia w jednym punkcie**
+- kontrola bezpieczników pierwotnych i zabezpieczeń wtórnych (selektywność, oznaczenie)
+- **sprawdzenie obwodu otwartego trójkąta** (składowa zerowa ≈ 0 przy symetrii napięć)
+- kontrola **rezystora tłumiącego ferrorezonans** (obecność i wartość)
 
 ### D.3 Wyłącznik
-| Test | Kryterium (typowe — sprawdź DTR!) |
+| Badanie | Kryterium (typowe — sprawdź DTR) |
 |---|---|
-| Rezystancja styków głównych (µΩ) | 20–60 µΩ/pole dla próżniowych; odchylenie między fazami < 20 % |
+| Rezystancja styków głównych | 20–60 µΩ na biegun dla wyłączników próżniowych; różnica między fazami < 20 % |
 | Czas zamykania | 40–80 ms |
 | Czas otwierania (od komendy do rozejścia styków) | 30–60 ms |
 | Całkowity czas przerywania | 50–70 ms |
 | Niejednoczesność biegunów | < 2–3 ms |
-| Rezystancja cewek Z/W | zgodna z DTR |
-| Minimalne napięcie zadziałania cewki wył. | zwykle ≤ 70 % U_n DC (test: obniżaj napięcie) |
-| Wytrzymałość próżni komory | próba napięciowa na otwartych stykach lub tester magnetronowy |
-| Szczelność SF₆ / ciśnienie | wg DTR, z kompensacją temperatury |
-| Zbrojenie sprężyny, licznik operacji, blokady napędu | działa poprawnie |
-| Cykl O-C-O, próba antypompowania | zgodnie z DTR |
+| Rezystancja cewek załączającej i wyłączającej | zgodna z DTR |
+| Najmniejsze napięcie zadziałania cewki wyłączającej | zwykle ≤ 70 % napięcia znamionowego (badanie: obniżaj napięcie) |
+| Wytrzymałość próżni komory gaszeniowej | próba napięciowa na otwartych stykach lub przyrząd do badania próżni |
+| Szczelność i ciśnienie SF₆ | wg DTR, z uwzględnieniem temperatury |
+| Zbrojenie sprężyny, licznik operacji, blokady napędu | działanie poprawne |
+| Cykl otwórz–zamknij–otwórz, próba blokady przeciwpompującej | zgodnie z DTR |
 
 ### D.4 Szyny, izolacja, kable
-- **rezystancja izolacji szyn**: megomierz **5 kV**, faza–ziemia i faza–faza;
-  typowo **> 1 GΩ** (kryterium z DTR)
-- **próba napięciowa AC** na miejscu (IEC 62271-200 zaleca **80 % napięcia znamionowego
-  probierczego**): dla rozdzielnicy 24 kV → U_d = 50 kV, test na miejscu ≈ **40 kV / 1 min**;
-  dla 17,5 kV → 38 kV → ok. 30 kV; dla 36 kV → 70 kV → ok. 56 kV
-- **kable SN**: VLF/DAC, tgδ, PD, ciągłość i zgodność faz, rezystancja ekranu
-- **rezystancja połączeń śrubowych** i **kontrola momentów dokręcenia** (protokół)
-- **ciągłość uziemienia** każdego przedziału i konstrukcji: **≤ 0,1 Ω** do głównej szyny
+- **rezystancja izolacji szyn**: megomierz **5 kV**, faza–ziemia i faza–faza; typowo **> 1 GΩ**
+- **próba napięciowa przemienna na obiekcie** — norma dla rozdzielnic powyżej 1 kV zaleca
+  **80 % znamionowego napięcia probierczego**:
+
+  | Napięcie znamionowe rozdzielnicy | Znamionowe napięcie probiercze (1 min) | Próba na obiekcie (~80 %) |
+  |---|---|---|
+  | 12 kV | 28 kV | ok. 22 kV |
+  | 17,5 kV | 38 kV | ok. 30 kV |
+  | 24 kV | 50 kV | ok. **40 kV** |
+  | 36 kV | 70 kV | ok. 56 kV |
+
+- **kable SN**: próba napięciem o bardzo niskiej częstotliwości lub napięciem tłumionym,
+  współczynnik strat dielektrycznych, wyładowania niezupełne, ciągłość i zgodność faz,
+  rezystancja żyły powrotnej
+- **rezystancja połączeń śrubowych** i kontrola **momentów dokręcenia** — z protokołem
+- **ciągłość uziemienia** każdego przedziału i konstrukcji: **≤ 0,1 Ω** do głównej szyny uziemiającej
 
 ---
 
-## E. Testy sekundarne — jak to robić poprawnie
+## E. Próby prądem wtórnym — jak to robić poprawnie
 
-### E.1 Procedura dla jednej funkcji (przykład: 51 w polu odpływowym)
-1. Nastawa z karty: `I> = 240 A pierwotnie`, CT 300/5 → `I> = 4,0 A wtórnie`,
-   charakterystyka IEC Normal Inverse, `TMS = 0,2`
-2. **Izoluj CT** bloczkiem probierczym; podłącz tester do zaciskόw wtórnych IED
-3. **Próg:** wstrzykuj rampę → odczyt prądu zadziałania.
-   Kryterium: w granicach **±5 %** nastawy (lub wg DTR przekaźnika)
-4. **Nieczułość:** 0,95 × nastawy przez 2× nastawiony czas → brak zadziałania
-5. **Czas:** wstrzyk skokowy 2×, 5×, 10× nastawy; porównaj z obliczonym z formuły
-   `t = TMS · 0,14 / ((I/I>)^0,02 − 1)`.
-   Kryterium: **±5 % lub ±30 ms**, co większe
-6. **Reset:** sprawdź czas i tryb resetu (natychmiastowy / wg krzywej)
-7. **Wyjście:** sprawdź, że zadziałanie trafia na właściwy styk/matrycę i sygnał do SCADA
-8. Zapisz wyniki w protokole; przywróć bloczek; zapisz „as-left"
+### E.1 Procedura dla jednej funkcji (przykład: zabezpieczenie nadprądowe zwłoczne)
+1. Nastawa z karty: prąd rozruchowy **240 A pierwotnie**, przekładniki 300/5 →
+   **4,0 A wtórnie**, charakterystyka zależna, mnożnik czasowy 0,2
+2. **Izoluj obwód prądowy** bloczkiem probierczym; podłącz przyrząd do zacisków zabezpieczenia
+3. **Próg rozruchowy:** płynnie narastający prąd → odczytaj prąd zadziałania.
+   Kryterium: w granicach **±5 %** nastawy (lub wg DTR)
+4. **Nieczułość:** 0,95 × nastawy przez podwójny nastawiony czas → **brak zadziałania**
+5. **Czasy:** prąd skokowy 2×, 5×, 10× nastawy; porównaj z czasem obliczonym z charakterystyki.
+   Kryterium: **±5 % lub ±30 ms**, co jest większe
+6. **Powrót:** sprawdź czas i sposób powrotu (natychmiastowy / wg charakterystyki)
+7. **Wyjście:** sprawdź, że zadziałanie trafia na właściwy styk i właściwy sygnał do systemu nadzoru
+8. Zapisz wyniki w protokole; przywróć bloczek; zapisz stan pozostawiony
 
-### E.2 Zasady, które odróżniają dobry test od pozornego
-- testuj **każdą fazę osobno** (L1, L2, L3) — wykrywa błędy w jednym torze CT
-- testuj **50 i 51 rozdzielnie** (przez czasowe blokowanie drugiej funkcji), potem razem
-- **kierunkowość testuj kątowo**, nie tylko amplitudowo
-- weryfikuj **kierunek przepływu** w IED przy pomocy wskazań wektorowych (fazorów) w mierniku
-  przekaźnika — nie tylko przez zadziałanie
-- sprawdź zachowanie przy **utracie napięcia** (blokada 67) i **utracie GOOSE**
-- dla 87: **stabilność** jest ważniejsza od progu — testuj prądy przechodzące (through-fault)
+### E.2 Zasady odróżniające badanie rzetelne od pozornego
+- badaj **każdą fazę osobno** — to wykrywa błąd w jednym torze prądowym
+- badaj **zabezpieczenie bezzwłoczne i zwłoczne rozdzielnie** (czasowo blokując drugie),
+  potem razem
+- **kierunkowość badaj kątowo**, nie tylko amplitudą prądu
+- weryfikuj **kierunek przepływu** na wskazaniach wektorowych w zabezpieczeniu, nie tylko
+  po samym zadziałaniu
+- sprawdź zachowanie przy **zaniku napięcia** (blokada zabezpieczeń kierunkowych) i przy
+  **utracie komunikatów międzypolowych**
+- dla zabezpieczeń różnicowych **stabilność jest ważniejsza od progu** — badaj prądy
+  przechodzące (zwarcie zewnętrzne)
 
-### E.3 Wstrzyk pierwotny — kiedy jest niezbędny
-- sprawdzenie **przekładni i polaryzacji CT wraz z całym obwodem** do IED (jedyny test
-  potwierdzający kompletny tor, w tym pomyłki w mufie zaciskowej i w szafie)
-- sprawdzenie **przypisania stref 87B** i granic
-- weryfikacja **CT sumujących** (core-balance) i obwodów 51N
-- test **ciągłości pętli** dużym prądem (wykrywa złe zaciski, których omomierz nie pokaże)
+### E.3 Próby prądem pierwotnym — kiedy są niezbędne
+- sprawdzenie **przekładni i biegunowości przekładników wraz z całym obwodem** do zabezpieczenia
+  (jedyna próba potwierdzająca kompletny tor, w tym pomyłki w skrzynce zaciskowej i w szafie)
+- sprawdzenie **przypisania stref** zabezpieczenia różnicowego szyn i granic tych stref
+- weryfikacja **przekładników sumujących** i obwodów zabezpieczenia ziemnozwarciowego
+- badanie **ciągłości pętli dużym prądem** — wykrywa luźne zaciski, których omomierz nie pokaże
 
-Typowo wstrzykuje się **100–1000 A** przez szynę/kabel z jednoczesnym pomiarem prądu wtórnego
-i odczytem w IED. Wymaga zwarcia i uziemienia po drugiej stronie obwodu.
+Typowo podaje się **100–1000 A** przez szynę lub kabel, mierząc jednocześnie prąd wtórny
+i odczytując wskazanie w zabezpieczeniu. Wymaga zwarcia i uziemienia po drugiej stronie obwodu.
 
 ---
 
-## F. Testy po podaniu napięcia (nie da się ich zrobić wcześniej)
+## F. Badania po podaniu napięcia (niemożliwe do wykonania wcześniej)
 
-| Test | Cel | Metoda |
+| Badanie | Cel | Metoda |
 |---|---|---|
-| **Sprawdzenie napięć wtórnych VT** | poprawność obwodów, przekładni i faz | pomiar 57,7/100 V, kolejność faz, 3U₀ ≈ 0 |
-| **Kontrola fazorów w IED** | zgodność przypisania faz U i I | odczyt wektorów w IED przy obciążeniu |
-| **Stabilność 87T / 87B** | brak prądu różnicowego przy obciążeniu | odczyt I_d przy rosnącym obciążeniu — musi być ≪ progu |
-| **Kierunkowość 67/67N** | poprawność kierunku przy realnym przepływie | porównanie kierunku mocy z rzeczywistym |
-| **Weryfikacja 25** | zgodność faz między sekcjami | pomiar napięcia różnicowego na otwartym sprzęgle ≈ 0 V |
-| **Pomiary i rozliczenia** | poprawność P, Q, E | porównanie z niezależnym miernikiem |
-| **Termowizja** | jakość połączeń | po min. 40–60 % obciążenia, po 1–2 h |
-| **Test SZR „na gorąco"** | działanie w realnych warunkach | wg uzgodnionego scenariusza, z odbiorami przygotowanymi na przerwę |
+| **Sprawdzenie napięć wtórnych** | poprawność obwodów, przekładni i faz | pomiar 57,7 / 100 V, kolejność faz, składowa zerowa ≈ 0 |
+| **Kontrola wektorów w zabezpieczeniu** | zgodność przypisania faz prądu i napięcia | odczyt wskazań wektorowych pod obciążeniem |
+| **Stabilność zabezpieczeń różnicowych** | brak prądu różnicowego przy obciążeniu | odczyt prądu różnicowego przy rosnącym obciążeniu — musi być znacznie poniżej progu |
+| **Kierunkowość** | poprawność kierunku przy rzeczywistym przepływie | porównanie kierunku mocy ze stanem faktycznym |
+| **Weryfikacja kontroli synchronizmu** | zgodność faz między sekcjami | pomiar napięcia różnicowego na **otwartym** sprzęgle ≈ 0 V |
+| **Pomiary i układ rozliczeniowy** | poprawność wskazań mocy i energii | porównanie z niezależnym miernikiem |
+| **Kontrola termowizyjna** | jakość połączeń | po 1–2 h przy obciążeniu min. 40–60 % |
+| **Próba automatyki SZR w warunkach rzeczywistych** | działanie na obiekcie | wg uzgodnionego scenariusza, z odbiorami przygotowanymi na przerwę |
 
 ---
 
-## G. Protokół z testów zabezpieczeń — co musi zawierać
+## G. Protokół z badań zabezpieczeń — zawartość
 
-- identyfikacja obiektu, pola, IED (typ, nr fabryczny, **wersja firmware**, suma kontrolna
-  konfiguracji)
-- **przekładnie CT/VT** rzeczywiste i wprowadzone w IED
-- **nastawy „as-found"** i **„as-left"** (pełny wydruk / plik)
+- identyfikacja obiektu, pola, zabezpieczenia (typ, numer fabryczny, **wersja oprogramowania**,
+  suma kontrolna konfiguracji)
+- **przekładnie przekładników** rzeczywiste i wprowadzone w zabezpieczeniu
+- **nastawy stanu zastanego** i **stanu pozostawionego** (pełny wydruk)
 - użyte przyrządy z numerami i datami wzorcowania
-- dla każdej funkcji: nastawa, wartość zmierzona, odchyłka, kryterium, **wynik OK/NOK**
-- tabela **czasów** dla min. 3 punktów krzywej
-- wyniki testów blokad, matrycy wyzwalania, sygnalizacji i SCADA
-- lista usterek (**punch list**) z klasyfikacją (blokująca / do usunięcia przed odbiorem / drobna)
+- dla każdej funkcji: nastawa, wartość zmierzona, odchyłka, kryterium, **wynik: spełnia / nie spełnia**
+- tabela **czasów** dla co najmniej trzech punktów charakterystyki
+- wyniki prób blokad, macierzy wyzwalania, sygnalizacji i przesyłania do systemu nadzoru
+- **lista usterek** z klasyfikacją (blokująca / do usunięcia przed odbiorem / drobna)
 - wniosek: **czy pole można załączyć**
-- podpisy: wykonawca, sprawdzający (dozór), przedstawiciel użytkownika/OSD
-- data i **termin następnego badania** (typowo 3–6 lat dla IED, wg instrukcji obiektu)
+- podpisy: wykonawca, sprawdzający (dozór), przedstawiciel użytkownika
+- data i **termin następnego badania** (typowo 3–6 lat, wg instrukcji eksploatacji obiektu)
 
 ---
 
-## H. Najczęstsze błędy wykrywane podczas testów
+## H. Najczęstsze błędy wykrywane podczas badań
 
-1. **Odwrotna polaryzacja jednego CT** → zbędne zadziałanie 87 lub błędna kierunkowość
-2. **Zamienione fazy** między obwodem prądowym i napięciowym → 67 działa w złym kierunku
-3. **Podwójne uziemienie obwodu wtórnego VT lub CT** → prądy krążące, błędy pomiaru
-4. **Brak lub błędny bloczek zwierający CT** → uszkodzenie CT przy pracach
-5. **Nastawy w IED niezgodne z kartą** (najczęściej przekładnia CT lub TMS)
-6. **Brak nadzoru obwodu wyłączającego (TCS)** lub nadzór tylko w jednej pozycji
-7. **Blokada logiczna podłączona odwrotnie** (odpływ ↔ zasilanie) → szyny bez ochrony
-8. **Sprzęgło przypisane do złej strefy 87B**
-9. **Sygnał 86 nietrzymający** albo reset zdalny (nie powinien być zdalny bez oględzin)
-10. **Trip do niewłaściwego wyłącznika** — wychwytuje tylko test zintegrowany na realnym torze
-11. **SZR bez blokady od 87B/arc-flash** → przełączenie na zwarcie
-12. **Nieprzetestowana logika GOOSE timeout** → cicha utrata blokady logicznej
+1. **Odwrotna biegunowość jednego przekładnika prądowego** → zbędne zadziałanie zabezpieczenia
+   różnicowego lub błędny kierunek
+2. **Zamienione fazy** między obwodem prądowym i napięciowym → zabezpieczenie kierunkowe działa
+   w złą stronę
+3. **Podwójne uziemienie obwodu wtórnego** przekładnika prądowego lub napięciowego → prądy
+   krążące i błędy pomiaru
+4. **Brak lub niesprawny bloczek zwierający** w obwodzie prądowym → uszkodzenie przekładnika
+   przy pracach
+5. **Nastawy w zabezpieczeniu niezgodne z kartą** — najczęściej przekładnia przekładnika
+   albo mnożnik czasowy
+6. **Brak kontroli ciągłości obwodu wyzwalającego** albo kontrola tylko w jednej pozycji wyłącznika
+7. **Blokada logiczna podłączona odwrotnie** (odpływ zamieniony z zasilaniem) → szyny bez ochrony
+8. **Przekładniki sprzęgła przypisane do niewłaściwej strefy** zabezpieczenia różnicowego szyn
+9. **Przekaźnik blokujący nietrzymający stanu** albo kasowany zdalnie (nie powinien być kasowany
+   zdalnie bez oględzin)
+10. **Wyzwolenie skierowane do niewłaściwego wyłącznika** — wychwytuje to tylko próba zintegrowana
+    na rzeczywistym torze
+11. **Automatyka SZR bez blokady od zabezpieczenia różnicowego szyn i łukoochronnego** →
+    przełączenie zasilania na zwarcie
+12. **Nieprzebadana reakcja na utratę komunikatów międzypolowych** → cicha utrata blokady logicznej
+
+---
+
+## ZAŁĄCZNIK — tabela przeliczeniowa oznaczeń
+
+Numery amerykańskie (ANSI/IEEE) bywają na schematach obcego pochodzenia oraz **w menu
+zabezpieczeń cyfrowych** — dlatego warto je rozpoznawać, mimo że w tekście używamy pełnych nazw.
+
+| Pełna nazwa polska | Symbol PL | Numer |
+|---|---|---|
+| Nadprądowe zwarciowe bezzwłoczne | I≫ | 50 |
+| Nadprądowe zwłoczne przeciążeniowe | I> | 51 |
+| Ziemnozwarciowe zerowoprądowe (bezzwłoczne / zwłoczne) | I₀> | 50N / 51N |
+| Nadprądowe kierunkowe | I> ⟶ | 67 |
+| Ziemnozwarciowe kierunkowe | I₀> ⟶ | 67N |
+| Nadprądowe z blokadą napięciową | I>/U< | 51V |
+| Od asymetrii prądów (składowej przeciwnej) | I₂> | 46 |
+| Cieplne (obraz cieplny) | ϑ> | 49 |
+| Podprądowe | I< | 37 |
+| Od zbyt długiego rozruchu / utyku wirnika | — | 48 / 51LR |
+| Od zbyt częstych rozruchów | — | 66 |
+| Podnapięciowe | U< | 27 |
+| Nadnapięciowe | U> | 59 |
+| Od składowej zerowej napięcia | U₀> | 59N / 64 |
+| Od niezgodnej kolejności faz | — | 47 |
+| Podczęstotliwościowe / nadczęstotliwościowe | f< / f> | 81U / 81O |
+| Od szybkości zmian częstotliwości | df/dt | 81R |
+| Nadzór obwodów napięciowych | — | 60 / VTS |
+| Kontrola synchronizmu | — | 25 |
+| Różnicowe (transformatora / szyn / silnika / linii) | ΔI | 87T / 87B / 87M / 87L |
+| Ziemnozwarciowe stabilizowane | — | 64REF |
+| Lokalne rezerwowanie wyłącznika | LRW | 50BF |
+| Przekaźnik blokujący kasowany ręcznie | — | 86 |
+| Przekaźnik wyzwalający pośredniczący | — | 94 |
+| Samoczynne ponowne załączanie | SPZ | 79 |
+| Gazowo-przepływowe (Buchholza) | — | 63 |
+| Kontrola poziomu cieczy | — | 71 |
+| Kontrola temperatury | ϑ | 26 / 49T |
+| Kontrola temperatury łożysk | — | 38 |
+| Wyłącznik (aparat) | W | 52 |

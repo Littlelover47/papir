@@ -9,266 +9,278 @@ kryteria zaliczenia i typowe pułapki.
 
 | Rodzaj próby | Co sprawdza | Czego NIE sprawdza |
 |---|---|---|
-| **Kontrola punkt-punkt** (*point-to-point*) | zgodność fizycznego okablowania ze schematem | czy logika ma sens |
-| **Test elementu** | parametry aparatu (czas, rezystancja, próg) | współdziałanie |
-| **Test sekundarny zabezpieczenia** | progi i czasy funkcji w IED | czy wyjście trafia do właściwego wyłącznika |
-| **Próba funkcjonalna sterowania** | reakcja układu na komendy i stany: Z/W, L/R, blokady, sygnalizacja | dokładność nastaw |
-| **Próba funkcjonalna automatyki** | logika SZR, ZSI, arc-flash, 25, ARN, 50BF | parametry pierwotne |
-| **Test zintegrowany (*scheme / end-to-end*)** | cały tor: kryterium → logika → wyjście → cewka → wyłącznik → sygnał w SCADA | — |
-| **SAT** | działanie w warunkach obiektowych z udziałem użytkownika | — |
+| **Kontrola zacisk–zacisk** (żyła po żyle) | zgodność fizycznego okablowania ze schematem | czy logika ma sens |
+| **Badanie elementu** | parametry aparatu (czas, rezystancja, próg) | współdziałanie elementów |
+| **Próba zabezpieczenia prądem wtórnym** | progi i czasy funkcji w zabezpieczeniu | czy wyjście trafia do właściwego wyłącznika |
+| **Próba funkcjonalna sterowania** | reakcja układu na komendy i stany: załącz/wyłącz, sterowanie miejscowe/zdalne, blokady, sygnalizacja | dokładność nastaw |
+| **Próba funkcjonalna automatyki** | logikę: automatyka SZR, blokada logiczna, łukoochronne, synchronizm, regulacja napięcia, rezerwowanie wyłącznika | parametry pierwotne |
+| **Próba zintegrowana** (na rzeczywistym torze) | cały tor: kryterium → logika → wyjście → cewka → wyłącznik → sygnał w systemie nadzoru | — |
+| **Odbiór na obiekcie** | działanie w warunkach rzeczywistych, z udziałem użytkownika | — |
 
-**Zasada nadrzędna:** żadna z tych prób nie zastępuje pozostałych. Najwięcej poważnych błędów
-(trip do złego wyłącznika, odwrócona blokada logiczna) wykrywa **wyłącznie test zintegrowany
-na realnym torze**.
+**Zasada nadrzędna:** żadna z tych prób nie zastępuje pozostałych. Najpoważniejsze błędy
+(wyzwolenie skierowane do złego wyłącznika, odwrócona blokada logiczna) wykrywa **wyłącznie
+próba zintegrowana na rzeczywistym torze**.
 
 ---
 
 ## B. Przygotowanie — bez tego nie zaczynaj
 
 ### B.1 Dokumenty
-- [ ] schemat jednobiegunowy (aktualny, z rewizją)
-- [ ] schematy obwodów wtórnych: prądowe, napięciowe, sterownicze, sygnalizacyjne, blokad
-- [ ] **matryca wyzwalania (trip matrix)** — co wyłącza co
-- [ ] **matryca blokad (interlock matrix)**
-- [ ] karta nastaw zatwierdzona + plik konfiguracyjny IED
-- [ ] lista sygnałów do SCADA (*I/O list*, *signal list*) z adresami
-- [ ] DTR rozdzielnicy, wyłącznika, IED, napędu
-- [ ] procedura testowa / *ITP* (Inspection & Test Plan) i formularze protokołów
-- [ ] ocena ryzyka + LOTO plan + polecenie na pracę
+- [ ] schemat jednobiegunowy (aktualny, z numerem rewizji)
+- [ ] schematy obwodów wtórnych: prądowych, napięciowych, sterowniczych, sygnalizacyjnych, blokad
+- [ ] **macierz wyzwalania** — co wyłącza co
+- [ ] **macierz blokad**
+- [ ] karta nastaw zatwierdzona + plik konfiguracyjny zabezpieczeń
+- [ ] wykaz sygnałów przesyłanych do systemu nadzoru, z adresami
+- [ ] DTR: rozdzielnicy, wyłącznika, zabezpieczeń, napędu
+- [ ] **plan prób i badań** oraz formularze protokołów
+- [ ] ocena ryzyka, plan blokad i oznakowania, polecenie na pracę
 
 ### B.2 Warunki techniczne
 - [ ] rozdzielnica **bez napięcia SN**, odłączona, uziemiona, strefa pracy wyznaczona
-- [ ] **VT odizolowane** (wtyk/odłącznik otwarty, bezpieczniki pierwotne wyjęte)
-- [ ] kable odpływowe odłączone lub uziemione po drugiej stronie
-- [ ] zasilanie **DC** obecne i stabilne (bateria + ładowarka), zmierzone napięcie
-- [ ] zasilanie **AC potrzeb własnych** obecne (grzałki, napędy, oświetlenie)
-- [ ] SCADA/dyspozytor **poinformowany**, alarmy w **trybie test/blokada** (żeby nie generować
-      fałszywych zgłoszeń), uzgodniony kanał łączności
-- [ ] bloczki probiercze CT/VT zidentyfikowane i sprawne
+- [ ] **przekładniki napięciowe odizolowane** (odłącznik otwarty, bezpieczniki pierwotne wyjęte)
+- [ ] kable odpływowe odłączone albo uziemione po drugiej stronie
+- [ ] zasilanie **prądem stałym** obecne i stabilne (bateria + ładowarka), napięcie zmierzone
+- [ ] zasilanie **potrzeb własnych** obecne (ogrzewanie, napędy, oświetlenie)
+- [ ] dyspozytor **powiadomiony**, alarmy w systemie nadzoru **zablokowane / tryb próbny**,
+      uzgodniony kanał łączności
+- [ ] bloczki probiercze zidentyfikowane i sprawne
 - [ ] przyrządy z aktualnym wzorcowaniem
-- [ ] zespół min. dwuosobowy, ŚOI, łączność
+- [ ] zespół co najmniej dwuosobowy, środki ochrony indywidualnej, łączność
 
-### B.3 Zasady prowadzenia testu
-1. **Jedna zmiana w jednym czasie** — nie testuj przy równoległych pracach w tych samych obwodach.
-2. **Czerwone kreślenie** schematów na bieżąco; każda rozbieżność → *punch list* z numerem.
-3. **Rejestr tymczasowych ingerencji** (wyjęte bezpieczniki, zmostkowane zaciski, wyłączone
-   funkcje, zablokowane wyjścia) — lista musi być **wyzerowana** przed zakończeniem.
+### B.3 Zasady prowadzenia prób
+1. **Jedna zmiana w jednym czasie** — nie badaj przy równoległych pracach w tych samych obwodach.
+2. **Nanoszenie zmian na schematach** na bieżąco; każda rozbieżność → **lista usterek** z numerem.
+3. **Rejestr ingerencji tymczasowych** (wyjęte bezpieczniki, zmostkowane zaciski, wyłączone
+   funkcje, odizolowane wyjścia) — lista musi być **wyzerowana** przed zakończeniem.
    To najczęstsza przyczyna awarii po uruchomieniu: zapomniany mostek albo wyłączona funkcja.
-4. **„As-found" / „as-left"** dla każdej nastawy i konfiguracji.
-5. Podpis pod każdym punktem protokołu **w momencie wykonania**, nie zbiorczo na końcu.
+4. **Stan zastany / stan pozostawiony** zapisany dla każdej nastawy i konfiguracji.
+5. Podpis pod każdym punktem protokołu **w chwili wykonania**, nie zbiorczo na końcu.
 
 ---
 
-## C. Etap 1 — kontrola punkt-punkt (point-to-point)
+## C. Etap 1 — kontrola zacisk–zacisk
 
 **Cel:** potwierdzić, że każdy przewód idzie tam, gdzie pokazuje schemat.
 
-**Metoda:** dwie osoby z łącznością, brzęczyk/omomierz. Sprawdzenie **od zacisku do zacisku**,
-z odhaczaniem na schemacie każdej sprawdzonej żyły.
+**Metoda:** dwie osoby z łącznością, brzęczyk lub omomierz. Sprawdzenie **od zacisku do
+zacisku**, z odhaczaniem każdej sprawdzonej żyły na schemacie.
 
 **Zakres:**
-- obwody CT: od zaciskόw przekładnika → bloczek probierczy → zaciski IED (z pomiarem rezystancji
-  pętli, żeby wykryć luźny zacisk)
-- obwody VT: analogicznie, z weryfikacją **jednego punktu uziemienia**
-- obwody sterownicze: cewki Z i W, styki pomocnicze 52a/52b, blokady, przełącznik L/R
-- obwody sygnalizacyjne: każde wejście binarne IED, każde wyjście przekaźnikowe
-- obwody międzypolowe: blokady logiczne, arc-flash, 86, sygnały do sprzęgła
-- obwody do obiektu: Buchholz, temperatury, presostat SF₆, uziemniki
-- ekrany i uziemienia obwodów wtórnych (jednostronnie, przy IED lub w szafie — wg projektu)
+- obwody prądowe: od zacisków przekładnika → bloczek probierczy → zaciski zabezpieczenia,
+  z pomiarem rezystancji pętli (wykrywa luźny zacisk)
+- obwody napięciowe: analogicznie, z weryfikacją **uziemienia w jednym punkcie**
+- obwody sterownicze: cewki załączająca i wyłączająca, styki pomocnicze wyłącznika, blokady,
+  przełącznik sterowania miejscowego/zdalnego
+- obwody sygnalizacyjne: każde wejście dwustanowe i każde wyjście przekaźnikowe
+- obwody międzypolowe: blokada logiczna, zabezpieczenie łukoochronne, przekaźnik blokujący,
+  sygnały do sprzęgła
+- obwody do obiektu: przekaźnik Buchholza, czujniki temperatury, czujnik ciśnienia SF₆, uziemniki
+- ekrany i uziemienia obwodów wtórnych (jednostronnie — wg projektu)
 
-**Kryterium:** 100 % żył sprawdzonych i odhaczonych. Brak „sprawdzone wyrywkowo".
+**Kryterium:** 100 % żył sprawdzonych i odhaczonych. Nie ma pojęcia „sprawdzone wyrywkowo".
 
 ---
 
 ## D. Etap 2 — próby funkcjonalne sterowania
 
-### D.1 Sterowanie wyłącznikiem — matryca do przejścia
+### D.1 Sterowanie wyłącznikiem — macierz do przejścia
 
-| Nr | Test | Oczekiwany rezultat |
+| Nr | Próba | Oczekiwany wynik |
 |---|---|---|
-| 1 | L/R = LOCAL, komenda ZAMKNIJ z panelu pola | wyłącznik zamyka się, sygnalizacja Z, 52a/52b zmieniają stan |
-| 2 | L/R = LOCAL, komenda WYŁĄCZ z panelu | wyłącznik otwiera się |
-| 3 | L/R = LOCAL, komenda z **SCADA** | **komenda odrzucona**, komunikat o braku uprawnienia |
-| 4 | L/R = REMOTE, komenda z SCADA | wyłącznik reaguje |
-| 5 | L/R = REMOTE, komenda z panelu pola | **odrzucona** (o ile projekt tak zakłada) |
-| 6 | Komenda ZAMKNIJ przy zamkniętym uziemniku | **zablokowana** |
-| 7 | Komenda ZAMKNIJ przy wózku w pozycji pośredniej | **zablokowana** |
-| 8 | Komenda ZAMKNIJ przy braku zbrojenia sprężyny | **zablokowana**, sygnał „not ready" |
-| 9 | Komenda ZAMKNIJ przy obniżonym ciśnieniu SF₆ (2. próg) | **zablokowana** |
-| 10 | Komenda ZAMKNIJ przy zadziałanym 86 | **zablokowana** do ręcznego resetu |
-| 11 | Ciągła komenda ZAMKNIJ + symulowany trip | **antypompowanie**: jedno zamknięcie, bez cyklowania |
-| 12 | Wyzwalanie mechaniczne (przycisk awaryjny na napędzie) | wyłącznik otwiera się bez DC |
-| 13 | Test przy obniżonym napięciu DC (do ~70 % U_n) | cewka wyłączająca **nadal działa** |
-| 14 | Zanik DC podczas pracy | wyłącznik pozostaje w stanie, alarm „brak DC" |
-| 15 | Wyzwalanie z TC1 i osobno z TC2 (jeśli dwie cewki) | każda cewka wyłącza samodzielnie |
+| 1 | Sterowanie **miejscowe**, komenda ZAŁĄCZ z panelu pola | wyłącznik zamyka się, sygnalizacja poprawna, oba styki pomocnicze zmieniają stan |
+| 2 | Sterowanie **miejscowe**, komenda WYŁĄCZ z panelu | wyłącznik otwiera się |
+| 3 | Sterowanie **miejscowe**, komenda **zdalna** | **komenda odrzucona**, komunikat o braku uprawnienia |
+| 4 | Sterowanie **zdalne**, komenda z systemu nadzoru | wyłącznik reaguje |
+| 5 | Sterowanie **zdalne**, komenda z panelu pola | **odrzucona** (jeśli tak zakłada projekt) |
+| 6 | Komenda ZAŁĄCZ przy **zamkniętym uziemniku** | **zablokowana** |
+| 7 | Komenda ZAŁĄCZ przy wózku w **pozycji pośredniej** | **zablokowana** |
+| 8 | Komenda ZAŁĄCZ przy **niezbrojonej sprężynie** | **zablokowana**, sygnał „wyłącznik niegotowy" |
+| 9 | Komenda ZAŁĄCZ przy obniżonym **ciśnieniu SF₆** (drugi próg) | **zablokowana** |
+| 10 | Komenda ZAŁĄCZ przy zadziałanym **przekaźniku blokującym** | **zablokowana** do ręcznego skasowania |
+| 11 | Ciągła komenda ZAŁĄCZ + symulowane wyzwolenie | **blokada przeciwpompująca**: jedno zamknięcie, bez powtarzania cyklu |
+| 12 | Wyzwolenie **mechaniczne** (przycisk na napędzie) | wyłącznik otwiera się bez zasilania prądem stałym |
+| 13 | Próba przy **obniżonym napięciu prądu stałego** (do ~70 %) | cewka wyłączająca **nadal działa** |
+| 14 | **Zanik zasilania prądem stałym** podczas pracy | wyłącznik pozostaje w swoim stanie, alarm |
+| 15 | Wyzwolenie osobno z **pierwszej i drugiej cewki** (jeśli są dwie) | każda cewka wyłącza samodzielnie |
 
-### D.2 Sterowanie odłącznikiem / uziemnikiem / wózkiem
+### D.2 Sterowanie odłącznikiem, uziemnikiem i wózkiem
 - ruch w obu kierunkach, potwierdzenie pozycji krańcowych
-- **stan pośredni** musi być rozpoznany i zgłoszony jako „nieokreślony" (nie jako Z ani W)
+- **stan pośredni** musi być rozpoznany i zgłoszony jako „nieokreślony" — nie jako załączony
+  ani wyłączony
 - blokada operowania przy zamkniętym wyłączniku
-- blokada uziemnika przy obecności napięcia (test z symulacją sygnału „live")
-- blokada drzwi przedziału / kłódki, klucze zamków wzajemnych (Castell/Fortress) —
-  sprawdź **fizycznie**, że klucz nie da się wyjąć/wstawić poza dozwoloną sekwencją
+- blokada uziemnika przy obecności napięcia (próba z symulacją sygnału obecności napięcia)
+- blokady drzwi przedziału, kłódki, **zamki na klucze wzajemne** — sprawdź **fizycznie**,
+  że klucza nie da się wyjąć ani wstawić poza dozwoloną kolejnością
 
 ### D.3 Sygnalizacja i wskazania
-- każda pozycja i alarm sprawdzony **na trzech poziomach**: lampka/HMI pola → sterownik stacji
-  → SCADA (opis, priorytet, znacznik czasu)
-- **spójność 52a/52b** — sprawdź stan nieokreślony przez odłączenie jednego styku
-- sprawdzenie **znaczników czasu** (synchronizacja NTP/PTP) — rozjazd czasu psuje analizę awarii
-- test **utraty komunikacji** (odłączenie kabla Ethernet) → alarm w SCADA, IED nadal chroni lokalnie
+- każda pozycja i każdy sygnał sprawdzony **na trzech poziomach**: lampka lub panel pola →
+  sterownik stacji → system nadzoru (opis, priorytet, znacznik czasu)
+- **spójność obu styków pomocniczych** — sprawdź stan nieokreślony przez odłączenie jednego styku
+- sprawdzenie **znaczników czasu** i synchronizacji czasu — rozjazd zegarów uniemożliwia
+  późniejszą analizę awarii
+- próba **utraty łączności** (odłączenie kabla sieciowego) → alarm w systemie nadzoru,
+  a zabezpieczenie **nadal chroni miejscowo**
 
 ---
 
 ## E. Etap 3 — próby funkcjonalne automatyki
 
-### E.1 Matryca wyzwalania (trip matrix) — najważniejszy test
-Dla **każdego** kryterium zadziałania wywołaj je (wstrzykiem lub symulacją wejścia) i sprawdź
-**pełną listę** skutków. Przykładowy wiersz:
+### E.1 Macierz wyzwalania — najważniejsza próba
+Dla **każdego** kryterium zadziałania wywołaj je (prądem probierczym lub symulacją wejścia)
+i sprawdź **pełną listę skutków**. Przykład:
 
-| Kryterium | Wył. własny | Wył. nadrzędny | 86 | Blokada SZR | Sygnał SCADA | Zapis w rejestratorze |
+| Kryterium | Wył. własny | Wył. nadrzędny | Przekaźnik blokujący | Blokada SZR | Sygnał w nadzorze | Zapis w rejestratorze |
 |---|---|---|---|---|---|---|
-| 50 pola FDR-3 | ✔ | — | — | — | ✔ „FDR-3 zwarcie" | ✔ |
-| 87T trafo T1 | ✔ (SN i nn) | — | ✔ | ✔ | ✔ | ✔ |
-| Buchholz przepływ | ✔ | — | ✔ | ✔ | ✔ | ✔ |
-| Arc-flash sekcja A | ✔ INC-A | ✔ BC | ✔ | ✔ | ✔ | ✔ |
-| 50BF pola FDR-3 | — | ✔ INC-A + BC | ✔ | ✔ | ✔ | ✔ |
+| Nadprądowe bezzwłoczne pola odpływowego nr 3 | ✔ | — | — | — | ✔ | ✔ |
+| Różnicowe transformatora T1 | ✔ (SN i nn) | — | ✔ | ✔ | ✔ | ✔ |
+| Przekaźnik Buchholza — przepływ | ✔ | — | ✔ | ✔ | ✔ | ✔ |
+| Łukoochronne sekcji A | ✔ zasilanie A | ✔ sprzęgło | ✔ | ✔ | ✔ | ✔ |
+| Rezerwowanie wyłącznika pola nr 3 | — | ✔ zasilanie + sprzęgło | ✔ | ✔ | ✔ | ✔ |
+| Od niezrównoważenia baterii kondensatorów | ✔ | — | ✔ | — | ✔ | ✔ |
 
-**Kryterium zaliczenia:** każdy zaznaczony skutek **potwierdzony fizycznie**, każdy niezaznaczony
-**potwierdzony jako nieaktywny** (brak zbędnych wyłączeń — to równie ważne).
+**Kryterium zaliczenia:** każdy zaznaczony skutek **potwierdzony fizycznie**, a każdy
+niezaznaczony **potwierdzony jako nieaktywny**. Brak zbędnych wyłączeń jest równie ważny
+jak obecność właściwych.
 
-### E.2 Blokada logiczna / ZSI
+### E.2 Blokada logiczna zabezpieczeń
 Dla **każdej pary** (pole odpływowe → pole zasilające):
-1. Wstrzyk prądu zwarciowego w odpływie → sprawdź, że **sygnał blokady dociera** do INC
-   (odczyt wejścia binarnego / GOOSE w IED zasilania)
-2. Sprawdź, że INC **przechodzi na czas zwłoczny** (nie wyłącza bezzwłocznie)
-3. Wstrzyk prądu **tylko w INC** (symulacja zwarcia na szynach, brak blokady) →
-   INC wyłącza **bezzwłocznie** w zadanym czasie
-4. **Przerwij tor blokady** (odłącz kabel / zatrzymaj publikację GOOSE) → sprawdź zachowanie:
-   powinno przejść w stan **bezpieczny** (zwykle brak blokady = szybkie wyłączanie) + **alarm**
-5. Zmierz **czas propagacji** blokady (dla GOOSE typowo < 5 ms; dla styków DC < 20 ms) —
-   musi być krótszy od czasu zadziałania bezzwłocznego INC z marginesem
+1. Podaj prąd zwarciowy w polu odpływowym → sprawdź, że **sygnał blokady dociera** do pola
+   zasilającego (odczyt wejścia w zabezpieczeniu)
+2. Sprawdź, że pole zasilające **przechodzi na czas zwłoczny** (nie wyłącza bezzwłocznie)
+3. Podaj prąd **tylko w polu zasilającym** (symulacja zwarcia na szynach, brak blokady) →
+   pole zasilające wyłącza **bezzwłocznie**
+4. **Przerwij tor blokady** (odłącz przewód lub zatrzymaj nadawanie komunikatów) → sprawdź,
+   że układ przechodzi w stan **bezpieczny** (zwykle brak blokady = szybkie wyłączanie)
+   **i zgłasza alarm**
+5. Zmierz **czas przesłania** blokady — musi być krótszy od czasu bezzwłocznego zadziałania
+   pola zasilającego, z marginesem (typowo < 5 ms dla komunikatów cyfrowych, < 20 ms dla styków)
 
-### E.3 SZR / ATS
-Testuj **scenariuszami**, nie pojedynczymi sygnałami:
+### E.3 Automatyka SZR — badaj scenariuszami, nie sygnałami
 
 | Scenariusz | Oczekiwanie |
 |---|---|
-| Zanik U na sekcji A (symulacja 27 + brak prądu) | otwórz INC-A → potwierdź → zamknij BC → alarm |
-| Zanik U + **zadziałane 87B** | **SZR zablokowany** (nie wolno przełączać na zwarcie) |
-| Zanik U + **arc-flash** | SZR zablokowany |
-| Zanik U + INC-A niesprawny (brak „ready") | SZR zablokowany, alarm |
-| Zanik U + brak napięcia także na sekcji B | SZR nie działa (nie ma rezerwy), alarm |
-| **Ręczne** wyłączenie INC-A przez operatora | SZR **nie startuje** (rozróżnienie operacji świadomej) |
-| Powrót napięcia na sekcji A | powrót automatyczny (jeśli przewidziany) lub tylko sygnał gotowości |
-| Powtórzenie zaniku po udanym SZR | **jednorazowość** — blokada powtórzenia do resetu |
-| Test warunku 25 przy transferze zamkniętym | zamknięcie tylko przy spełnionych ΔU, Δf, Δφ |
+| Zanik napięcia na sekcji A (symulacja podnapięcia + brak prądu) | otwórz zasilanie A → potwierdź → zamknij sprzęgło → sygnał |
+| Zanik napięcia **+ zadziałane różnicowe szyn** | **automatyka zablokowana** — nie wolno przełączać na zwarcie |
+| Zanik napięcia **+ zadziałane łukoochronne** | automatyka zablokowana |
+| Zanik napięcia + wyłącznik zasilania niesprawny (brak sygnału „gotowy") | automatyka zablokowana, alarm |
+| Zanik napięcia także na sekcji B | automatyka nie działa (brak rezerwy), alarm |
+| **Ręczne** wyłączenie zasilania A przez operatora | automatyka **nie startuje** — rozróżnienie świadomej operacji |
+| Powrót napięcia na sekcji A | powrót samoczynny (jeśli przewidziany) albo tylko sygnał gotowości |
+| Powtórny zanik po udanym przełączeniu | **jednorazowość** — blokada powtórzenia do skasowania |
+| Przełączenie bez przerwy (przez pracę równoległą) | zamknięcie **tylko** przy spełnionych warunkach kontroli synchronizmu |
 
-**Zawsze zmierz czas całkowity przerwy** (od zaniku do zamknięcia BC) i porównaj z wymaganiem
-procesowym (dla silników i UPS-ów to krytyczne).
+**Zawsze zmierz całkowity czas przerwy** (od zaniku do zamknięcia sprzęgła) i porównaj
+z wymaganiem procesowym — dla silników i zasilaczy bezprzerwowych jest to krytyczne.
 
-### E.4 Synchro-check (25)
-- test każdego warunku **osobno**: ΔU poza zakresem → blokada; Δf poza zakresem → blokada;
-  Δφ poza zakresem → blokada
-- test **dead bus / dead line** permissive (zamknięcie na martwe szyny dozwolone lub nie —
-  zgodnie z projektem)
-- test **utraty napięcia odniesienia** (VTS) → 25 musi zablokować, a nie zezwolić
-- weryfikacja po podaniu napięcia: **napięcie różnicowe na otwartym sprzęgle ≈ 0 V**
-  (potwierdza zgodność faz między sekcjami — bez tego zamknięcie sprzęgła to zwarcie międzyfazowe)
+### E.4 Kontrola synchronizmu
+- badaj **każdy warunek osobno**: różnica napięć poza zakresem → blokada; różnica częstotliwości
+  poza zakresem → blokada; różnica kątów poza zakresem → blokada
+- badaj **zezwolenia przy braku napięcia** na jednej ze stron (zgodnie z projektem: dozwolone
+  lub nie)
+- badaj **utratę napięcia odniesienia** → kontrola synchronizmu musi **zablokować**, nie zezwolić
+- weryfikacja po podaniu napięcia: **napięcie różnicowe na otwartym sprzęgle ≈ 0 V** —
+  bez tego zamknięcie sprzęgła oznacza zwarcie międzyfazowe
 
-### E.5 Arc-flash
-- pobudzenie **każdego** czujnika osobno (źródło światła) — potwierdź identyfikację przedziału
-- test **koincydencji z kryterium prądowym**: samo światło → brak wyłączenia (lub wyłączenie,
-  zależnie od koncepcji); światło + prąd → wyłączenie
-- pomiar czasu: **detekcja** (1–7 ms) i **całkowity czas wyłączenia** (~50–60 ms)
-- test **przez 86** (blokada załączenia po zadziałaniu)
-- sprawdzenie odporności na oświetlenie zewnętrzne (latarka serwisowa, lampy) —
-  brak fałszywych pobudzeń przy zamkniętych drzwiach
+### E.5 Zabezpieczenie łukoochronne
+- pobudź **każdy czujnik osobno** źródłem światła — potwierdź identyfikację przedziału
+- sprawdź **koincydencję z kryterium prądowym**: samo światło → zgodnie z przyjętą koncepcją;
+  światło razem z prądem → wyłączenie
+- zmierz **czas wykrycia** (1–7 ms) i **całkowity czas wyłączenia** (~50–60 ms)
+- sprawdź działanie **przez przekaźnik blokujący**
+- sprawdź odporność na oświetlenie zewnętrzne (latarka serwisowa, lampy) — brak fałszywych
+  pobudzeń przy zamkniętych drzwiach
 
-### E.6 50BF (breaker failure)
-1. Wywołaj trip przy jednoczesnym **utrzymaniu prądu** (tester nie przestaje wstrzykiwać)
-2. Po nastawionym czasie (150–250 ms) → wyłączenie **INC i/lub BC**
-3. Sprawdź kryterium pozycyjne (styk 52a nie zmienił stanu) niezależnie od prądowego
-4. Sprawdź **blokadę SZR** i sygnał do SCADA
+### E.6 Lokalne rezerwowanie wyłącznika
+1. Wywołaj wyzwolenie przy **utrzymanym prądzie** (przyrząd nie przerywa podawania)
+2. Po nastawionym czasie (150–250 ms) → wyłączenie **pola zasilającego i/lub sprzęgła**
+3. Sprawdź **kryterium pozycyjne** (styk pomocniczy nie zmienił stanu) niezależnie od prądowego
+4. Sprawdź **blokadę automatyki SZR** i sygnał do systemu nadzoru
 
-### E.7 ARN / regulator zaczepów (jeśli występuje)
-- ruch zaczepów w górę/dół, wskazanie pozycji, krańcówki
+### E.7 Automatyczna regulacja napięcia (przełącznik zaczepów)
+- ruch zaczepów w górę i w dół, wskazanie pozycji, wyłączniki krańcowe
 - reakcja na odchyłkę napięcia: strefa nieczułości, opóźnienie, kolejne kroki
 - blokady: nadprądowa, podnapięciowa (brak regulacji przy zaniku), skrajne pozycje
-- praca równoległa: master/follower lub metoda prądu krążącego — test rozjazdu zaczepów
-- tryb ręczny/automatyczny, sterowanie lokalne i zdalne
+- praca równoległa: układ nadrzędny/podrzędny albo metoda prądu krążącego — próba rozjazdu zaczepów
+- tryb ręczny i samoczynny, sterowanie miejscowe i zdalne
 
-### E.8 Komunikacja i IEC 61850
-- import/eksport SCD, weryfikacja subskrypcji **każdego** GOOSE (publisher → subscriber)
-- pomiar czasu propagacji GOOSE
-- test **GOOSE timeout**: zatrzymaj publikację → sprawdź zdefiniowaną reakcję + alarm
-- test redundancji sieci (PRP/HSR/RSTP): odłącz jeden link → brak utraty funkcji
-- test sterowania z SCADA z **select-before-operate**, kontrolą uprawnień i logowaniem operacji
-- weryfikacja **kompletności listy sygnałów** — punkt po punkcie z I/O listy
+### E.8 Łączność i komunikacja międzypolowa
+- weryfikacja przypisania **nadawca → odbiorca** dla każdego szybkiego komunikatu
+- pomiar **czasu przesłania**
+- próba **utraty nadawania**: zatrzymaj publikację → sprawdź zdefiniowaną reakcję i alarm
+- próba **redundancji sieci**: odłącz jeden łącze → brak utraty funkcji
+- sterowanie z systemu nadzoru z **potwierdzeniem wyboru przed wykonaniem**, kontrolą uprawnień
+  i zapisem operacji
+- weryfikacja **kompletności wykazu sygnałów** — punkt po punkcie
 
 ---
 
-## F. Etap 4 — test zintegrowany na realnym torze
+## F. Etap 4 — próba zintegrowana na rzeczywistym torze
 
-**Warunek:** wszystkie tymczasowe ingerencje usunięte, bloczki probiercze wstawione,
-funkcje włączone, nastawy „as-left" zgodne z kartą.
+**Warunek:** wszystkie ingerencje tymczasowe usunięte, bloczki probiercze wstawione,
+funkcje włączone, nastawy stanu pozostawionego zgodne z kartą.
 
-**Zakres:** dla wybranego, reprezentatywnego zestawu kryteriów (min. jedno na każdy typ:
-nadprądowe, ziemnozwarciowe, różnicowe, wejście od obiektu, arc-flash, 50BF) wywołaj
-zadziałanie i potwierdź **fizyczne otwarcie wyłącznika** oraz kompletność sygnalizacji.
+**Zakres:** dla reprezentatywnego zestawu kryteriów (co najmniej po jednym z każdego rodzaju:
+nadprądowe, ziemnozwarciowe, różnicowe, sygnał z obiektu, łukoochronne, rezerwowanie wyłącznika)
+wywołaj zadziałanie i potwierdź **fizyczne otwarcie wyłącznika** oraz kompletność sygnalizacji.
 
-**To jedyny test, który potwierdza, że tor `kryterium → logika → styk → cewka → wyłącznik`
-jest ciągły.** Testy z odizolowanym wyjściem tego nie dowodzą.
+**To jedyna próba potwierdzająca ciągłość toru:**
+`kryterium → logika → styk → cewka → wyłącznik`.
+Próby z odizolowanym wyjściem tego nie dowodzą.
 
 ---
 
 ## G. Formularz protokołu próby funkcjonalnej (wzór)
 
 ```
-OBIEKT: ..................  POLE: ..........  IED: typ ......... nr ......... FW .........
+OBIEKT: ..................  POLE: ..........
+ZABEZPIECZENIE: typ ......... nr ......... wersja oprogramowania .........
 SCHEMATY: nr ......... rew. ......   KARTA NASTAW: nr ......... rew. ......
 DATA: ..........  ZESPÓŁ: ..........................  NR POLECENIA: ..........
 
-WARUNKI WSTĘPNE                                                     [ ] potwierdzone
-  Rozdzielnica bez napięcia, uziemiona, strefa pracy wyznaczona     [ ]
-  VT odizolowane, bezpieczniki pierwotne wyjęte                     [ ]
-  Napięcie DC zmierzone: ........ V                                 [ ]
-  SCADA w trybie test / dyspozytor powiadomiony                     [ ]
+WARUNKI WSTĘPNE                                                      potwierdzone
+  Rozdzielnica bez napięcia, uziemiona, strefa pracy wyznaczona          [ ]
+  Przekładniki napięciowe odizolowane, bezpieczniki pierwotne wyjęte     [ ]
+  Napięcie prądu stałego zmierzone: ........ V                           [ ]
+  Dyspozytor powiadomiony, alarmy zablokowane                            [ ]
 
 PRZYRZĄDY
   ......................  nr ..........  wzorcowanie do ..........
 
-TESTY
- Nr | Opis testu | Kryterium | Wynik zmierzony | OK/NOK | Podpis
- ---+------------+-----------+-----------------+--------+-------
-  1 |            |           |                 |        |
+PRÓBY
+ Nr | Opis próby | Kryterium | Wartość zmierzona | Wynik | Podpis
+ ---+------------+-----------+-------------------+-------+-------
+  1 |            |           |                   |       |
 
 REJESTR INGERENCJI TYMCZASOWYCH (musi być wyzerowany!)
- Nr | Co | Kto założył | Kto usunął | Data/godz.
- ---+----+-------------+------------+-----------
+ Nr | Co | Kto założył | Kto usunął | Data i godzina
+ ---+----+-------------+------------+---------------
 
-USTERKI (PUNCH LIST)
- Nr | Opis | Klasa (A blokująca / B przed odbiorem / C drobna) | Status
+LISTA USTEREK
+ Nr | Opis | Klasa (A blokująca / B przed odbiorem / C drobna) | Stan
 
-NASTAWY: as-found załączone [ ]   as-left załączone [ ]
+NASTAWY:  stan zastany załączony [ ]    stan pozostawiony załączony [ ]
 WNIOSEK:  Pole zdatne do załączenia:  TAK / NIE / z ograniczeniami: ..............
 
-Wykonał: ..............  Sprawdził (dozór): ..............  Użytkownik/OSD: ..............
+Wykonał: ..............  Sprawdził (dozór): ..............  Użytkownik: ..............
 ```
 
 ---
 
 ## H. Pułapki, które kosztują najwięcej
 
-1. **Zapomniany mostek / wyjęty bezpiecznik / wyłączona funkcja** — dlatego rejestr ingerencji
+1. **Zapomniany mostek, wyjęty bezpiecznik albo wyłączona funkcja** — dlatego rejestr ingerencji
    jest obowiązkowy i musi być formalnie wyzerowany.
-2. **Testowanie z odizolowanym wyjściem i uznanie tego za komplet** — brak dowodu na ciągłość
-   toru do cewki.
-3. **Brak testu „braku zadziałania"** — sprawdzasz, że coś działa, ale nie że nie działa zbędnie.
-4. **Blokada logiczna sprawdzona tylko dla jednego pola** — pozostałe pary nieprzetestowane.
-5. **SZR testowany sygnałami, nie scenariuszami** — nie wykrywa braku blokady od 87B.
+2. **Badanie z odizolowanym wyjściem uznane za komplet** — brak dowodu ciągłości toru do cewki.
+3. **Brak próby „nie powinno zadziałać"** — sprawdzasz, że coś działa, ale nie że nie działa zbędnie.
+4. **Blokada logiczna sprawdzona tylko dla jednego pola** — pozostałe pary niesprawdzone.
+5. **Automatyka SZR badana sygnałami, nie scenariuszami** — nie wykrywa braku blokady od
+   zabezpieczenia różnicowego szyn.
 6. **Brak weryfikacji zgodności faz między sekcjami** przed pierwszym zamknięciem sprzęgła.
-7. **Nastawy zmienione „na czas testu" i niepowrócone** — porównanie as-found/as-left to wykrywa.
-8. **VT nieodizolowane przy wstrzyku napięcia** → napięcie SN na szynach od strony wtórnej.
-9. **Alarmy niezablokowane w SCADA** → lawina fałszywych zgłoszeń, utrata zaufania do sygnalizacji,
-   a potem realny alarm zignorowany.
-10. **Brak synchronizacji czasu** — analiza kolejności zdarzeń niemożliwa.
+7. **Nastawy zmienione „na czas próby" i niepowrócone** — porównanie stanu zastanego
+   z pozostawionym to wykrywa.
+8. **Przekładniki napięciowe nieodizolowane przy podawaniu napięcia** → pełne napięcie SN
+   na szynach od strony wtórnej.
+9. **Alarmy niezablokowane w systemie nadzoru** → lawina fałszywych zgłoszeń, utrata zaufania
+   do sygnalizacji, a potem zignorowany alarm rzeczywisty.
+10. **Brak synchronizacji czasu** — analiza kolejności zdarzeń po awarii staje się niemożliwa.

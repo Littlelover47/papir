@@ -61,7 +61,8 @@ spełnione?**
 
 **9. Wymień i omów pięć zasad bezpiecznej pracy.**
 > (1) Odłączyć całkowicie — widoczna przerwa izolacyjna we wszystkich biegunach i ze wszystkich
-> stron zasilania, w tym rezerwowych, generatorów, PV, baterii kondensatorów i przekładników
+> stron zasilania, w tym rezerwowych, generatorów, instalacji fotowoltaicznych, baterii
+> kondensatorów i przekładników
 > napięciowych. (2) Zabezpieczyć przed ponownym załączeniem — blokady, zamki, wyjęcie wkładek
 > i cewek napędu, tablice ostrzegawcze. (3) Sprawdzić brak napięcia — wskaźnikiem właściwym dla
 > napięcia, sprawdzonym przed i po pomiarze, na wszystkich fazach, w miejscu pracy.
@@ -117,8 +118,9 @@ spełnione?**
 > i ppoż., oznakowanie i schematy, zabezpieczenie przed dostępem osób nieupoważnionych.
 
 **17. Czym różni się rozdzielnica w izolacji powietrznej od rozdzielnicy SF₆?**
-> AIS: izolacja powietrzna, większe gabaryty, łatwy dostęp wzrokowy do przerwy izolacyjnej,
-> wrażliwa na zabrudzenia i wilgoć. GIS: aparaty w hermetycznym zbiorniku wypełnionym SF₆,
+> Rozdzielnica w **izolacji powietrznej**: większe gabaryty, łatwy dostęp wzrokowy do przerwy
+> izolacyjnej, wrażliwa na zabrudzenia i wilgoć. Rozdzielnica w **izolacji gazowej**:
+> aparaty w hermetycznym zbiorniku wypełnionym SF₆,
 > małe wymiary, odporność na środowisko, mała konserwacja, ale konieczna kontrola ciśnienia
 > gazu, wyższy koszt, wymagania dotyczące F-gazów i bezpieczeństwa przy rozszczelnieniu.
 
@@ -169,7 +171,7 @@ spełnione?**
 > Na podstawie sygnalizacji i zabezpieczeń ziemnozwarciowych kierunkowych, wskaźników
 > przepływu prądu zwarciowego w stacjach, przez sekwencyjne przełączenia (podział sieci)
 > i pomiary; w liniach kablowych — dodatkowo metodami lokalizacji uszkodzeń kabla
-> (TDR, metoda udarowa, akustyczna, krokowa).
+> (metoda reflektometryczna, udarowa, akustyczna, krokowa).
 
 **26. Czym jest SPZ i SZR?**
 > SPZ — samoczynne ponowne załączanie: automatyczne, jedno- lub wielokrotne załączenie linii po
@@ -186,7 +188,8 @@ spełnione?**
 
 **28. Jakie próby wykonuje się po ułożeniu nowego kabla SN?**
 > Sprawdzenie ciągłości i zgodności faz, pomiar rezystancji izolacji, próba napięciowa (dla XLPE
-> napięciem VLF 0,1 Hz lub DAC), pomiar tgδ i badanie wyładowań niezupełnych (diagnostyka mufy
+> napięciem o bardzo niskiej częstotliwości 0,1 Hz albo napięciem tłumionym), pomiar
+> współczynnika strat dielektrycznych i badanie wyładowań niezupełnych (diagnostyka mufy
 > i głowic), pomiar rezystancji ekranu i uziemień, oględziny trasy i oznaczników.
 
 ---
@@ -197,7 +200,8 @@ spełnione?**
 > Ochrona podstawowa: izolacja, obudowy i przegrody (min. IP2X), przeszkody, umieszczenie poza
 > zasięgiem ręki, ograniczenie napięcia. Ochrona przy uszkodzeniu: samoczynne wyłączenie
 > zasilania (z uziemieniem ochronnym i połączeniami wyrównawczymi), izolacja podwójna
-> (klasa II), separacja elektryczna, SELV/PELV. Ochrona uzupełniająca: RCD ≤ 30 mA i dodatkowe
+> (klasa II), separacja elektryczna, SELV/PELV. Ochrona uzupełniająca: wyłącznik
+> różnicowoprądowy ≤ 30 mA i dodatkowe
 > połączenia wyrównawcze.
 
 **30. Jak działa samoczynne wyłączenie zasilania w układzie TN?**
@@ -208,9 +212,10 @@ spełnione?**
 **31. Czym różni się układ TN od TT i który jest bezpieczniejszy?**
 > W TN części dostępne są połączone z uziemionym punktem neutralnym sieci przewodem PE/PEN —
 > pętla ma małą impedancję i działa zabezpieczenie nadprądowe. W TT części dostępne mają własne
-> uziemienie — pętla przechodzi przez ziemię, impedancja jest duża, więc ochronę realizuje RCD.
+> uziemienie — pętla przechodzi przez ziemię, impedancja jest duża, więc ochronę realizuje
+> wyłącznik różnicowoprądowy.
 > TT jest bezpieczniejszy w razie uszkodzenia przewodu PEN sieci (nie przenosi potencjału),
-> ale wymaga RCD i dobrego uziemienia.
+> ale wymaga wyłącznika różnicowoprądowego i dobrego uziemienia.
 
 **32. Dlaczego uszkodzenie przewodu PEN jest tak niebezpieczne?**
 > Przy przerwie PEN prąd powrotny nie ma drogi, a napięcie faz „przenosi się" na obudowy
@@ -241,18 +246,21 @@ spełnione?**
 
 **36. Jakie pomiary wykonuje się w ramach badań okresowych instalacji?**
 > Ciągłość przewodów ochronnych i połączeń wyrównawczych, rezystancja izolacji, sprawdzenie
-> ochrony przez separację, pomiar impedancji pętli zwarciowej, sprawdzenie RCD (prąd i czas
+> ochrony przez separację, pomiar impedancji pętli zwarciowej, sprawdzenie wyłączników
+> różnicowoprądowych (prąd i czas
 > wyłączenia), rezystancja uziemienia, sprawdzenie biegunowości i kolejności faz, próby
 > funkcjonalne, w razie potrzeby spadek napięcia i natężenie oświetlenia.
 
 **37. Dlaczego kolejność pomiarów jest istotna?**
 > Bo pomiary wykonywane bez napięcia (ciągłość PE, rezystancja izolacji) mogą ujawnić błędy,
 > które przy podaniu napięcia byłyby groźne (np. zwarcie N–PE, przebicie izolacji). Dopiero po
-> ich pozytywnym wyniku podaje się napięcie i mierzy pętlę zwarciową oraz RCD.
+> ich pozytywnym wyniku podaje się napięcie i mierzy pętlę zwarciową oraz wyłączniki
+> różnicowoprądowe.
 
 **38. Jak zmierzyć rezystancję izolacji instalacji w budynku?**
-> Wyłączyć i zabezpieczyć zasilanie, odłączyć odbiorniki oraz elementy wrażliwe (SPD, elektronika,
-> LED, RCD), zwolnić bezpieczniki obwodów niebadanych. Mierzyć megomierzem 500 V DC między każdym
+> Wyłączyć i zabezpieczyć zasilanie, odłączyć odbiorniki oraz elementy wrażliwe
+> (ograniczniki przepięć, elektronika, oprawy LED, wyłączniki różnicowoprądowe),
+> zwolnić bezpieczniki obwodów niebadanych. Mierzyć megomierzem 500 V DC między każdym
 > przewodem czynnym a PE oraz między przewodami czynnymi, odczyt po 60 s. Wymagana wartość
 > ≥ 1 MΩ. Po pomiarze rozładować instalację. Zapisać temperaturę i wilgotność.
 
@@ -272,10 +280,12 @@ spełnione?**
 > rażeniowe wg PN-EN 50522.
 
 **41. Jak sprawdzić wyłącznik różnicowoprądowy?**
-> Miernikiem RCD podłączonym za wyłącznikiem: pomiar prądu wyłączającego (wymagane
+> Miernikiem wyłączników różnicowoprądowych podłączonym za wyłącznikiem: pomiar prądu
+> wyłączającego (wymagane
 > 0,5–1,0 I_Δn) i czasu wyłączenia przy I_Δn, 2·I_Δn i 5·I_Δn, dla obu połówek okresu, przyjmując
-> wynik najmniej korzystny. Wymagania dla RCD bezzwłocznego: ≤ 300 ms przy I_Δn, ≤ 150 ms przy
-> 2·I_Δn, ≤ 40 ms przy 5·I_Δn. Dodatkowo próba przyciskiem TEST (sprawdzenie mechanizmu).
+> wynik najmniej korzystny. Wymagania dla wyłącznika bezzwłocznego: ≤ 300 ms przy I_Δn,
+> ≤ 150 ms przy 2·I_Δn, ≤ 40 ms przy 5·I_Δn. Dodatkowo próba przyciskiem kontrolnym TEST
+> (sprawdzenie mechanizmu).
 
 **42. Jakie wymagania musi spełniać miernik używany do pomiarów ochronnych?**
 > Zgodność z PN-EN 61557, aktualne świadectwo wzorcowania, odpowiednia kategoria pomiarowa
@@ -338,7 +348,8 @@ spełnione?**
 
 **50. Czy można zmierzyć impedancję pętli po odłączeniu przewodu ochronnego?**
 > Nie. Odłączenie PE pracującej instalacji jest niedopuszczalne — pozbawia ochrony wszystkie
-> odbiorniki i grozi porażeniem. Stosuje się mierniki z funkcją pomiaru bez wyzwalania RCD.
+> odbiorniki i grozi porażeniem. Stosuje się mierniki z funkcją pomiaru bez wyzwalania
+> wyłącznika różnicowoprądowego.
 
 **51. Czy uprawnienia „do 30 kV" pozwalają pracować w stacji 110/15 kV?**
 > Tylko w części o napięciu do 30 kV (rozdzielnia SN, transformator od strony SN — o ile
@@ -356,8 +367,9 @@ w pracującej instalacji?**
 > wyłącznie przy wyłączonym zasilaniu instalacji lub z zachowaniem szczególnych środków; w innych
 > przypadkach stosuje się pomiar selektywny (cęgowy) albo dwucęgowy.
 
-**54. Czy RCD 30 mA zastępuje przewód ochronny?**
-> Nie. RCD jest środkiem **uzupełniającym**. Podstawą jest ochrona przy uszkodzeniu (samoczynne
+**54. Czy wyłącznik różnicowoprądowy 30 mA zastępuje przewód ochronny?**
+> Nie. Wyłącznik różnicowoprądowy jest środkiem **uzupełniającym**. Podstawą jest ochrona
+> przy uszkodzeniu (samoczynne
 > wyłączenie z prawidłowym PE) — bez PE część uszkodzeń nie spowoduje przepływu prądu
 > różnicowego, dopóki człowiek nie dotknie obudowy.
 

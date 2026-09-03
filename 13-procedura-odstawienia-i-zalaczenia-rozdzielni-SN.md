@@ -1,45 +1,52 @@
 # 13. Odstawienie rozdzielni SN i ponowne podanie napięcia — procedura od zera
 
-Pełna sekwencja: od planowania, przez wyłączenie i zabezpieczenie, testy, aż do
+Pełna kolejność: od planowania, przez wyłączenie i zabezpieczenie, badania, aż do
 kontrolowanego podania napięcia i przekazania do ruchu.
 
-> **To jest wzorzec metodyczny, nie instrukcja gotowa do wykonania.** Każde odstawienie musi być
-> prowadzone na podstawie **programu łączeń** i **polecenia na pracę** dla konkretnego obiektu,
-> zgodnie z instrukcją eksploatacji, DTR i uzgodnieniem z OSD/dyspozytorem.
+> **To wzorzec metodyczny, nie instrukcja gotowa do wykonania.** Każde odstawienie prowadzi się
+> na podstawie **programu łączeń** i **polecenia na pracę** dla konkretnego obiektu, zgodnie
+> z instrukcją eksploatacji, DTR i uzgodnieniem z dyspozytorem.
 
 ---
 
-# FAZA 0 — PLANOWANIE (dni/tygodnie przed)
+# FAZA 0 — PLANOWANIE (dni / tygodnie przed)
 
 ## 0.1 Ustalenie zakresu i skutków
 - [ ] Co dokładnie jest odstawiane: cała rozdzielnica / jedna sekcja / jedno pole
-- [ ] **Lista odbiorów, które stracą zasilanie** — z właścicielami procesów
-- [ ] Odbiory krytyczne: UPS-y (czas autonomii!), pompy pożarowe, chłodzenie, serwerownie,
-      oświetlenie awaryjne, systemy bezpieczeństwa
-- [ ] Czy potrzeby własne stacji (AC do ładowarek DC) będą zasilone z innego źródła?
-      **Utrata AC = odliczanie autonomii baterii DC = utrata zdolności wyłączania**
-- [ ] Ogrzewanie antykondensacyjne rozdzielnicy — czy zostanie zasilone (wilgoć!)
+- [ ] **Wykaz odbiorów, które stracą zasilanie** — z właścicielami procesów
+- [ ] Odbiory krytyczne: zasilacze bezprzerwowe (czas pracy na baterii!), pompy pożarowe,
+      chłodzenie, oświetlenie awaryjne, systemy bezpieczeństwa
+- [ ] Czy **potrzeby własne stacji** będą zasilone z innego źródła?
+      **Utrata zasilania przemiennego = odliczanie czasu pracy baterii = utrata zdolności
+      wyłączania**
+- [ ] Ogrzewanie przeciwkondensacyjne rozdzielnicy — czy pozostanie zasilone (wilgoć!)
+- [ ] Czy odstawienie obejmuje **pole transformatora uziemiającego**? Jeśli tak, sekcja stanie
+      się sieciowo izolowana → **wymagana zmiana nastaw** zabezpieczeń ziemnozwarciowych
+- [ ] Czy odstawienie obejmuje **baterię kondensatorów**? Jeśli tak — wzrost pobieranej mocy
+      biernej i możliwe opłaty oraz spadek napięcia
 
 ## 0.2 Uzgodnienia i dokumenty
-- [ ] **Wniosek o wyłączenie** do OSD / dyspozytora (terminy zgodne z IRiESD)
-- [ ] **Program łączeń** — spisana, zaakceptowana kolejność czynności z numeracją
+- [ ] **Wniosek o wyłączenie** do dyspozytora / operatora sieci
+- [ ] **Program łączeń** — spisana i zaakceptowana kolejność czynności z numeracją
 - [ ] **Polecenie na pracę** (pisemne), wyznaczone osoby funkcyjne
-- [ ] **Ocena ryzyka** dla zadania + analiza łuku (kategoria ŚOI)
-- [ ] **Plan LOTO** (Lock-Out / Tag-Out): lista punktów odcięcia, zamków, kłódek, tablic
-- [ ] Plan awaryjny / **plan powrotu** (co robimy, jeśli nie zdążymy — kryterium *point of
-      no return*, czyli moment, po którym nie da się szybko wrócić do ruchu)
+- [ ] **Ocena ryzyka** dla zadania oraz analiza zagrożenia łukiem (dobór odzieży ochronnej)
+- [ ] **Plan blokad i oznakowania** — wykaz punktów odcięcia, kłódek, zamków, tablic
+- [ ] **Plan powrotu** — co robimy, jeśli nie zdążymy; wyznaczony **moment bez odwrotu**
+      (po którym nie da się szybko wrócić do ruchu)
 - [ ] Powiadomienia: użytkownicy, ochrona, służby utrzymania, straż zakładowa
-- [ ] Uzgodnienie **zmiany nastaw**, jeśli odstawienie zmienia układ (np. odstawienie NER/TRU
-      lub praca z zamkniętym sprzęgłem — inne prądy zwarciowe i inna selektywność!)
+- [ ] Uzgodnienie **zmiany nastaw**, jeśli zmienia się układ pracy (np. praca z zamkniętym
+      sprzęgłem — inne prądy zwarciowe i inna selektywność)
 
 ## 0.3 Przygotowanie zasobów
 - [ ] Skład zespołu, kwalifikacje (**E powyżej 1 kV**), badania lekarskie, szkolenia
-- [ ] Sprzęt ochronny z aktualnymi badaniami: drążki, wskaźnik napięcia SN, uziemiacze przenośne
-      (dobrane na prąd zwarciowy!), maty, rękawice, kaski z osłoną twarzy, **odzież łukoochronna**
-- [ ] Kłódki LOTO, tablice ostrzegawcze, taśmy, barierki, ekrany izolacyjne
-- [ ] Przyrządy pomiarowe z wzorcowaniem (lista w pliku `11`)
+- [ ] Sprzęt ochronny z aktualnymi badaniami: drążki izolacyjne, wskaźnik napięcia SN,
+      uziemiacze przenośne **dobrane na prąd zwarciowy**, maty i pomosty, rękawice
+      elektroizolacyjne, kaski z osłoną twarzy, **odzież trudnopalna łukoochronna**
+- [ ] Kłódki i tablice ostrzegawcze, taśmy, barierki, przegrody izolacyjne
+- [ ] Przyrządy pomiarowe z aktualnym wzorcowaniem (wykaz w pliku `11`)
 - [ ] Części zamienne: bezpieczniki WN i wtórne, uszczelki, smary wg DTR
-- [ ] Sprzęt ppoż., apteczka, **AED**, łączność (radia), oświetlenie awaryjne/przenośne
+- [ ] Sprzęt przeciwpożarowy, apteczka, **defibrylator**, łączność (radiotelefony),
+      oświetlenie przenośne
 - [ ] Dokumentacja na miejscu: schematy, DTR, karta nastaw, formularze protokołów
 
 ---
@@ -48,254 +55,286 @@ kontrolowanego podania napięcia i przekazania do ruchu.
 
 ## 1.1 Przygotowanie ruchowe
 1. Potwierdź z dyspozytorem **gotowość i okno czasowe**.
-2. Sprawdź stan układu: pozycje wszystkich łączników, obciążenia, napięcia, brak alarmów,
-      **stan baterii DC** i ładowarki.
-3. Sprawdź, że rezerwa jest **naprawdę dostępna** (nie tylko na schemacie): napięcie na
-      rezerwowym zasilaniu, sprawność wyłącznika, brak blokad, brak 86.
-4. **Zablokuj automatyki**, które mogłyby zadziałać w trakcie: **SZR/ATS**, **SPZ (79)**,
-      automatyka ARN (jeśli wymagana zmiana), automatyczne przełączanie potrzeb własnych —
-      i **zapisz to w rejestrze ingerencji**.
+2. Sprawdź stan układu: pozycje wszystkich łączników, obciążenia, napięcia, brak sygnałów
+   awaryjnych, **stan baterii i ładowarki**.
+3. Sprawdź, że rezerwa jest **rzeczywiście dostępna** (nie tylko na schemacie): napięcie na
+   zasilaniu rezerwowym, sprawność wyłącznika, brak blokad, brak zadziałanego przekaźnika
+   blokującego.
+4. **Zablokuj automatyki**, które mogłyby zadziałać w trakcie prac: **SZR**, **SPZ**,
+   automatyczną regulację napięcia, samoczynne przełączanie potrzeb własnych —
+   i **zapisz to w rejestrze ingerencji**.
 
-## 1.2 Przeniesienie obciążenia (jeśli możliwe)
-Wariant A — **transfer zamknięty** (bez przerwy):
-1. Sprawdź warunki 25 (ΔU, Δf, Δφ) i **zgodność faz** (napięcie różnicowe ≈ 0 V).
+## 1.2 Przeniesienie obciążenia
+
+**Wariant A — bez przerwy** (przez chwilową pracę równoległą):
+1. Sprawdź warunki kontroli synchronizmu i **zgodność faz** (napięcie różnicowe ≈ 0 V).
 2. Zamknij sprzęgło → chwilowa praca równoległa.
 3. Otwórz wyłącznik odstawianego zasilania.
 4. Potwierdź, że obciążenie przeszło (odczyt prądów).
-> Czas równoległości ograniczony; prądy zwarciowe w tym stanie są **wyższe** — upewnij się,
-> że aparatura i nastawy to dopuszczają.
+> W tym stanie **prądy zwarciowe są wyższe** — upewnij się, że aparatura i nastawy to dopuszczają.
 
-Wariant B — **transfer otwarty** (z przerwą):
+**Wariant B — z przerwą:**
 1. Poinformuj użytkowników o przerwie, potwierdź gotowość.
 2. Otwórz wyłącznik zasilania podstawowego.
-3. Zamknij sprzęgło / zasilanie rezerwowe.
+3. Zamknij sprzęgło lub zasilanie rezerwowe.
 4. Sprawdź powrót napięcia i samorozruch odbiorów.
 
-## 1.3 Wyłączanie odstawianego fragmentu — kolejność
+## 1.3 Kolejność wyłączania odstawianego fragmentu
 ```
-1. Odpływy (od najmniejszych/najmniej krytycznych)  → wyłączniki pól FDR/TR/MTR
-2. Sprawdź: prąd = 0 w każdym polu
-3. Pole zasilające (INC)                            → wyłącznik
-4. Pole punktu neutralnego (NER/TRU) — jeśli dotyczy → wyłącznik/odłącznik
-5. Pole pomiaru napięcia (VT)                       → odłącznik/wtyk + wyjęcie bezpieczników WN
-6. Odłączniki / wózki wszystkich pól                → pozycja OTWARTA (widoczna przerwa)
-7. Zabezpieczenie przed załączeniem (LOTO)          → kłódki, tablice, wyjęcie cewek/wkładek
-8. Sprawdzenie braku napięcia                       → wskaźnik SN, wszystkie fazy
-9. Uziemienie                                       → uziemniki / uziemiacze przenośne
-10. Wyznaczenie i oznakowanie strefy pracy
+ 1. Odpływy — od najmniej krytycznych                → wyłączniki pól odpływowych,
+                                                       transformatorowych, silnikowych
+ 2. Bateria kondensatorów                            → wyłącznik (potem czas rozładowania!)
+ 3. Sprawdź: prąd = 0 w każdym polu
+ 4. Pole zasilające                                  → wyłącznik
+ 5. Pole transformatora uziemiającego                → wyłącznik / odłącznik
+ 6. Pole pomiaru napięcia                            → odłącznik + wyjęcie bezpieczników WN
+ 7. Odłączniki / wózki wszystkich pól                → pozycja OTWARTA (widoczna przerwa)
+ 8. Zabezpieczenie przed załączeniem                 → kłódki, tablice, wyjęcie cewek i wkładek
+ 9. Sprawdzenie braku napięcia                       → wskaźnik SN, wszystkie trzy fazy
+10. Uziemienie                                       → uziemniki / uziemiacze przenośne
+11. Wyznaczenie i oznakowanie strefy pracy
 ```
 
 **Uwagi krytyczne:**
 - Kolejność „odpływy → zasilanie" ogranicza prąd łączony i skutki błędu.
-- **Odłącznikiem nigdy nie przerywaj prądu** — zawsze najpierw wyłącznik, potwierdzenie
+- **Odłącznikiem nigdy nie przerywaj prądu** — najpierw wyłącznik, potwierdzenie
   bezprądowości, potem odłącznik.
-- **VT to źródło napięcia zwrotnego** — musi być odizolowane i uziemione.
-- **Baterie kondensatorów** — odczekaj czas rozładowania z DTR (typowo 5–10 min), potem
-  sprawdź brak napięcia i uziem każdą sekcję.
+- **Przekładniki napięciowe są źródłem napięcia zwrotnego** — muszą być odizolowane i uziemione.
+- **Bateria kondensatorów** — odczekaj czas rozładowania z DTR (typowo 5–10 min), sprawdź brak
+  napięcia i **uziem każdą sekcję osobno**.
 - **Kable odpływowe mogą być zasilone z drugiej strony** — uzgodnij i potwierdź wyłączenie
-  oraz uziemienie po **obu** stronach; przy sieci pierścieniowej to obowiązek.
-- **Transformatory SN/nn uziem po obu stronach** (zasilanie zwrotne od nn: agregat, PV, SZR nn).
+  oraz uziemienie po **obu** stronach; w sieci pierścieniowej to obowiązek.
+- **Transformatory SN/nn uziem po obu stronach** — zasilanie zwrotne od nn (agregat, instalacja
+  fotowoltaiczna, automatyka SZR na nn).
 
 ## 1.4 Pięć zasad — realizacja na obiekcie
 1. **Odłączenie całkowite** — widoczna przerwa we wszystkich biegunach, ze wszystkich stron
-   (włącznie z VT, potrzebami własnymi, agregatem, PV).
-2. **Zabezpieczenie przed załączeniem** — kłódki LOTO na napędach i wózkach, wyjęte wkładki
-   i cewki, blokady kluczowe, tablice „NIE ZAŁĄCZAĆ — PRACA NA URZĄDZENIU",
-   **zablokowane sterowanie zdalne** (przełącznik L/R w LOCAL + blokada w SCADA).
-3. **Sprawdzenie braku napięcia** — wskaźnikiem SN właściwym dla napięcia, sprawdzonym
+   zasilania (również przekładniki napięciowe, potrzeby własne, agregat, fotowoltaika).
+2. **Zabezpieczenie przed załączeniem** — kłódki na napędach i wózkach, wyjęte wkładki
+   bezpiecznikowe i cewki, zamki na klucze wzajemne, tablice **„NIE ZAŁĄCZAĆ — PRACA NA
+   URZĄDZENIU"**, **zablokowane sterowanie zdalne** (przełącznik w położeniu miejscowym
+   + blokada w systemie nadzoru).
+3. **Sprawdzenie braku napięcia** — wskaźnikiem właściwym dla danego napięcia, sprawdzonym
    **przed i po** pomiarze, **na wszystkich trzech fazach**, w miejscu pracy.
-4. **Uziemienie i zwarcie** — uziemniki stacjonarne, a gdzie ich nie ma — uziemiacze przenośne:
-   **najpierw zacisk uziemiający, potem fazy** (zdejmowanie odwrotnie).
-5. **Zabezpieczenie części czynnych w pobliżu** — przegrody, ekrany, zamknięte przedziały
-   pól czynnych, oznakowanie granic strefy pracy.
+4. **Uziemienie i zwarcie** — uziemniki stacjonarne, a gdzie ich nie ma, uziemiacze przenośne:
+   **najpierw zacisk uziemiający, potem fazy**; zdejmowanie w odwrotnej kolejności.
+5. **Zabezpieczenie części czynnych w pobliżu** — przegrody, ekrany, zamknięte przedziały pól
+   czynnych, oznakowanie granic strefy pracy.
 
 ## 1.5 Dopuszczenie do pracy
-Dopuszczający: potwierdza spełnienie warunków polecenia, **pokazuje zespołowi granice strefy**,
-**udowadnia brak napięcia** (pomiar w obecności zespołu), wskazuje uziemienia i **części czynne
-pozostające pod napięciem**, omawia zagrożenia. Kierujący zespołem przyjmuje strefę pracy.
+Dopuszczający potwierdza spełnienie warunków polecenia, **wskazuje zespołowi granice strefy
+pracy**, **udowadnia brak napięcia** (pomiar w obecności zespołu), pokazuje uziemienia
+i **części czynne pozostające pod napięciem**, omawia zagrożenia. Kierujący zespołem przyjmuje
+strefę pracy.
 
 ---
 
-# FAZA 2 — PRACE I TESTY (bez napięcia)
+# FAZA 2 — PRACE I BADANIA (bez napięcia)
 
 ## 2.1 Czyszczenie, oględziny, mechanika
 - [ ] Oględziny wszystkich przedziałów: ślady wyładowań, przegrzania, korozji, zawilgocenia,
       pęknięcia izolatorów, stan przepustów i uszczelnień
-- [ ] Czyszczenie izolacji (środki dopuszczone przez producenta), osuszenie
+- [ ] Czyszczenie izolacji środkami dopuszczonymi przez producenta, osuszenie
 - [ ] Kontrola i **dokręcenie połączeń śrubowych** momentem z DTR — **z protokołem**
 - [ ] Smarowanie mechanizmów, kontrola napędów, wózków, prowadnic, styków wtykowych
-      (stan posrebrzenia, smar stykowy)
+      (stan powłoki, smar stykowy)
 - [ ] Kontrola przegród, blokad mechanicznych, zamków, kłódek
 - [ ] Kontrola przepustów kablowych, uszczelnień ogniowych, drożności kanałów
-- [ ] Kontrola grzałek, higrostatów, wentylacji, oświetlenia przedziałów
-- [ ] Kontrola oznakowania pól, faz, schematów w rozdzielni
+- [ ] Kontrola ogrzewania, higrostatów, wentylacji, oświetlenia przedziałów
+- [ ] Kontrola oznakowania pól, faz i schematów w rozdzielni
 
-## 2.2 Pomiary i próby elementów
-Szczegóły w pliku `11`, sekcja D. Skrót zakresu:
-- [ ] Rezystancja izolacji szyn i pól: **megomierz 5 kV**, faza–ziemia i faza–faza
-- [ ] **Próba napięciowa AC** (jeśli przewidziana): ~80 % napięcia znamionowego probierczego,
-      1 min (dla 24 kV → ok. **40 kV**) — po próbie **rozładować i uziemić**
-- [ ] Rezystancja styków wyłączników (µΩ), czasy Z/W, niejednoczesność biegunów
-- [ ] Próżnia komór / ciśnienie SF₆
-- [ ] Rezystancja i napięcie zadziałania cewek Z i W (test przy ~70 % U_n DC)
-- [ ] CT: przekładnia, **polaryzacja**, izolacja, krzywa magnesowania
-- [ ] VT: przekładnia, polaryzacja, izolacja, jeden punkt uziemienia, bezpieczniki
+## 2.2 Pomiary i badania elementów
+Szczegóły w pliku `11`, rozdział D. Zakres:
+- [ ] Rezystancja izolacji szyn i pól — **megomierz 5 kV**, faza–ziemia i faza–faza
+- [ ] **Próba napięciowa przemienna** (jeśli przewidziana): ~80 % znamionowego napięcia
+      probierczego, 1 min — dla rozdzielnicy 24 kV około **40 kV**; po próbie
+      **rozładować i uziemić**
+- [ ] Rezystancja styków wyłączników, czasy załączania i wyłączania, niejednoczesność biegunów
+- [ ] Wytrzymałość próżni komór / ciśnienie SF₆
+- [ ] Rezystancja i najmniejsze napięcie zadziałania cewek
+- [ ] Przekładniki prądowe: przekładnia, **biegunowość**, izolacja, charakterystyka magnesowania
+- [ ] Przekładniki napięciowe: przekładnia, biegunowość, izolacja, uziemienie w jednym punkcie,
+      bezpieczniki
 - [ ] **Ciągłość uziemienia** każdego przedziału i konstrukcji: **≤ 0,1 Ω** do szyny głównej
 - [ ] **Rezystancja uziemienia stacji** i ocena napięć rażeniowych (PN-EN 50522)
-- [ ] Kable SN: izolacja, **VLF/DAC**, tgδ, PD, ciągłość i zgodność faz, rezystancja ekranu
-- [ ] Transformatory: izolacja uzwojeń, R uzwojeń, przekładnia, grupa połączeń, tgδ,
-      badanie oleju (przebicie, wilgotność, **DGA**), sprawdzenie zabezpieczeń wewnętrznych
-- [ ] Bateria DC: napięcie, rezystancja wewnętrzna ogniw, **test rozładowania/pojemności**,
-      sprawność ładowarki, kontrola izolacji obwodów DC
+- [ ] Kable SN: izolacja, próba napięciem o bardzo niskiej częstotliwości lub tłumionym,
+      współczynnik strat dielektrycznych, wyładowania niezupełne, ciągłość i zgodność faz
+- [ ] Transformatory: izolacja i rezystancja uzwojeń, przekładnia, grupa połączeń, współczynnik
+      strat, badanie oleju (napięcie przebicia, zawilgocenie, analiza gazów rozpuszczonych),
+      sprawdzenie zabezpieczeń wewnętrznych
+- [ ] Bateria kondensatorów: pomiar pojemności każdej sekcji, sprawdzenie rezystorów
+      rozładowczych i dławików
+- [ ] Bateria akumulatorów: napięcie, rezystancja wewnętrzna ogniw, **próba pojemności
+      (rozładowania)**, sprawność ładowarki, kontrola izolacji obwodów prądu stałego
 
-## 2.3 Testy obwodów wtórnych i zabezpieczeń
+## 2.3 Badania obwodów wtórnych i zabezpieczeń
 Pełna metodyka w plikach `11` i `12`. Kolejność:
-1. [ ] Kontrola **punkt-punkt** wszystkich obwodów
-2. [ ] Testy **sekundarne** każdej funkcji zabezpieczeniowej (progi, czasy, kierunkowość)
-3. [ ] Testy **pierwotne** (przekładnie i polaryzacja w kompletnym torze, strefy 87B)
-4. [ ] **Próby funkcjonalne sterowania** (matryca z pliku `12`, sekcja D.1)
+1. [ ] Kontrola **zacisk–zacisk** wszystkich obwodów
+2. [ ] Próby **prądem wtórnym** każdej funkcji zabezpieczeniowej (progi, czasy, kierunkowość)
+3. [ ] Próby **prądem pierwotnym** (przekładnie i biegunowość w kompletnym torze, strefy
+       zabezpieczenia różnicowego szyn)
+4. [ ] **Próby funkcjonalne sterowania** — macierz z pliku `12`, rozdział D.1
 5. [ ] **Próby funkcjonalne blokad** — pełna macierz, każdy warunek osobno
-6. [ ] **Próby automatyki**: ZSI, SZR (scenariusze!), 25, arc-flash, 50BF, ARN
-7. [ ] **Komunikacja i SCADA**: każdy sygnał, GOOSE, timeouty, znaczniki czasu
-8. [ ] **Test zintegrowany** na realnym torze do cewki wyłącznika
+6. [ ] **Próby automatyki**: blokada logiczna, SZR (scenariuszami!), kontrola synchronizmu,
+       łukoochronne, rezerwowanie wyłącznika, regulacja napięcia
+7. [ ] **Łączność i system nadzoru**: każdy sygnał, komunikaty międzypolowe, reakcja na ich
+       utratę, znaczniki czasu
+8. [ ] **Próba zintegrowana** na rzeczywistym torze — do cewki wyłącznika
 
 ---
 
-# FAZA 3 — CHECKLISTA PRZED PODANIEM NAPIĘCIA
+# FAZA 3 — LISTA KONTROLNA PRZED PODANIEM NAPIĘCIA
 
 **Nie podawaj napięcia, dopóki każdy punkt nie jest odhaczony i podpisany.**
 
 ## 3.1 Stan techniczny
 - [ ] Wszystkie prace **zakończone**, zgłoszone i odebrane
-- [ ] Przedziały czyste, **brak narzędzi, szmat, elementów luzem, zwarć montażowych**
+- [ ] Przedziały czyste — **brak narzędzi, szmat, elementów luzem, zwarć montażowych**
 - [ ] Wszystkie osłony, przegrody i pokrywy **zamontowane i dokręcone**
 - [ ] Drzwi przedziałów zamknięte, blokady sprawne
 - [ ] Protokoły pomiarów **kompletne, z wynikami pozytywnymi**
-- [ ] Punch list: **brak usterek klasy A (blokujących)**; klasa B/C zaakceptowane pisemnie
+- [ ] Lista usterek: **brak usterek klasy A (blokujących)**; klasa B i C zaakceptowane pisemnie
 
 ## 3.2 Obwody wtórne i nastawy
-- [ ] **Rejestr ingerencji tymczasowych WYZEROWANY** — wszystkie mostki usunięte, bezpieczniki
-      wstawione, funkcje włączone, bloczki probiercze w pozycji pracy
-- [ ] Nastawy **„as-left" zgodne z zatwierdzoną kartą** (wydruk porównany linia po linii)
-- [ ] Wszystkie zabezpieczenia **w stanie aktywnym** (żadne nie „na testach")
-- [ ] **86 zresetowane**, brak podtrzymanych alarmów
-- [ ] Zasilanie DC obecne, napięcie w normie, **brak doziemienia DC**, ładowarka pracuje
-- [ ] **TCS (nadzór obwodu wyłączającego) aktywny i bez alarmu**
-- [ ] Wyłączniki: sprężyny zbrojone, sygnał „ready", ciśnienie SF₆ w normie
-- [ ] Automatyki w wymaganym stanie (SZR — świadomie włączony lub wyłączony, **udokumentowane**)
-- [ ] SCADA: **tryb test wyłączony**, alarmy odblokowane, sygnały widoczne u dyspozytora
+- [ ] **Rejestr ingerencji tymczasowych WYZEROWANY** — mostki usunięte, bezpieczniki wstawione,
+      funkcje włączone, bloczki probiercze w położeniu pracy
+- [ ] Nastawy **stanu pozostawionego zgodne z zatwierdzoną kartą** (wydruk porównany linia po linii)
+- [ ] Wszystkie zabezpieczenia **aktywne** — żadne nie pozostawione „na próbach"
+- [ ] **Przekaźniki blokujące skasowane**, brak podtrzymanych sygnałów awaryjnych
+- [ ] Zasilanie prądem stałym obecne, napięcie w normie, **brak zwarcia doziemnego**,
+      ładowarka pracuje
+- [ ] **Kontrola ciągłości obwodu wyzwalającego aktywna i bez alarmu**
+- [ ] Wyłączniki: sprężyny zbrojone, sygnał „gotowy", ciśnienie SF₆ w normie
+- [ ] Automatyki w wymaganym stanie (SZR świadomie włączona lub wyłączona — **udokumentowane**)
+- [ ] System nadzoru: **tryb próbny wyłączony**, alarmy odblokowane, sygnały widoczne u dyspozytora
 
 ## 3.3 Bezpieczeństwo
 - [ ] Zespół **poza strefą**, narzędzia usunięte, ludzie przeliczeni
 - [ ] **Wszystkie uziemienia robocze usunięte** — uziemniki otwarte, uziemiacze przenośne
       **zdjęte i przeliczone** (fizycznie sprawdź komplet — to najczęstsza przyczyna zwarcia
       przy podaniu napięcia)
-- [ ] Kłódki LOTO zdjęte przez **te same osoby**, które je zakładały; tablice usunięte
+- [ ] Kłódki zdjęte przez **te same osoby**, które je zakładały; tablice usunięte
 - [ ] Strefa pracy **zlikwidowana przez dopuszczającego**, zgłoszenie do koordynującego
-- [ ] Zakończenie pracy potwierdzone w polecenia; polecenie zamknięte
+- [ ] Zakończenie pracy potwierdzone, polecenie zamknięte
 - [ ] Ogrodzenia usunięte, przejścia i drogi ewakuacyjne wolne
-- [ ] Sprzęt ppoż. na miejscu, obsługa poinformowana
-- [ ] Uzgodniona **łączność z dyspozytorem** i osoba kierująca czynnościami łączeniowymi
+- [ ] Sprzęt przeciwpożarowy na miejscu, obsługa poinformowana
+- [ ] Uzgodniona łączność z dyspozytorem i osobą kierującą czynnościami łączeniowymi
 
 ---
 
-# FAZA 4 — PODANIE NAPIĘCIA (energizing)
+# FAZA 4 — PODANIE NAPIĘCIA
 
 ## 4.1 Zasada: małymi krokami, z weryfikacją po każdym
-Nigdy nie załączaj całej rozdzielnicy jedną komendą. Sekwencja:
+Nigdy nie załączaj całej rozdzielnicy jedną komendą.
 
 ```
 KROK 1  Zamknij odłącznik / wsuń wózek pola zasilającego  → potwierdź pozycję
-KROK 2  Załącz VT (odłącznik + bezpieczniki WN)           → przygotowanie pomiaru
-KROK 3  Zamknij wyłącznik pola zasilającego (INC)         → NAPIĘCIE NA SZYNACH
-        ↳ NASŁUCH: brak nietypowych dźwięków, zapachu, brak alarmów
-KROK 4  WERYFIKACJA NAPIĘĆ (patrz 4.2) — zanim cokolwiek dalej
-KROK 5  Załącz pole punktu neutralnego (NER/TRU)          → sieć nabiera charakteru
-KROK 6  Odczekaj i obserwuj (10–15 min bez obciążenia)    → stabilizacja, kontrola
-KROK 7  Załączaj odpływy POJEDYNCZO, od najmniejszych     → po każdym: prądy, symetria
-KROK 8  Załączaj transformatory pojedynczo                → uwaga na prąd inrush
-KROK 9  Przywracaj obciążenie stopniowo                   → kontrola po każdym stopniu
-KROK 10 Przywróć normalny układ pracy i automatyki (SZR)  → udokumentuj
+KROK 2  Załącz pole pomiaru napięcia (odłącznik +          → przygotowanie pomiaru
+        bezpieczniki WN)
+KROK 3  Zamknij wyłącznik pola zasilającego                → NAPIĘCIE NA SZYNACH
+        ↳ NASŁUCH: brak nietypowych dźwięków, zapachu, brak sygnałów awaryjnych
+KROK 4  WERYFIKACJA NAPIĘĆ (punkt 4.2) — zanim cokolwiek dalej
+KROK 5  Załącz pole transformatora uziemiającego            → sieć nabiera charakteru
+KROK 6  Odczekaj 10–15 min bez obciążenia                   → stabilizacja, obserwacja
+KROK 7  Załączaj odpływy POJEDYNCZO, od najmniejszych       → po każdym: prądy, symetria
+KROK 8  Załączaj transformatory pojedynczo                  → uwaga na prąd włączania
+KROK 9  Załącz baterię kondensatorów                        → na końcu, po ustaleniu obciążenia
+KROK 10 Przywracaj obciążenie stopniowo                     → kontrola po każdym stopniu
+KROK 11 Przywróć normalny układ pracy i automatyki          → udokumentuj
 ```
 
 ## 4.2 Weryfikacja bezpośrednio po podaniu napięcia na szyny — OBOWIĄZKOWO
-- [ ] **Napięcia międzyfazowe** z pomiaru: symetryczne, wartość zgodna (np. 3 × ~20 kV)
-- [ ] **Napięcia wtórne VT**: ~100 V lub 57,7 V, symetryczne
-- [ ] **3U₀ ≈ 0 V** — brak doziemienia (jeśli nie, natychmiast wyłącz i szukaj przyczyny)
+- [ ] **Napięcia międzyfazowe** symetryczne i o właściwej wartości
+- [ ] **Napięcia wtórne przekładników**: ~100 V lub 57,7 V, symetryczne
+- [ ] **Składowa zerowa napięcia ≈ 0 V** — brak zwarcia doziemnego.
+      Jeśli występuje, **natychmiast wyłącz** i szukaj przyczyny
 - [ ] **Kolejność faz** zgodna z wymaganą (wskaźnik kolejności faz)
-- [ ] **Fazory w IED** — poprawne przypisanie faz U (a po obciążeniu również I)
-- [ ] Brak alarmów: VTS/60, doziemienie, arc-flash, 86
-- [ ] Odczyt w SCADA zgodny z odczytem lokalnym
+- [ ] **Wskazania wektorowe w zabezpieczeniach** — poprawne przypisanie faz napięcia
+      (po obciążeniu również prądu)
+- [ ] Brak alarmów: nadzór obwodów napięciowych, zwarcie doziemne, łukoochronne,
+      przekaźnik blokujący
+- [ ] Odczyt w systemie nadzoru zgodny z odczytem miejscowym
 
-## 4.3 Przed pierwszym zamknięciem sprzęgła — test krytyczny
+## 4.3 Przed pierwszym zamknięciem sprzęgła — badanie krytyczne
 Na **otwartym** wyłączniku sprzęgła zmierz **napięcie różnicowe** między sekcjami:
 - **≈ 0 V** → fazy zgodne, można zamykać
-- **napięcie międzyfazowe** → **fazy niezgodne**; zamknięcie = zwarcie międzyfazowe.
-  Zatrzymaj się i wyjaśnij (kolejność faz kabla, przepięcia w mufie, zamiana żył).
+- **napięcie międzyfazowe** → **fazy niezgodne**; zamknięcie oznaczałoby zwarcie międzyfazowe.
+  Zatrzymaj się i wyjaśnij przyczynę (kolejność faz kabla, zamiana żył w mufie).
 
-Dodatkowo sprawdź działanie **25** (synchro-check) w warunkach rzeczywistych.
+Dodatkowo sprawdź działanie **kontroli synchronizmu** w warunkach rzeczywistych.
 
-## 4.4 Załączanie transformatorów — na co uważać
-- **Prąd inrush** (6–12 × I_n, zanikający w 0,1–0,3 s) nie może wyzwolić 50 — jeśli wyzwala,
-  to błąd nastawy, nie „normalne zjawisko"
-- Sprawdź **blokadę 2. harmoniczną** w 87T (jeśli występuje)
-- Po załączeniu: brak nietypowego hałasu, kontrola temperatury, poziomu oleju,
-  brak zadziałania Buchholza
-- Załączaj transformatory **pojedynczo**, z odstępem
+## 4.4 Załączanie transformatorów
+- **Prąd włączania (udar magnesujący)** — 6–12 × prąd znamionowy, zanikający w 0,1–0,3 s —
+  nie może wyzwolić zabezpieczenia bezzwłocznego. Jeśli wyzwala, to **błąd nastawy**,
+  a nie „normalne zjawisko".
+- Sprawdź działanie **blokady od drugiej harmonicznej** w zabezpieczeniu różnicowym.
+- Po załączeniu: brak nietypowego hałasu, kontrola temperatury i poziomu oleju,
+  brak zadziałania przekaźnika Buchholza.
+- Załączaj transformatory **pojedynczo**, z odstępem czasowym.
 
-## 4.5 Testy możliwe tylko pod napięciem (patrz `11`, sekcja F)
-- [ ] **Stabilność 87T / 87B** — prąd różnicowy przy rosnącym obciążeniu ≪ progu
-- [ ] **Kierunkowość 67/67N** — zgodność z rzeczywistym przepływem mocy
-- [ ] Poprawność **pomiarów i układu rozliczeniowego** (P, Q, cosφ, E)
-- [ ] **Termowizja** po 1–2 h przy obciążeniu min. 40–60 %
-- [ ] Symetria obciążenia faz, poziom harmonicznych, prąd w przewodzie N (strona nn)
-- [ ] **Test SZR „na gorąco"** — tylko wg uzgodnionego scenariusza i z gotowością odbiorów
+## 4.5 Załączanie baterii kondensatorów
+- Załączaj **na końcu**, po ustabilizowaniu obciążenia — inaczej ryzyko przepięć i przewzbudzenia.
+- Sprawdź **prąd załączania** (dławiki ograniczające) i brak zadziałania zabezpieczenia
+  nadprądowego.
+- Sprawdź **symetrię prądów** sekcji i brak sygnału od niezrównoważenia.
+- Sprawdź wpływ na napięcie szyn i na poziom harmonicznych (ryzyko rezonansu).
+- Przy wyłączeniu — **nie załączaj ponownie przed upływem czasu rozładowania**.
+
+## 4.6 Badania możliwe tylko pod napięciem (patrz `11`, rozdział F)
+- [ ] **Stabilność zabezpieczeń różnicowych** — prąd różnicowy przy rosnącym obciążeniu
+      znacznie poniżej progu
+- [ ] **Kierunkowość** — zgodność z rzeczywistym przepływem mocy
+- [ ] Poprawność **pomiarów i układu rozliczeniowego**
+- [ ] **Kontrola termowizyjna** po 1–2 h przy obciążeniu min. 40–60 %
+- [ ] Symetria obciążenia faz, poziom harmonicznych, prąd w przewodzie neutralnym (strona nn)
+- [ ] **Próba automatyki SZR w warunkach rzeczywistych** — wyłącznie wg uzgodnionego scenariusza
 
 ---
 
 # FAZA 5 — PRZEKAZANIE DO RUCHU
 
 - [ ] Wpis do **dziennika operacyjnego / książki ruchu**: czynności, czasy, osoby
-- [ ] Zgłoszenie dyspozytorowi: **rozdzielnica w ruchu, układ normalny, automatyki w stanie X**
-- [ ] Kompletacja dokumentacji: protokoły pomiarów i prób, karty nastaw „as-left",
-      **schematy z naniesionymi zmianami (as-built)**, protokoły odbioru
+- [ ] Zgłoszenie dyspozytorowi: **rozdzielnica w ruchu, układ normalny, stan automatyk**
+- [ ] Kompletacja dokumentacji: protokoły pomiarów i badań, karty nastaw stanu pozostawionego,
+      **schematy z naniesionymi zmianami (powykonawcze)**, protokoły odbioru
 - [ ] Aktualizacja **instrukcji eksploatacji**, jeśli zmienił się układ, nastawy lub automatyki
-- [ ] Zamknięcie punch listy klasy B/C z terminami i odpowiedzialnymi
+- [ ] Zamknięcie listy usterek klasy B i C — z terminami i osobami odpowiedzialnymi
 - [ ] Ustalenie **terminu następnych badań** i wpis do harmonogramu
-- [ ] Krótki przegląd poawaryjny/powdrożeniowy z zespołem: co poszło nie tak, co poprawić
+- [ ] Krótkie omówienie z zespołem: co poszło nie tak, co poprawić następnym razem
 
 ---
 
-# ZAŁĄCZNIK A — Sekwencja dla obiektu NOWEGO („od zera", greenfield)
+# ZAŁĄCZNIK A — Kolejność dla obiektu NOWEGO
 
-Dla rozdzielnicy nigdy wcześniej nieuruchamianej dochodzą etapy przed FAZĄ 2:
+Dla rozdzielnicy nigdy wcześniej nieuruchamianej przed FAZĄ 2 dochodzą etapy:
 
-1. **FAT** (Factory Acceptance Test) u producenta: próby napięciowe, mechaniczne, funkcjonalne,
-   sprawdzenie zgodności z projektem, próba łuku wewnętrznego (typowa dla typu)
-2. **Odbiór dostawy na obiekcie**: kontrola uszkodzeń transportowych, kompletności,
+1. **Odbiór fabryczny u producenta** — próby napięciowe, mechaniczne i funkcjonalne,
+   sprawdzenie zgodności z projektem
+2. **Odbiór dostawy na obiekcie** — kontrola uszkodzeń transportowych, kompletności,
    wskaźników udaru i wilgotności, zgodności tabliczek
-3. **Montaż mechaniczny**: poziomowanie, kotwienie, łączenie sekcji, kontrola odstępów
-4. **Podłączenie szyn i kabli** z kontrolą momentów; montaż głowic kablowych
-5. **Instalacja uziemienia**: przyłączenie do siatki, pomiar ciągłości i rezystancji
-6. **Podłączenie obwodów wtórnych** i systemu DC; uruchomienie ładowarki i baterii
-7. **Parametryzacja IED**: wgranie konfiguracji, nastaw, plików 61850, synchronizacja czasu
+3. **Montaż mechaniczny** — poziomowanie, kotwienie, łączenie sekcji, kontrola odstępów
+   izolacyjnych
+4. **Podłączenie szyn i kabli** z kontrolą momentów dokręcenia; montaż głowic kablowych
+5. **Wykonanie uziemienia** — przyłączenie do siatki, pomiar ciągłości i rezystancji
+6. **Podłączenie obwodów wtórnych** i układu prądu stałego; uruchomienie ładowarki i baterii
+7. **Parametryzacja zabezpieczeń** — wgranie konfiguracji i nastaw, synchronizacja czasu
 8. → dalej jak **FAZA 2** i **FAZA 3**
-9. **SAT** (Site Acceptance Test) z udziałem użytkownika — protokolarnie
+9. **Odbiór na obiekcie** z udziałem użytkownika — protokolarnie
 10. **Pierwsze podanie napięcia** wg FAZY 4, zwykle z przedstawicielem producenta
 11. **Okres obserwacji** (typowo 72 h) przed pełnym przekazaniem
-12. Przekazanie: dokumentacja as-built, DTR, lista części zamiennych, szkolenie obsługi
+12. Przekazanie: dokumentacja powykonawcza, DTR, wykaz części zamiennych, szkolenie obsługi
 
 ---
 
-# ZAŁĄCZNIK B — Karta kontrolna „STOP" (5 pytań przed zamknięciem wyłącznika)
+# ZAŁĄCZNIK B — Karta kontrolna „STOP": pięć pytań przed zamknięciem wyłącznika
 
-Zanim zamkniesz jakikolwiek wyłącznik SN, odpowiedz na głos:
+Zanim zamkniesz jakikolwiek wyłącznik SN, odpowiedz **na głos**:
 
 1. **Czy wszystkie uziemienia robocze są usunięte i przeliczone?**
 2. **Czy ktokolwiek może być w strefie zagrożenia?** (fizyczne sprawdzenie, nie założenie)
-3. **Czy zabezpieczenia są aktywne, z prawidłowymi nastawami, i czy 86 jest zresetowane?**
-4. **Czy stan łączników jest taki, jak zakładam?** (sprawdź pozycje, nie pamięć)
-5. **Czy mam potwierdzenie od dyspozytora / kierującego czynnościami łączeniowymi?**
+3. **Czy zabezpieczenia są aktywne, z prawidłowymi nastawami, a przekaźniki blokujące skasowane?**
+4. **Czy stan łączników jest taki, jak zakładam?** (sprawdź pozycje, nie polegaj na pamięci)
+5. **Czy mam potwierdzenie od dyspozytora / osoby kierującej czynnościami łączeniowymi?**
 
 Jeśli którakolwiek odpowiedź brzmi „chyba tak" — **nie zamykaj**.
 
@@ -307,11 +346,12 @@ Jeśli którakolwiek odpowiedź brzmi „chyba tak" — **nie zamykaj**.
 |---|---|
 | **Pozostawiony uziemiacz przenośny** | zwarcie trójfazowe przy zamknięciu wyłącznika, zniszczenie rozdzielnicy, łuk |
 | **Zamknięcie sprzęgła przy niezgodnych fazach** | zwarcie międzyfazowe |
-| **Zabezpieczenia „na testach" / wyłączone funkcje** | zwarcie bez wyłączenia, kaskada uszkodzeń |
-| **Zapomniany mostek w obwodzie CT lub trip** | brak wyzwolenia albo zbędne wyzwolenie |
-| **Nastawy pozostawione testowe** | brak selektywności, zbędne wyłączenia |
-| **Niezablokowany SZR podczas prac** | przełączenie zasilania na pracujący zespół |
-| **VT nieodizolowane przy próbach wtórnych** | napięcie SN na szynach z „bezpiecznej" strony |
-| **Brak sprawdzenia 3U₀ po podaniu napięcia** | praca z niewykrytym doziemieniem, przepięcia |
-| **Załączenie wszystkiego naraz** | brak możliwości zlokalizowania problemu, kumulacja inrush |
-| **Reset 86 bez ustalenia przyczyny** | ponowne załączenie na uszkodzenie |
+| **Zabezpieczenia pozostawione „na próbach" lub wyłączone** | zwarcie bez wyłączenia, kaskada uszkodzeń |
+| **Zapomniany mostek w obwodzie prądowym lub wyzwalającym** | brak wyzwolenia albo wyzwolenie zbędne |
+| **Nastawy pozostawione próbne** | brak selektywności, zbędne wyłączenia |
+| **Niezablokowana automatyka SZR podczas prac** | przełączenie zasilania na pracujący zespół |
+| **Przekładniki napięciowe nieodizolowane przy próbach wtórnych** | pełne napięcie SN na szynach od strony wtórnej |
+| **Brak sprawdzenia składowej zerowej napięcia po podaniu napięcia** | praca z niewykrytym zwarciem doziemnym, przepięcia |
+| **Załączenie baterii kondensatorów przed rozładowaniem** | przepięcie, uszkodzenie ogniw i wyłącznika |
+| **Załączenie wszystkiego naraz** | brak możliwości zlokalizowania problemu, kumulacja prądów włączania |
+| **Skasowanie przekaźnika blokującego bez ustalenia przyczyny** | ponowne załączenie na uszkodzenie |

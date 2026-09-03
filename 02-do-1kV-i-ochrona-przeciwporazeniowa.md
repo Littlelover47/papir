@@ -15,7 +15,8 @@ To najczęściej pytany blok — również na egzaminie „do 30 kV", bo każda 
 Wartości progowe dla prądu przemiennego 50 Hz (drogą ręka–ręka/ręka–stopy):
 - **~0,5 mA** — próg odczuwania,
 - **~10 mA** — próg samouwolnienia (dla mężczyzn ok. 10 mA, kobiet ok. 6–7 mA),
-- **~30 mA** — zaburzenia oddychania (stąd wartość 30 mA dla RCD ochrony uzupełniającej),
+- **~30 mA** — zaburzenia oddychania (stąd wartość 30 mA dla wyłączników różnicowoprądowych
+  ochrony uzupełniającej),
 - **> ~50–80 mA przez ok. 1 s** — realne ryzyko migotania komór,
 - **> 1 A** — zatrzymanie serca, ciężkie oparzenia.
 
@@ -103,13 +104,15 @@ Dalsze litery — sposób prowadzenia przewodów N i PE:
 
 **Układy:**
 - **TN-C** — funkcje N i PE w jednym przewodzie **PEN** na całej długości. Nie wolno stosować
-  RCD, nie wolno stosować w nowych instalacjach wewnętrznych; przekrój PEN min. **10 mm² Cu**
+  wyłączników różnicowoprądowych, nie wolno stosować w nowych instalacjach wewnętrznych;
+  przekrój PEN min. **10 mm² Cu**
   (16 mm² Al).
 - **TN-S** — N i PE rozdzielone od źródła.
 - **TN-C-S** — PEN rozdzielany na N i PE w określonym punkcie (typowo w złączu/rozdzielnicy
   głównej); **po rozdzieleniu nie wolno ich ponownie łączyć**. To najczęstszy układ w Polsce.
 - **TT** — punkt neutralny źródła uziemiony, części dostępne odbiorcy uziemione **własnym,
-  niezależnym uziemieniem**. Ochronę realizuje praktycznie zawsze **RCD**.
+  niezależnym uziemieniem**. Ochronę realizuje praktycznie zawsze
+  **wyłącznik różnicowoprądowy**.
 - **IT** — punkt neutralny izolowany (lub przez dużą impedancję), części dostępne uziemione;
   stosowany tam, gdzie nie wolno przerwać zasilania (sale operacyjne, przemysł ciągły, potrzeby
   własne stacji) — wymaga **kontroli stanu izolacji** i sygnalizacji pierwszego zwarcia doziemnego.
@@ -121,7 +124,8 @@ zabezpieczenia w wymaganym czasie, **U_0** — napięcie fazowe względem ziemi 
 
 Równoważnie: $I_k = \dfrac{U_0}{Z_s} \ge I_a$
 
-W układzie **TT** dodatkowo: $R_A \le \dfrac{U_L}{I_a}$ (dla RCD: $R_A \le \dfrac{50}{I_{\Delta n}}$).
+W układzie **TT** dodatkowo: $R_A \le \dfrac{U_L}{I_a}$ (dla wyłącznika różnicowoprądowego:
+$R_A \le \dfrac{50}{I_{\Delta n}}$).
 
 ### 13. Wymagane czasy wyłączenia (PN-HD 60364-4-41, tabl. 41.1)
 Dla obwodów końcowych o prądzie znamionowym **≤ 32 A**:
@@ -136,7 +140,7 @@ Dla obwodów końcowych o prądzie znamionowym **≤ 32 A**:
 Dla obwodów **rozdzielczych** oraz obwodów końcowych **> 32 A**:
 **TN — 5 s**, **TT — 1 s**.
 
-### 14. Gdzie obowiązkowo stosuje się RCD 30 mA?
+### 14. Gdzie obowiązkowo stosuje się wyłączniki różnicowoprądowe 30 mA?
 - **gniazda wtyczkowe o prądzie znamionowym do 32 A** dostępne dla osób niewykwalifikowanych,
 - **obwody na zewnątrz** (przenośne urządzenia używane na zewnątrz) do 32 A,
 - pomieszczenia **z wanną lub natryskiem**, baseny, sauny, place budowy, kempingi, przystanie,
@@ -147,21 +151,25 @@ Dla obwodów **rozdzielczych** oraz obwodów końcowych **> 32 A**:
 - **AC** — reaguje na prąd różnicowy przemienny sinusoidalny.
 - **A** — dodatkowo na prąd pulsujący jednokierunkowy (elektronika, zasilacze) — obecnie standard.
 - **F** — jak A + prądy o mieszanej częstotliwości (falowniki 1-fazowe, pralki z inwerterem).
-- **B** — dodatkowo prąd różnicowy stały wygładzony (falowniki 3-fazowe, ładowarki EV, PV).
+- **B** — dodatkowo prąd różnicowy stały wygładzony (falowniki 3-fazowe, ładowarki pojazdów
+  elektrycznych, instalacje fotowoltaiczne).
 - Podział wg zwłoki: **bezzwłoczne**, **G** (krótka zwłoka ~10 ms), **S** (selektywne, opóźnione —
-  do selektywności z RCD za nim).
-- Podział konstrukcyjny: **RCCB** (bez zabezpieczenia nadprądowego), **RCBO** (z nadprądowym),
+  do selektywności z wyłącznikiem różnicowoprądowym zainstalowanym za nim).
+- Podział konstrukcyjny: **bez wbudowanego zabezpieczenia nadprądowego** (sam wyłącznik
+  różnicowoprądowy) i **z wbudowanym zabezpieczeniem nadprądowym** (wyłącznik
+  różnicowoprądowy z członem nadprądowym),
   **typu A/AC**, **sieciowo niezależne (elektromechaniczne)** i **zależne od napięcia sieci**
   (elektroniczne — mniej pewne).
 
-### 16. Czy RCD chroni przed zwarciem i przeciążeniem?
-**Nie.** RCD (RCCB) reaguje wyłącznie na **prąd różnicowy** (upływowy). Zabezpieczenie przed
-przeciążeniem i zwarciem musi zapewniać wyłącznik nadprądowy lub bezpiecznik (albo RCBO,
-który łączy obie funkcje).
+### 16. Czy wyłącznik różnicowoprądowy chroni przed zwarciem i przeciążeniem?
+**Nie.** Wyłącznik różnicowoprądowy reaguje wyłącznie na **prąd różnicowy** (upływowy).
+Zabezpieczenie przed przeciążeniem i zwarciem musi zapewniać wyłącznik nadprądowy lub
+bezpiecznik — albo wyłącznik różnicowoprądowy **z wbudowanym członem nadprądowym**,
+który łączy obie funkcje.
 
-### 17. Czy RCD chroni przy dotknięciu L i N jednocześnie?
+### 17. Czy wyłącznik różnicowoprądowy chroni przy dotknięciu L i N jednocześnie?
 **Nie.** Jeśli człowiek dotknie równocześnie przewodu fazowego i neutralnego, prąd przepływa
-„w obwodzie" i suma prądów w rdzeniu jest zerowa — RCD nie zadziała.
+„w obwodzie" i suma prądów w rdzeniu jest zerowa — wyłącznik nie zadziała.
 
 ### 18. Połączenia wyrównawcze — jakie są?
 - **Główne (główna szyna uziemiająca)** — łączy: przewód ochronny instalacji, przewód uziemiający,
@@ -216,17 +224,19 @@ który łączy obie funkcje).
 - **Strefa 1** — nad wanną do 2,25 m: urządzenia przystosowane (bojler, oprawa), min. **IPX4**.
 - **Strefa 2** — 0,6 m od strefy 1: min. **IPX4**, dopuszczalne oprawy, grzejniki, gniazdo
   ogolarki na transformatorze separacyjnym.
-- Wszystkie obwody łazienki: **RCD 30 mA** + **dodatkowe połączenia wyrównawcze**.
+- Wszystkie obwody łazienki: **wyłącznik różnicowoprądowy 30 mA** + **dodatkowe połączenia
+  wyrównawcze**.
 
 ### 24. Ochrona odgromowa i przeciwprzepięciowa
-- **LPS** (instalacja piorunochronna): zwody, przewody odprowadzające, przewody uziemiające, uziom.
+- **Instalacja piorunochronna (urządzenie piorunochronne)**: zwody, przewody odprowadzające,
+  przewody uziemiające, uziom.
   Klasy ochrony **I–IV** (I najostrzejsza). Metody projektowania zwodów: **kąta ochronnego**,
   **toczącej się kuli**, **siatki**.
-- **Ograniczniki przepięć (SPD)**:
+- **Ograniczniki przepięć**:
   - **Typ 1** — wytrzymuje prąd udarowy piorunowy (10/350 µs), w złączu/rozdzielnicy głównej,
   - **Typ 2** — udary indukowane (8/20 µs), w rozdzielnicy piętrowej/obiektowej,
   - **Typ 3** — ochrona precyzyjna przy odbiorniku (listwy, gniazda).
-- Kluczowe: **koordynacja energetyczna** SPD, długość przewodów przyłączeniowych (≤ 0,5 m),
+- Kluczowe: **koordynacja energetyczna** ograniczników, długość przewodów przyłączeniowych (≤ 0,5 m),
   poziom ochrony **U_p** niższy od wytrzymałości udarowej urządzenia.
 
 ### 25. Przekroje i spadki napięcia — o co pyta komisja?
@@ -248,6 +258,7 @@ zabezpieczenie od zbyt długiego rozruchu i utyku.
 ### 27. Kompensacja mocy biernej — dlaczego i jak?
 Cel: zmniejszenie prądu i strat, uniknięcie opłat za moc bierną (tgφ > 0,4), odciążenie
 transformatorów i kabli. Realizacja: baterie kondensatorów (indywidualne, grupowe, centralne
-z regulatorem), dławiki w przypadku nadmiaru mocy biernej pojemnościowej (instalacje PV, sieci
+z regulatorem), dławiki w przypadku nadmiaru mocy biernej pojemnościowej (instalacje
+fotowoltaiczne, sieci
 kablowe). **Zagrożenie BHP**: kondensatory pozostają naładowane — przed pracą trzeba je
 **rozładować i uziemić**, odczekać czas wg instrukcji.
