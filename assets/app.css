@@ -226,6 +226,46 @@ svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width:
 html[data-motyw="jasny"] .ikona:hover { color: var(--roz-ciemny); }
 .ikona.mala { width: auto; height: 31px; padding: 0 10px; font-size: 12.5px; }
 
+/* przycisk z kotkiem „uwu” */
+.ikona-kotek { padding: 5px; }
+.ikona-kotek img {
+  width: 26px; height: 26px; display: block;
+  filter: drop-shadow(0 0 4px rgba(255, 77, 151, 0));
+  transition: filter .2s ease, transform .2s cubic-bezier(.34, 1.56, .64, 1);
+}
+.ikona-kotek:hover img {
+  filter: drop-shadow(0 0 7px rgba(255, 77, 151, .6));
+  transform: scale(1.12) rotate(-4deg);
+}
+.ikona-kotek.mrucza img { animation: kotek-podskok .5s cubic-bezier(.34, 1.56, .64, 1); }
+@keyframes kotek-podskok {
+  0%   { transform: scale(1) rotate(0); }
+  30%  { transform: scale(1.28) rotate(-9deg); }
+  55%  { transform: scale(.92) rotate(6deg); }
+  75%  { transform: scale(1.1) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* dymek „uwu” wyskakujący po kliknięciu */
+.uwu-dymek {
+  position: fixed; z-index: 70;
+  transform: translate(-50%, 0);
+  font-weight: 800; font-size: 20px;
+  color: var(--roz-jasny);
+  text-shadow: 0 0 12px rgba(255, 77, 151, .8), 0 2px 4px rgba(0, 0, 0, .5);
+  pointer-events: none; user-select: none;
+  animation: uwu-plyn 1s ease-out forwards;
+}
+@keyframes uwu-plyn {
+  0%   { opacity: 0; transform: translate(-50%, 4px) scale(.6); }
+  25%  { opacity: 1; transform: translate(-50%, -10px) scale(1.15); }
+  100% { opacity: 0; transform: translate(-50%, -46px) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ikona-kotek.mrucza img { animation: none; }
+  .uwu-dymek { animation-duration: .01ms; }
+}
+
 .i-ksiezyc { display: none; }
 html[data-motyw="jasny"] .i-slonce { display: none; }
 html[data-motyw="jasny"] .i-ksiezyc { display: block; }

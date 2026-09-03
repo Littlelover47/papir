@@ -1,7 +1,7 @@
 /* Tryb offline: po pierwszym wejściu cała treść zapisuje się na urządzeniu.
    Po zmianie plików podnieś numer wersji — stary zapas zostanie usunięty. */
 
-const WERSJA = 'sep-30kv-v1';
+const WERSJA = 'sep-30kv-v2';
 
 const ZAPAS = [
   './',
@@ -10,6 +10,7 @@ const ZAPAS = [
   'assets/app.css',
   'assets/app.js',
   'assets/icon.svg',
+  'assets/kotek.svg',
   'assets/vendor/marked.js',
   'assets/vendor/katex.min.js',
   'assets/vendor/katex.min.css',

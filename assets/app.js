@@ -958,6 +958,103 @@ $('#btn-wiecej').addEventListener('click', () => { skala = ustawSkale(skala + 0.
 
 $('#btn-wszystko').addEventListener('click', () => { nawiguj('wszystko'); });
 
+/* ------------------------------------------------------------- kotek „uwu” */
+
+let kontekstDzwieku = null;
+
+/** Odtwarza krótkie, piskliwe „uwu” w stylu anime — syntezą, bez plików audio. */
+function zagrajUwu() {
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    if (!kontekstDzwieku) kontekstDzwieku = new AC();
+    const ctx = kontekstDzwieku;
+    if (ctx.state === 'suspended') ctx.resume();
+
+    const teraz = ctx.currentTime;
+
+    // wspólne pogłośnienie z miękką obwiednią (żeby nie „strzelało”)
+    const glosnosc = ctx.createGain();
+    glosnosc.gain.value = 0.0001;
+    glosnosc.connect(ctx.destination);
+
+    // lekki wibrat — nadaje „śpiewny”, uroczy charakter
+    const vibrato = ctx.createOscillator();
+    const vibratoGain = ctx.createGain();
+    vibrato.frequency.value = 12;
+    vibratoGain.gain.value = 10;
+    vibrato.connect(vibratoGain);
+
+    // dwa tony głosu — dają wrażenie zaokrąglonego „u–wu”
+    const podstawa = ctx.createOscillator();
+    const alikwot = ctx.createOscillator();
+    podstawa.type = 'triangle';
+    alikwot.type = 'sine';
+    vibratoGain.connect(podstawa.frequency);
+    vibratoGain.connect(alikwot.frequency);
+
+    const mieszacz = ctx.createGain();
+    mieszacz.gain.value = 0.5;
+    podstawa.connect(glosnosc);
+    alikwot.connect(mieszacz).connect(glosnosc);
+
+    // filtr „ust” — obniża jasność barwy jak przy głosce „u”
+    const filtr = ctx.createBiquadFilter();
+    filtr.type = 'lowpass';
+    filtr.frequency.value = 900;
+    // (filtr pominięty w połączeniu, ale barwę daje już mieszanka tonów)
+
+    // kontur wysokości: „u” (nisko) → wznosi się do „wu” (wyżej), potem lekko opada
+    const start = 430;
+    podstawa.frequency.setValueAtTime(start, teraz);
+    podstawa.frequency.exponentialRampToValueAtTime(660, teraz + 0.14);   // u ↗
+    podstawa.frequency.setValueAtTime(560, teraz + 0.19);                 // krótka przerwa „w”
+    podstawa.frequency.exponentialRampToValueAtTime(770, teraz + 0.34);   // wu ↗
+    podstawa.frequency.exponentialRampToValueAtTime(690, teraz + 0.46);   // opad
+    alikwot.frequency.setValueAtTime(start * 2, teraz);
+    alikwot.frequency.exponentialRampToValueAtTime(660 * 2, teraz + 0.14);
+    alikwot.frequency.setValueAtTime(560 * 2, teraz + 0.19);
+    alikwot.frequency.exponentialRampToValueAtTime(770 * 2, teraz + 0.34);
+    alikwot.frequency.exponentialRampToValueAtTime(690 * 2, teraz + 0.46);
+
+    // głośność: dwie sylaby (dwa garby) z lekką przerwą między „u” a „wu”
+    const g = glosnosc.gain;
+    g.exponentialRampToValueAtTime(0.22, teraz + 0.05);
+    g.exponentialRampToValueAtTime(0.10, teraz + 0.18);   // przewężenie na „w”
+    g.exponentialRampToValueAtTime(0.24, teraz + 0.30);
+    g.exponentialRampToValueAtTime(0.0001, teraz + 0.5);  // wyciszenie
+
+    vibrato.start(teraz);
+    podstawa.start(teraz);
+    alikwot.start(teraz);
+    vibrato.stop(teraz + 0.5);
+    podstawa.stop(teraz + 0.5);
+    alikwot.stop(teraz + 0.5);
+  } catch (_) { /* brak Web Audio — trudno, kotek i tak podskoczy */ }
+}
+
+/** Pokazuje wyskakujący napis „uwu” nad przyciskiem. */
+function pokazDymekUwu(przycisk) {
+  const prostokat = przycisk.getBoundingClientRect();
+  const dymek = document.createElement('span');
+  dymek.className = 'uwu-dymek';
+  dymek.textContent = 'uwu';
+  dymek.setAttribute('aria-hidden', 'true');
+  dymek.style.left = `${prostokat.left + prostokat.width / 2}px`;
+  dymek.style.top = `${prostokat.bottom - 6}px`;
+  document.body.appendChild(dymek);
+  setTimeout(() => dymek.remove(), 1000);
+}
+
+$('#btn-kotek').addEventListener('click', () => {
+  const przycisk = $('#btn-kotek');
+  zagrajUwu();
+  pokazDymekUwu(przycisk);
+  przycisk.querySelector('img').classList.remove('mrucza');
+  void przycisk.offsetWidth;                       // restart animacji przy szybkim klikaniu
+  przycisk.querySelector('img').classList.add('mrucza');
+});
+
 $('#btn-szukaj').addEventListener('click', () => szukajkaOtwarta(true));
 $('#szukajka-zamknij').addEventListener('click', () => szukajkaOtwarta(false));
 $('#szukajka').addEventListener('click', zdarzenie => {
