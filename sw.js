@@ -13,6 +13,7 @@ const ZAPAS = [
   'assets/vendor/marked.js',
   'assets/vendor/katex.min.js',
   'assets/vendor/katex.min.css',
+  'assets/vendor/fonts/KaTeX_Main-Regular.woff2',   // awaryjny font dla symboli w treści
   '01-podstawy-prawne-i-organizacja-pracy.md',
   '02-do-1kV-i-ochrona-przeciwporazeniowa.md',
   '03-sieci-i-urzadzenia-SN-do-30kV.md',

@@ -3,6 +3,19 @@
    Motyw czarny z różowym akcentem (domyślny) + opcjonalny motyw jasny.
    ========================================================================== */
 
+/* Awaryjny font dla symboli matematycznych (≤ ≥ ≫ · × Δ ρ π …).
+   Używany tylko wtedy, gdy font systemowy nie ma danego znaku — inaczej
+   na części urządzeń w miejscu symbolu pojawia się pusty kwadrat.
+   Plik jest już w repozytorium (pochodzi z KaTeX). */
+@font-face {
+  font-family: "Symbole zapasowe";
+  src: url("vendor/fonts/KaTeX_Main-Regular.woff2") format("woff2");
+  font-display: swap;
+  unicode-range: U+00B1, U+00B7, U+00D7, U+00F7, U+0394, U+03A9, U+03B4, U+03B8,
+    U+03BC, U+03C0, U+03C1, U+03C6, U+03C9, U+2032, U+2044, U+2190-21FF,
+    U+2200-22FF, U+2260, U+2264, U+2265, U+226A, U+226B, U+2299, U+27F6, U+27F9;
+}
+
 :root {
   --gora-h: 58px;
   --panel-w: 314px;
@@ -11,8 +24,10 @@
 
   --promien: 14px;
   --promien-s: 10px;
-  --czcionka: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --czcionka-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --czcionka: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Symbole zapasowe", sans-serif;
+  --czcionka-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono",
+    "Symbole zapasowe", monospace;
 
   /* ---- motyw czarny (domyślny) ---- */
   --tlo: #07070b;
