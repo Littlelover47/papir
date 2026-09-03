@@ -688,6 +688,27 @@ let wskaznik = null;   // indeks: [{ plik, tytul, numer, wiersze: [{ tekst, nagl
 let wybranyWynik = -1;
 
 /**
+ * Zamienia zapis wzorów na czytelny tekst — inaczej w wynikach szukania
+ * pokazywałby się surowy zapis w rodzaju „$$Z_s \cdot I_a \le U_0$$”.
+ */
+function uprosciWzory(tekst) {
+  return tekst
+    .replace(/\$\$?([^$]+)\$\$?/g, (_, wzor) => wzor
+      .replace(/\\d?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g, '$1/$2')
+      .replace(/\\cdot/g, '·')
+      .replace(/\\times/g, '×')
+      .replace(/\\le\b/g, '≤')
+      .replace(/\\ge\b/g, '≥')
+      .replace(/\\rho\b/g, 'ρ')
+      .replace(/\\pi\b/g, 'π')
+      .replace(/\\Delta\b/g, 'Δ')
+      .replace(/\\[a-zA-Z]+/g, ' ')
+      .replace(/[{}]/g, '')
+      .replace(/\s{2,}/g, ' ')
+      .trim());
+}
+
+/**
  * Buduje indeks wyszukiwania. Pliki są zawijane na ~95 znaków, więc szukamy
  * w całych akapitach (linie łączone), a nie w pojedynczych liniach — inaczej
  * fraza rozbita na dwie linie nigdy by się nie znalazła.
@@ -705,7 +726,7 @@ async function zbudujWskaznik() {
     let bufor = [];
 
     const dodaj = tekst => {
-      const czysty = tekst
+      const czysty = uprosciWzory(tekst)
         .replace(/\|/g, ' · ')
         .replace(/[*`>]/g, '')
         .replace(/\s{2,}/g, ' ')
