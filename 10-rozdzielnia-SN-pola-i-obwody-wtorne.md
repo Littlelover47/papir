@@ -41,26 +41,28 @@ mogą być zamknięte).
 
 | Kod EN | Kod PL | Pole |
 |---|---|---|
-| **INC** / **BKR** / CB | pole zasilające, pole wyłącznikowe | zasilanie sekcji szyn |
+| **INC** / CB | pole zasilające, pole wyłącznikowe | zasilanie sekcji szyn |
 | **FDR** | pole odpływowe / liniowe | odpływ kablowy do odbioru |
 | **BC** / **BT** / TIE | pole sprzęgła (łącznika szyn) | łączy sekcje A i B |
 | **VT** / **PT** / MU | pole pomiaru napięcia | przekładniki napięciowe na szynach |
 | **MET** | pole pomiarowo-rozliczeniowe | CT + VT + licznik energii |
 | **TR** / **TRF** | pole transformatorowe | odpływ do transformatora SN/nn |
 | **MTR** / M | pole silnikowe | zasilanie silnika SN |
-| **CAP** | pole baterii kondensatorów | kompensacja mocy biernej |
+| **BKR** / **CAP** | **pole baterii kondensatorów** | kompensacja mocy biernej |
 | **NER** / **NGR** / **TRU** | pole punktu neutralnego / transformatora uziemiającego | uziemienie punktu neutralnego przez rezystor/dławik |
 | **SST** / **AUX** | pole potrzeb własnych | transformator potrzeb własnych stacji |
 | **EB** / **ES** | pole uziemiające | uziemnik szyn / pole kablowe z uziemnikiem |
 | **RSF** | pole rozłącznikowo-bezpiecznikowe | tanie odpływy małej moc (RMU) |
 
+> **BKR** = **Bateria KondensatoRów** (skrót polski, nie angielskie *breaker*) — patrz B.7.
+>
 > **TRU** w polskich projektach to najczęściej **transformator uziemiający** (zwykle zygzak lub
 > Yd z rezystorem w punkcie neutralnym) — patrz B.8. W niektórych projektach TRU = *transformer
 > unit*, czyli po prostu pole transformatorowe. **Sprawdź w legendzie schematu jednobiegunowego.**
 
 ---
 
-### B.2 Pole zasilające (INC / BKR)
+### B.2 Pole zasilające (INC)
 
 **Funkcja:** wprowadza zasilanie z transformatora WN/SN lub z linii SN na sekcję szyn; jest
 głównym punktem wyłączania i miejscem zabezpieczeń rezerwowych dla całej sekcji.
@@ -199,7 +201,7 @@ przekaźnik silnikowy, opcjonalnie przekładniki do 87M.
 
 ---
 
-### B.7 Pole baterii kondensatorów (CAP)
+### B.7 Pole baterii kondensatorów (BKR / CAP)
 
 **Wyposażenie:** wyłącznik przystosowany do łączenia obwodów pojemnościowych (klasa C2),
 **dławiki tłumiące (reaktory)** ograniczające prąd załączania, rezystory rozładowcze, CT.
