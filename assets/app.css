@@ -3,17 +3,22 @@
    Motyw czarny z różowym akcentem (domyślny) + opcjonalny motyw jasny.
    ========================================================================== */
 
-/* Awaryjny font dla symboli matematycznych (≤ ≥ ≫ · × Δ ρ π …).
-   Używany tylko wtedy, gdy font systemowy nie ma danego znaku — inaczej
-   na części urządzeń w miejscu symbolu pojawia się pusty kwadrat.
-   Plik jest już w repozytorium (pochodzi z KaTeX). */
+/* Symbole matematyczne (≤ ≥ ≫ ≈ √ → ⇒ · × Δ ρ π) rysujemy fontem z KaTeX,
+   który jest już w repozytorium. Dzięki `unicode-range` dotyczy to WYŁĄCZNIE
+   wymienionych znaków — cała reszta tekstu zostaje na foncie systemowym.
+   Bez tego na części urządzeń zamiast symbolu pojawia się pusty kwadrat
+   (font systemowy zgłasza obsługę znaku, a rysuje .notdef). */
 @font-face {
-  font-family: "Symbole zapasowe";
+  font-family: "Symbole SEP";
   src: url("vendor/fonts/KaTeX_Main-Regular.woff2") format("woff2");
   font-display: swap;
-  unicode-range: U+00B1, U+00B7, U+00D7, U+00F7, U+0394, U+03A9, U+03B4, U+03B8,
-    U+03BC, U+03C0, U+03C1, U+03C6, U+03C9, U+2032, U+2044, U+2190-21FF,
-    U+2200-22FF, U+2260, U+2264, U+2265, U+226A, U+226B, U+2299, U+27F6, U+27F9;
+  unicode-range:
+    U+00B1, U+00B7, U+00D7, U+00F7,                  /* ± · × ÷ */
+    U+0394, U+03A9, U+03B4, U+03B8, U+03BC,          /* Δ Ω δ θ μ */
+    U+03C0, U+03C1, U+03C6, U+03C9,                  /* π ρ φ ω */
+    U+2032, U+2044, U+2190, U+2192, U+21D2, U+21D4,  /* ′ ⁄ ← → ⇒ ⇔ */
+    U+2212, U+221A, U+2248, U+2260, U+2264, U+2265,  /* − √ ≈ ≠ ≤ ≥ */
+    U+226A, U+226B, U+2299, U+27F6, U+27F9;          /* ≪ ≫ ⊙ ⟶ ⟹ */
 }
 
 :root {
@@ -24,10 +29,13 @@
 
   --promien: 14px;
   --promien-s: 10px;
-  --czcionka: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-    "Symbole zapasowe", sans-serif;
-  --czcionka-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono",
-    "Symbole zapasowe", monospace;
+  /* „Symbole SEP” muszą być pierwsze — inaczej font systemowy przechwyci
+     znak i narysuje pusty kwadrat; unicode-range pilnuje, by dotyczyło to
+     tylko symboli matematycznych */
+  --czcionka: "Symbole SEP", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --czcionka-mono: "Symbole SEP", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
 
   /* ---- motyw czarny (domyślny) ---- */
   --tlo: #07070b;
