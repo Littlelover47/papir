@@ -501,6 +501,60 @@ function dodajPasekNauki(poz) {
   zastosujTrybNauki(pamiecOdczyt(KLUCZ_NAUKA, false));
 }
 
+/* --------------------------------------------------- działające listy kontrolne */
+
+/**
+ * Kwadraciki „[ ]” z rozdziałów 12 i 13 zamienia w działające pola do odhaczania,
+ * a stan zapisuje na urządzeniu — procedurę można prowadzić etapami.
+ */
+function wlaczListyKontrolne(plik) {
+  const pola = [...el.querySelectorAll('input[type="checkbox"]')];
+  if (!pola.length) return;
+
+  const klucz = `sep.lista.${plik}`;
+  const stan = pamiecOdczyt(klucz, {});
+
+  const odswiezLicznik = () => {
+    const licznik = $('#licznik-listy');
+    if (licznik) licznik.textContent = `${pola.filter(p => p.checked).length} / ${pola.length}`;
+  };
+
+  pola.forEach((pole, indeks) => {
+    pole.disabled = false;
+    pole.checked = Boolean(stan[indeks]);
+    pole.closest('li')?.classList.toggle('odhaczone', pole.checked);
+
+    pole.addEventListener('change', () => {
+      stan[indeks] = pole.checked;
+      pamiecZapis(klucz, stan);
+      pole.closest('li')?.classList.toggle('odhaczone', pole.checked);
+      odswiezLicznik();
+    });
+  });
+
+  const pasek = document.createElement('div');
+  pasek.className = 'pasek-narzedzi';
+  pasek.innerHTML = `
+    <p>Lista kontrolna — możesz odhaczać pozycje, stan zostaje zapisany na tym urządzeniu.</p>
+    <span class="znacznik-listy">Odhaczone: <strong id="licznik-listy">0 / 0</strong></span>
+    <button type="button" id="btn-wyczysc-liste">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>
+      Wyczyść odhaczenia
+    </button>`;
+  wstawPoNaglowku(pasek);
+  odswiezLicznik();
+
+  pasek.querySelector('#btn-wyczysc-liste').addEventListener('click', () => {
+    pola.forEach((pole, indeks) => {
+      pole.checked = false;
+      delete stan[indeks];
+      pole.closest('li')?.classList.remove('odhaczone');
+    });
+    pamiecZapis(klucz, stan);
+    odswiezLicznik();
+  });
+}
+
 // odkrywanie pojedynczej zasłoniętej odpowiedzi dotknięciem
 el.addEventListener('click', zdarzenie => {
   const zakryty = zdarzenie.target.closest('.zakryte');
@@ -593,6 +647,7 @@ async function pokazRozdzial(plik, kotwica) {
 
   const markdown = await wezPlik(plik);
   await renderujMarkdown(markdown, el);
+  bezpiecznie(() => wlaczListyKontrolne(plik), 'listy kontrolne');
   bezpiecznie(() => dodajPasekNauki(poz), 'pasek trybu nauki');
   bezpiecznie(zbudujSpisTresci, 'spis treści rozdziału');
   bezpiecznie(() => zbudujWedrowke(indeks), 'nawigacja między rozdziałami');

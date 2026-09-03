@@ -12,6 +12,8 @@ Wygodniejsza niż pliki na GitHubie — zwłaszcza na telefonie:
 - spis rozdziałów, nawigacja i spis treści każdego rozdziału,
 - **wyszukiwanie** w całości materiału (nie wymaga polskich znaków: „petla” znajdzie „pętla”),
 - **tryb nauki** w rozdziałach 05 i 06 — zasłania odpowiedzi, odkrywasz je dotknięciem,
+- **działające listy kontrolne** w rozdziałach 12 i 13 — odhaczasz pozycje procedury,
+  a stan zostaje zapisany na urządzeniu (z licznikiem i możliwością wyczyszczenia),
 - znacznik przeczytanych rozdziałów i pasek postępu,
 - **działa bez internetu** — dodaj stronę do ekranu głównego telefonu, treść zapisze się
   na urządzeniu,

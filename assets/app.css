@@ -442,6 +442,18 @@ html[data-motyw="jasny"] .proza code { color: var(--roz-ciemny); }
 
 .proza mark { background: var(--zaznaczenie); color: var(--atrament); padding: .06em .18em; border-radius: 4px; }
 
+/* listy kontrolne */
+.proza input[type="checkbox"] {
+  accent-color: var(--roz);
+  width: 1.05em; height: 1.05em;
+  margin: 0 .5em 0 -1.5em;
+  vertical-align: -.15em;
+  cursor: pointer;
+}
+.proza li:has(> input[type="checkbox"]) { list-style: none; }
+.proza li.odhaczone { color: var(--atrament-3); }
+.proza li.odhaczone strong { color: var(--atrament-3); font-weight: 600; }
+
 /* zakotwiczenia nagłówków */
 .zakotwiczenie {
   float: left; margin-left: -.9em; width: .9em;
@@ -471,6 +483,9 @@ h2:hover .zakotwiczenie, h3:hover .zakotwiczenie, .zakotwiczenie:focus { opacity
   background: var(--roz-mgla); box-shadow: var(--poswiata);
 }
 .pasek-narzedzi button svg { width: 16px; height: 16px; }
+.znacznik-listy { font-size: 12.5px; color: var(--atrament-3); }
+.znacznik-listy strong { color: var(--roz); font-variant-numeric: tabular-nums; }
+
 .pasek-narzedzi button.wlaczony {
   background: linear-gradient(150deg, var(--roz), var(--roz-ciemny));
   border-color: var(--roz); color: #fff; box-shadow: var(--poswiata-s);
