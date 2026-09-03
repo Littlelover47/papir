@@ -538,6 +538,7 @@ html[data-motyw="jasny"] .na-stronie li a.aktywny { color: var(--roz-ciemny); }
 
 .szukajka-wyniki { overflow-y: auto; padding: 9px; overscroll-behavior: contain; }
 .szukajka-podpowiedz, .szukajka-pusto { margin: 11px 9px; font-size: 13.5px; color: var(--atrament-3); }
+.szukajka-podpowiedz .kregiel { display: inline-block; vertical-align: -2px; margin-right: 5px; }
 
 .wynik {
   display: block; padding: 11px 13px; border-radius: var(--promien-s);

@@ -684,8 +684,9 @@ window.addEventListener('hashchange', obsluzTrase);
 
 /* -------------------------------------------------------------- szukanie */
 
-let wskaznik = null;   // indeks: [{ plik, tytul, numer, wiersze: [{ tekst, naglowek, id }] }]
+let wskaznik = null;      // indeks: [{ plik, tytul, numer, wiersze: [...] }]
 let wybranyWynik = -1;
+let numerZapytania = 0;   // chroni przed wyświetleniem wyników starszego zapytania
 
 /**
  * Zamienia zapis wzorów na czytelny tekst — inaczej w wynikach szukania
@@ -817,15 +818,22 @@ function podswietl(tekst, slowa) {
 }
 
 async function szukaj(zapytanie) {
+  const moje = ++numerZapytania;
   const pojemnik = $('#szukajka-wyniki');
   const fraza = bezOgonkow(zapytanie.trim());
 
   if (fraza.length < 2) {
-    pojemnik.innerHTML = '<p class="szukajka-podpowiedz">Wpisz co najmniej 2 znaki. Ogonki nie mają znaczenia — „petla” znajdzie „pętla”.</p>';
+    pojemnik.innerHTML = '<p class="szukajka-podpowiedz">Wpisz co najmniej 2 znaki. Ogonki i odmiana nie mają znaczenia — „petla zwarciowa” znajdzie „pętli zwarciowej”.</p>';
     return;
   }
 
+  // pierwsze szukanie musi wczytać wszystkie rozdziały — pokaż, że coś się dzieje
+  if (!wskaznik) {
+    pojemnik.innerHTML = '<p class="szukajka-podpowiedz"><span class="kregiel"></span> Przygotowuję wyszukiwanie…</p>';
+  }
+
   const dane = await zbudujWskaznik();
+  if (moje !== numerZapytania) return;   // w trakcie pojawiło się nowsze zapytanie
   const wyniki = [];
 
   // wiele słów = wszystkie muszą wystąpić w akapicie (kolejność nie ma znaczenia);
