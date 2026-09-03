@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pl" data-motyw="czarny">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Egzamin SEP do 30 kV — materiały</title>
+<meta name="description" content="Materiały do egzaminu SEP grupa 1 (elektroenergetyczna) do 30 kV i pomiary ochronne: pytania testowe, pytania ustne, ściągawka, ruch rozdzielni SN.">
+<meta name="theme-color" content="#07070b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+
+<a class="pomin-nawigacje" href="#tresc">Przejdź do treści</a>
+
+<header class="gora">
+  <button class="ikona" id="btn-menu" aria-label="Menu rozdziałów" aria-expanded="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+
+  <a class="marka" href="#/" aria-label="Strona główna">
+    <span class="marka-znak" aria-hidden="true">SEP</span>
+    <span class="marka-tekst">
+      <strong>Egzamin SEP do 30&nbsp;kV</strong>
+      <small>materiały + ruch rozdzielni SN</small>
+    </span>
+  </a>
+
+  <div class="gora-akcje">
+    <button class="ikona" id="btn-szukaj" aria-label="Szukaj (klawisz /)" title="Szukaj — klawisz /">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
+    </button>
+    <button class="ikona" id="btn-motyw" aria-label="Zmień motyw" title="Motyw czarny / jasny">
+      <svg class="i-slonce" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
+      <svg class="i-ksiezyc" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="zaslona" id="zaslona" hidden></div>
+
+<nav class="panel" id="panel" aria-label="Spis rozdziałów">
+  <div class="panel-gora">
+    <div class="postep">
+      <div class="postep-tekst">Przeczytane: <strong id="postep-liczba">0/12</strong></div>
+      <div class="postep-pasek"><div id="postep-wypelnienie"></div></div>
+    </div>
+  </div>
+  <div id="spis"></div>
+  <div class="panel-stopka">
+    <button class="przycisk-plaski" id="btn-wszystko">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M9 5v14"/></svg>
+      Cała książka na jednej stronie
+    </button>
+    <div class="rozmiar-czcionki" role="group" aria-label="Rozmiar tekstu">
+      <span>Tekst</span>
+      <button class="ikona mala" id="btn-mniej" aria-label="Zmniejsz tekst">A−</button>
+      <button class="ikona mala" id="btn-wiecej" aria-label="Zwiększ tekst">A+</button>
+    </div>
+    <p class="panel-info">Strona działa też bez internetu — dodaj ją do ekranu głównego telefonu.</p>
+  </div>
+</nav>
+
+<main id="tresc">
+  <div class="wczytywanie" id="wczytywanie" hidden><span class="kregiel"></span> Wczytywanie…</div>
+
+  <article id="artykul" class="proza"></article>
+
+  <nav class="wedrowka" id="wedrowka" aria-label="Nawigacja między rozdziałami"></nav>
+</main>
+
+<aside class="na-stronie" id="na-stronie" aria-label="Spis treści rozdziału">
+  <div class="na-stronie-naglowek">W tym rozdziale</div>
+  <ol id="na-stronie-lista"></ol>
+</aside>
+
+<!-- Wyszukiwanie -->
+<div class="szukajka" id="szukajka" hidden role="dialog" aria-modal="true" aria-label="Szukaj w materiałach">
+  <div class="szukajka-pudlo">
+    <div class="szukajka-pole">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
+      <input type="search" id="szukajka-input" placeholder="Szukaj: np. uziemnik, pętla zwarciowa, SZR…"
+             autocomplete="off" spellcheck="false" enterkeyhint="search">
+      <button class="ikona mala" id="szukajka-zamknij" aria-label="Zamknij szukanie">Esc</button>
+    </div>
+    <div class="szukajka-wyniki" id="szukajka-wyniki">
+      <p class="szukajka-podpowiedz">Wpisz co najmniej 2 znaki. Ogonki i odmiana nie mają znaczenia —
+        „petla zwarciowa” znajdzie „pętli zwarciowej”.</p>
+    </div>
+  </div>
+</div>
+
+<script src="assets/vendor/marked.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -9,8 +9,9 @@ Blok obowiązkowy na każdym egzaminie SEP — zarówno E, jak i D.
 ### 1. Kolejność działań (schemat, który warto podać komisji)
 1. **Bezpieczeństwo własne** — ocena sytuacji; nie wolno zostać drugą ofiarą.
 2. **Uwolnienie poszkodowanego spod działania prądu**:
-   - **nn**: wyłączenie zasilania (wyłącznik, RCD, bezpieczniki, wyłącznik pożarowy, wyjęcie
-     wtyczki); jeśli niemożliwe — odciągnięcie z izolacją siebie (rękawice elektroizolacyjne,
+   - **nn**: wyłączenie zasilania (wyłącznik nadprądowy, wyłącznik różnicowoprądowy, bezpieczniki,
+     wyłącznik pożarowy, wyjęcie wtyczki); jeśli niemożliwe — odciągnięcie z izolacją siebie
+     (rękawice elektroizolacyjne,
      sucha deska, mata, drążek izolacyjny, chwyt za suche ubranie), odsunięcie przewodu
      narzędziem izolowanym;
    - **SN i wyżej**: **wyłącznie po wyłączeniu napięcia** (zgłoszenie dyspozytorowi, awaryjne

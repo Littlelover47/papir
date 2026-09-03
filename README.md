@@ -3,18 +3,55 @@
 Kompletny zestaw materiałów: pytania, jakie realnie padają na egzaminie przed komisją
 kwalifikacyjną SEP, wraz z rozwiniętymi odpowiedziami i wyjaśnieniami.
 
+## 📖 Wersja do czytania w przeglądarce
+
+**→ [littlelover47.github.io/papir](https://littlelover47.github.io/papir/)**
+
+Wygodniejsza niż pliki na GitHubie — zwłaszcza na telefonie:
+
+- spis rozdziałów, nawigacja i spis treści każdego rozdziału,
+- **wyszukiwanie** w całości materiału (nie wymaga polskich znaków: „petla” znajdzie „pętla”),
+- **tryb nauki** w rozdziałach 05 i 06 — zasłania odpowiedzi, odkrywasz je dotknięciem,
+- **działające listy kontrolne** w rozdziałach 12 i 13 — odhaczasz pozycje procedury,
+  a stan zostaje zapisany na urządzeniu (z licznikiem i możliwością wyczyszczenia),
+- znacznik przeczytanych rozdziałów i pasek postępu,
+- **działa bez internetu** — dodaj stronę do ekranu głównego telefonu, treść zapisze się
+  na urządzeniu,
+- widok „cała książka na jednej stronie” do wydrukowania albo zapisania jako PDF.
+
+Stronę tworzą pliki `index.html`, `assets/` i `sw.js`; treścią są te same pliki `.md`, więc
+poprawka w materiale od razu widać na stronie.
+
 ## Spis materiałów
 
 | Plik | Zawartość |
 |---|---|
 | **[podstawy prawne i organizacja pracy](01-podstawy-prawne-i-organizacja-pracy.md)** | Prawo energetyczne, kwalifikacje E/D, rozporządzenie BHP przy urządzeniach energetycznych, polecenia na pracę, osoby funkcyjne, strefy pracy, 5 zasad bezpieczeństwa |
-| **[do 1kV i ochrona przeciwporazeniowa](02-do-1kV-i-ochrona-przeciwporazeniowa.md)** | Układy sieci TN/TT/IT, ochrona podstawowa i przy uszkodzeniu, samoczynne wyłączenie, RCD, SELV/PELV, klasy ochronności, połączenia wyrównawcze |
+| **[do 1kV i ochrona przeciwporazeniowa](02-do-1kV-i-ochrona-przeciwporazeniowa.md)** | Układy sieci TN/TT/IT, ochrona podstawowa i przy uszkodzeniu, samoczynne wyłączenie, wyłączniki różnicowoprądowe, SELV/PELV, klasy ochronności, połączenia wyrównawcze |
 | **[sieci i urzadzenia SN do 30kV](03-sieci-i-urzadzenia-SN-do-30kV.md)** | Stacje i rozdzielnice SN, aparaty łączeniowe, transformatory, kable i linie SN, sposoby pracy punktu neutralnego, zabezpieczenia, kolejność łączeń, uziemienia SN |
-| **[pomiary ochronne](04-pomiary-ochronne.md)** | Zakres E5/D5: rezystancja izolacji, ciągłość PE, impedancja pętli zwarcia, RCD, uziemienia, rezystywność gruntu, protokoły, terminy badań, ocena wyników |
+| **[pomiary ochronne](04-pomiary-ochronne.md)** | Zakres E5/D5: rezystancja izolacji, ciągłość PE, impedancja pętli zwarcia, wyłączniki różnicowoprądowe, uziemienia, rezystywność gruntu, protokoły, terminy badań, ocena wyników |
 | **[test ABC baza pytan](05-test-ABC-baza-pytan.md)** | **146 pytań testowych** jednokrotnego wyboru z odpowiedziami i komentarzem |
 | **[pytania otwarte ustne](06-pytania-otwarte-ustne.md)** | **60 pytań otwartych** (tak pyta komisja) z wzorcowymi odpowiedziami + 16 szybkich definicji |
 | **[sciagawka wzory i wartosci](07-sciagawka-wzory-i-wartosci.md)** | Wzory, wartości liczbowe, tabele do zapamiętania — powtórka na dzień przed |
-| **[pierwsza pomoc i ppoz](08-pierwsza-pomoc-i-ppoz.md)** | Uwolnienie spod napięcia, RKO, AED, oparzenia, gaszenie urządzeń elektrycznych |
+| **[pierwsza pomoc i ppoz](08-pierwsza-pomoc-i-ppoz.md)** | Uwolnienie spod napięcia, resuscytacja krążeniowo-oddechowa, defibrylator automatyczny, oparzenia, gaszenie urządzeń elektrycznych |
+
+## Część II — ruch i uruchamianie rozdzielni SN (poziom inżynierski)
+
+Materiał wykraczający poza egzamin SEP: eksploatacja ruchowa, próby funkcjonalne, rozruch
+i przekazanie rozdzielni do eksploatacji.
+
+> **Uwaga o nazewnictwie.** W całym materiale stosowane są **polskie nazwy i skróty**
+> (np. samoczynne załączanie rezerwy — SZR, samoczynne ponowne załączanie — SPZ, lokalne
+> rezerwowanie wyłącznika — LRW, dokumentacja techniczno-ruchowa — DTR). Zabezpieczenia opisane
+> są **pełnymi nazwami**, a nie numerami funkcji. Tabela przeliczeniowa na oznaczenia
+> spotykane w dokumentacji zagranicznej znajduje się na końcu pliku `11`.
+
+| Plik | Zawartość |
+|---|---|
+| **[rozdzielnia SN — pola i obwody wtórne](10-rozdzielnia-SN-pola-i-obwody-wtorne.md)** | Układy szyn zbiorczych, wszystkie typy pól (zasilające, odpływowe, sprzęgła, **pomiaru napięcia**, transformatorowe, silnikowe, **baterii kondensatorów**, **transformatora uziemiającego**, potrzeb własnych), obwody wtórne, instalacja prądu stałego, obwód wyłączający i jego nadzór, blokada przeciwpompująca, przekaźnik blokujący i wyłączający, współpraca pól: selektywność, blokada logiczna, samoczynne załączanie rezerwy, zabezpieczenie różnicowe szyn, zabezpieczenie łukoochronne, lokalne rezerwowanie wyłącznika, macierz blokad |
+| **[zabezpieczenia — nastawy i testowanie](11-zabezpieczenia-nastawy-i-testowanie.md)** | Katalog zabezpieczeń pod polskimi nazwami (nadprądowe zwarciowe i przeciążeniowe, ziemnozwarciowe zerowoprądowe i kierunkowe, cieplne, od asymetrii prądów, podprądowe, od zablokowania wirnika, od zbyt częstych rozruchów, pod- i nadnapięciowe, od składowej zerowej napięcia, częstotliwościowe, kontrola synchronizmu, nadzór obwodów napięciowych, różnicowe transformatora i szyn, ziemnozwarciowe stabilizowane, lokalne rezerwowanie wyłącznika, łukoochronne) z typowymi nastawami i **metodą testu każdego z nich**; badania przekładników i wyłącznika, wtórne i pierwotne wymuszanie prądu, protokół, 12 najczęstszych błędów. Na końcu tabela przeliczeniowa nazw polskich na oznaczenia spotykane w dokumentacji zagranicznej |
+| **[próby funkcjonalne sterowania i automatyki](12-proby-funkcjonalne-sterowania-i-automatyki.md)** | Piramida prób, przygotowanie, kontrola punkt–punkt, **matryca 15 prób sterowania wyłącznikiem**, matryca wyzwalania, próby blokady logicznej, samoczynnego załączania rezerwy scenariuszami, kontroli synchronizmu, zabezpieczenia łukoochronnego, lokalnego rezerwowania wyłącznika, automatycznej regulacji napięcia, komunikacji stacyjnej, próba zintegrowana, **wzór protokołu**, 10 pułapek |
+| **[procedura odstawienia i załączenia rozdzielni SN](13-procedura-odstawienia-i-zalaczenia-rozdzielni-SN.md)** | Pełna sekwencja od zera: planowanie i zabezpieczenie przed załączeniem (zamki i tablice) → przeniesienie obciążenia → kolejność wyłączania → 5 zasad → prace i próby → **lista kontrolna przed podaniem napięcia** → sekwencja podawania napięcia krok po kroku → próby pod napięciem → przekazanie do ruchu; załączniki: obiekt nowy (próby fabryczne i odbiorowe), karta „STOP", najgroźniejsze błędy |
 
 ## Jak wygląda egzamin (praktycznie)
 

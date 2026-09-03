@@ -49,7 +49,7 @@ miedź γ ≈ **56 m/(Ω·mm²)**, aluminium γ ≈ **35 m/(Ω·mm²)**.
 | Próg zaburzeń oddychania | ~30 mA |
 | Ryzyko migotania komór | > ~50 mA przez ~1 s |
 | Warunek samoczynnego wyłączenia | **Z_s · I_a ≤ U₀** |
-| Warunek dla TT | **R_A ≤ U_L/I_a**, dla RCD `R_A ≤ 50/I_Δn` |
+| Warunek dla TT | **R_A ≤ U_L/I_a**, dla wyłącznika różnicowoprądowego `R_A ≤ 50/I_Δn` |
 
 **Czasy wyłączenia (obwody końcowe ≤ 32 A, U₀ = 230 V):** TN — **0,4 s**, TT — **0,2 s**.
 **Obwody rozdzielcze / > 32 A:** TN — **5 s**, TT — **1 s**.
@@ -73,7 +73,7 @@ miedź γ ≈ **56 m/(Ω·mm²)**, aluminium γ ≈ **35 m/(Ω·mm²)**.
 
 ---
 
-## C. RCD
+## C. Wyłączniki różnicowoprądowe
 
 | Parametr | Wartość |
 |---|---|
@@ -152,7 +152,7 @@ L1/L2/L3 — brązowa / czarna / szara. Szyny: L1 żółta, L2 zielona, L3 czerw
 | Typowe moce transformatorów SN/nn | 63, 100, 160, 250, 400, 630, 1000 kVA |
 | Napięcie zwarcia u_k transformatorów rozdzielczych | ok. **4–6 %** |
 | Izolacja kabli SN | **XLPE** (dawniej papierowo-olejowa) |
-| Próba napięciowa kabli XLPE | **VLF 0,1 Hz** lub DAC (nie DC!) |
+| Próba napięciowa kabli XLPE | napięciem przemiennym **0,1 Hz** lub tłumionym (**nie stałym!**) |
 | Wzrost napięcia faz zdrowych przy doziemieniu w sieci izolowanej | do wartości międzyfazowej (√3 ×) |
 | Odstęp D_L / D_V dla 15 kV | 0,16 m / 1,16 m |
 | Odstęp D_L / D_V dla 20 kV | 0,22 m / 1,22 m |
@@ -168,11 +168,11 @@ sprawdzenie braku napięcia → uziemienie → wygrodzenie strefy.
 
 ## G. Ochrona odgromowa i przepięciowa
 
-- Klasy ochrony LPS: **I–IV** (I — najwyższy poziom, obiekty szczególne).
+- Klasy ochrony instalacji piorunochronnej: **I–IV** (I — najwyższy poziom, obiekty szczególne).
 - Metody projektowania zwodów: **kąta ochronnego**, **toczącej się kuli**, **siatki**.
-- SPD: **Typ 1** (10/350 µs, złącze/rozdzielnica główna), **Typ 2** (8/20 µs, rozdzielnica
+- Ograniczniki przepięć: **Typ 1** (10/350 µs, złącze/rozdzielnica główna), **Typ 2** (8/20 µs, rozdzielnica
   obiektowa), **Typ 3** (przy odbiorniku).
-- Przewody przyłączeniowe SPD: **≤ 0,5 m**.
+- Przewody przyłączeniowe ograniczników przepięć: **≤ 0,5 m**.
 - Minimalne przekroje przewodów odgromowych: **Cu 16 / Al 25 / Fe 50 mm²**.
 
 ---
