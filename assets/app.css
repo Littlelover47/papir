@@ -532,6 +532,8 @@ blockquote.zakryte:hover::after { color: var(--roz-jasny); }
 .na-stronie li a.aktywny { color: var(--roz-jasny); border-left-color: var(--roz); font-weight: 620; }
 html[data-motyw="jasny"] .na-stronie li a.aktywny { color: var(--roz-ciemny); }
 .na-stronie li.pod a { padding-left: 24px; font-size: 12.2px; }
+.na-stronie li.glowna a { font-weight: 700; color: var(--atrament-2); margin-top: 7px; font-size: 12.9px; }
+.na-stronie li.glowna a:hover { color: var(--atrament); }
 
 /* --------------------------------------------------------------- szukanie */
 

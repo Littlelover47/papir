@@ -274,9 +274,14 @@ function upiekszTresc(korzen) {
     else if (/^[A-C]\.\s/.test(tresc) || /^Odpowied/i.test(tresc)) ramka.classList.add('odpowiedz');
   });
 
-  // identyfikatory nagłówków + odnośnik do skopiowania
+  // identyfikatory nagłówków + odnośnik do skopiowania.
+  // Pierwszy nagłówek to tytuł rozdziału — pomijamy go; dalsze H1 (np. FAZA 0
+  // w procedurze odstawienia) są pełnoprawnymi sekcjami i muszą mieć adres.
   const uzyte = new Set();
-  korzen.querySelectorAll('h2, h3').forEach(naglowek => {
+  const naglowki = [...korzen.querySelectorAll('h1, h2, h3')];
+  if (naglowki[0] && naglowki[0].tagName === 'H1') naglowki.shift();
+
+  naglowki.forEach(naglowek => {
     let id = naIdentyfikator(naglowek.textContent);
     let n = 2;
     while (uzyte.has(id)) id = `${naIdentyfikator(naglowek.textContent)}-${n++}`;
@@ -397,14 +402,17 @@ function panelOtwarty(otwarty) {
 function zbudujSpisTresci() {
   const lista = $('#na-stronie-lista');
   lista.innerHTML = '';
-  const naglowki = [...el.querySelectorAll('h2, h3')];
+
+  const naglowki = [...el.querySelectorAll('h1, h2, h3')];
+  if (naglowki[0] && naglowki[0].tagName === 'H1') naglowki.shift();   // tytuł rozdziału
 
   if (naglowki.length < 3) { $('#na-stronie').style.visibility = 'hidden'; return; }
   $('#na-stronie').style.visibility = 'visible';
 
   for (const naglowek of naglowki) {
     const pozycja = document.createElement('li');
-    if (naglowek.tagName === 'H3') pozycja.className = 'pod';
+    if (naglowek.tagName === 'H1') pozycja.className = 'glowna';
+    else if (naglowek.tagName === 'H3') pozycja.className = 'pod';
     const link = document.createElement('a');
     link.href = `#${naglowek.id}`;
     link.textContent = naglowek.textContent.replace(/^#/, '').trim();
