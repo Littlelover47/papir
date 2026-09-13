@@ -488,12 +488,12 @@ function widgetRozdzielniaZS(miejsce) {
   const stub = { o1: 230, o2: 400, o3: 570 };
 
   const poleOdplywowe = (id, nr) => `
-    <path class="zs-tor-mocny" data-odc="${id}" d="M${X[id]} 160 V190 M${X[id]} 224 V254"/>
+    <path class="zs-tor-mocny" data-odc="${id}" d="M${X[id]} 160 V190 M${X[id]} 224 V266"/>
     <g class="zs-wyl" data-wyl="${id}" transform="translate(${X[id]},207)">
       <rect x="-11" y="-15" width="22" height="30" rx="3"/>
       <line class="zs-styk" x1="0" y1="-15" x2="0" y2="15"/>
     </g>
-    <path class="zs-strzalka" d="M${X[id] - 6} 254 H${X[id] + 6} L${X[id]} 264 Z"/>
+    <path class="zs-strzalka" d="M${X[id] - 6} 266 H${X[id] + 6} L${X[id]} 276 Z"/>
     <text class="zs-pole-nazwa koniec" x="${X[id] - 16}" y="184">Odpływ ${nr}</text>
     <g class="zs-pobudzenie" data-pob="${id}" transform="translate(${X[id] + 30},190)">
       <rect x="-17" y="-9" width="34" height="18" rx="9"/>
@@ -552,9 +552,9 @@ function widgetRozdzielniaZS(miejsce) {
           <circle class="zs-luk-tlo" r="18"/>
           <path transform="scale(1.15)" d="M-13 -16 L2 -4 L-6 0 L11 16 L-2 4 L6 0 Z"/>
         </g>
-        <g class="zs-luk" data-luk="odplyw" transform="translate(370,241)">
-          <circle class="zs-luk-tlo" r="15"/>
-          <path transform="scale(1.15)" d="M-13 -16 L2 -4 L-6 0 L11 16 L-2 4 L6 0 Z"/>
+        <g class="zs-luk" data-luk="odplyw" transform="translate(370,257)">
+          <circle class="zs-luk-tlo" r="12"/>
+          <path transform="scale(0.85)" d="M-13 -16 L2 -4 L-6 0 L11 16 L-2 4 L6 0 Z"/>
         </g>
 
         <text class="zs-plakietka" data-plakietka x="648" y="24"></text>
