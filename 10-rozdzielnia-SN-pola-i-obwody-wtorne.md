@@ -375,6 +375,10 @@ do pola zasilającego:
 Zysk: ochrona szyn bez kosztu zabezpieczenia różnicowego szyn. Wymaga niezawodnego toru blokady
 i **przetestowania każdej pary pól** (odpływ → zasilanie).
 
+> **Pamiętaj.** Cała ta logika, warunki wysłania sygnału blokady i przebieg obu scenariuszy
+> zwarcia są rozłożone na części z dwoma interaktywnymi symulatorami w rozdziale
+> [ZS — zabezpieczenie szyn](14-blokada-logiczna-ZS-symulator.md).
+
 ### D.3 Automatyka SZR (samoczynne załączanie rezerwy)
 
 **Warunki startu:** obniżenie napięcia na sekcji (np. poniżej 70 % przez 0,5–3 s) **oraz**

@@ -705,7 +705,228 @@ html[data-motyw="jasny"] .na-stronie li a.aktywny { color: var(--roz-ciemny); }
   * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
 
+/* ==================================================== symulatory ZS (rozdz. 14) */
+
+.zs {
+  margin: 26px 0;
+  border: 1px solid var(--kreska-2);
+  border-radius: var(--promien);
+  background: var(--tlo-2);
+  overflow: hidden;
+}
+
+.zs-pasek {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 11px 14px;
+  background: var(--tlo-3);
+  border-bottom: 1px solid var(--kreska);
+  font-size: 14px; color: var(--atrament);
+}
+.zs-znaczek {
+  padding: 3px 9px; border-radius: 99px;
+  background: var(--roz); color: #22000e;
+  font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+}
+
+/* ---- przełączniki wejść bramki ---- */
+
+.zs-przelaczniki {
+  display: grid; gap: 8px; padding: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(238px, 1fr));
+}
+.zs-przelacznik {
+  display: flex; align-items: center; gap: 10px; text-align: left;
+  padding: 9px 11px; font: inherit; font-size: 13.5px;
+  border: 1px solid var(--kreska-2); border-radius: var(--promien-s);
+  background: var(--tlo); color: var(--atrament-3); cursor: pointer;
+  transition: border-color .16s, background .16s, color .16s, box-shadow .16s;
+}
+.zs-przelacznik:hover { border-color: var(--kreska-2); background: var(--tlo-3); }
+.zs-przelacznik.wlaczony {
+  border-color: var(--roz); background: var(--roz-mgla);
+  color: var(--atrament); box-shadow: var(--poswiata-s);
+}
+.zs-dioda {
+  flex: 0 0 auto; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--kreska-2); transition: background .16s, box-shadow .16s;
+}
+.zs-przelacznik.wlaczony .zs-dioda { background: var(--roz); box-shadow: 0 0 10px var(--roz); }
+.zs-etykieta { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.zs-etykieta strong { font-weight: 650; }
+.zs-etykieta small { font-size: 11.5px; color: var(--atrament-3); line-height: 1.35; }
+.zs-bit {
+  margin-left: auto; flex: 0 0 auto;
+  font-family: var(--czcionka-mono); font-size: 15px; font-weight: 800;
+  color: var(--atrament-3);
+}
+.zs-przelacznik.wlaczony .zs-bit { color: var(--roz); }
+
+/* ---- przyciski scenariuszy ---- */
+
+.zs-sterowanie { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 14px 2px; }
+.zs-btn {
+  padding: 8px 13px; font: inherit; font-size: 13px; font-weight: 600;
+  border: 1px solid var(--kreska-2); border-radius: var(--promien-s);
+  background: var(--tlo); color: var(--atrament-2); cursor: pointer;
+  transition: border-color .16s, background .16s, color .16s;
+}
+.zs-btn:hover:not(:disabled) { border-color: var(--roz-ciemny); color: var(--atrament); }
+.zs-btn:disabled { opacity: .4; cursor: default; }
+.zs-btn.glowny.wybrany {
+  background: var(--roz); border-color: var(--roz); color: #22000e;
+  box-shadow: var(--poswiata-s);
+}
+
+/* ---- rysunki ---- */
+
+.zs-rysunek { padding: 8px 14px 12px; overflow-x: auto; }
+.zs-svg { display: block; width: 100%; max-width: 760px; height: auto; min-width: 470px; margin-inline: auto; }
+.zs-svg-stacja { min-width: 560px; }
+.zs-svg text { font-family: var(--czcionka); fill: var(--atrament-2); }
+
+.zs-opis { font-size: 13px; font-weight: 650; fill: var(--atrament); }
+.zs-adres { font-size: 10.5px; font-family: var(--czcionka-mono); fill: var(--atrament-3); }
+
+.zs-tor { fill: none; stroke: var(--kreska-2); stroke-width: 2.5; transition: stroke .18s, filter .18s; }
+.zs-tor.aktywny { stroke: var(--roz); filter: drop-shadow(0 0 5px var(--roz-ciemny)); }
+.zs-tor[data-tor="wyjscie"].aktywny { stroke: var(--sukces); filter: drop-shadow(0 0 6px rgba(86, 224, 160, .7)); }
+.zs-pin { fill: var(--kreska-2); transition: fill .18s; }
+.zs-pin.aktywny { fill: var(--roz); }
+
+.zs-brama-ksztalt { fill: var(--tlo-3); stroke: var(--kreska-2); stroke-width: 2.5; transition: stroke .18s, fill .18s; }
+.zs-brama-ksztalt.aktywny { stroke: var(--roz); fill: var(--roz-mgla); }
+.zs-brama-napis { font-size: 15px; font-weight: 800; text-anchor: middle; fill: var(--atrament); }
+.zs-brama-napis.mala { font-size: 10.5px; font-weight: 500; fill: var(--atrament-3); }
+
+.zs-pudlo { fill: var(--tlo-3); stroke: var(--kreska-2); stroke-width: 2.5; transition: stroke .18s, fill .18s; }
+.zs-pudlo.aktywny { stroke: var(--sukces); fill: var(--sukces-tlo); }
+.zs-wy-nazwa { font-size: 12px; font-weight: 650; text-anchor: middle; }
+.zs-wy-bit {
+  font-size: 20px; font-weight: 800; text-anchor: middle;
+  font-family: var(--czcionka-mono); fill: var(--atrament-3); transition: fill .18s;
+}
+.zs-wy-bit.aktywny { fill: var(--sukces); }
+
+/* ---- rysunek rozdzielni ---- */
+
+.zs-trafo { fill: none; stroke: var(--atrament-3); stroke-width: 2.2; }
+.zs-podpis { font-size: 12px; fill: var(--atrament-3); }
+.zs-pole-nazwa { font-size: 12px; font-weight: 650; text-anchor: middle; fill: var(--atrament-2); }
+.zs-pole-nazwa.start { text-anchor: start; }
+.zs-pole-nazwa.koniec { text-anchor: end; }
+
+.zs-tor-mocny { fill: none; stroke: var(--atrament-3); stroke-width: 3; transition: stroke .2s, opacity .2s; }
+.zs-szyna { fill: none; stroke: var(--atrament-2); stroke-width: 6.5; stroke-linecap: round; transition: stroke .2s, opacity .2s; }
+.zs-szyna-napis { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-anchor: end; fill: var(--atrament-3); }
+.zs-strzalka { fill: var(--atrament-3); }
+
+.zs-tor-mocny.prad {
+  stroke: var(--ostrzezenie); stroke-width: 4;
+  stroke-dasharray: 13 11; animation: zs-plyn .6s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 192, 97, .7));
+}
+.zs-szyna.prad { stroke: var(--ostrzezenie); animation: zs-tetno .8s ease-in-out infinite; }
+.zs-tor-mocny.martwy, .zs-szyna.martwy { opacity: .3; }
+.zs-svg-stacja.bez-napiecia .zs-tor-mocny,
+.zs-svg-stacja.bez-napiecia .zs-szyna { stroke: var(--kreska-2); }
+
+@keyframes zs-plyn { to { stroke-dashoffset: -48; } }
+@keyframes zs-tetno { 50% { filter: drop-shadow(0 0 10px rgba(255, 192, 97, .85)); } }
+
+.zs-wyl rect { fill: var(--tlo-3); stroke: var(--atrament-3); stroke-width: 2; transition: stroke .2s; }
+.zs-wyl .zs-styk { stroke: var(--roz); stroke-width: 3; stroke-linecap: round; transition: transform .25s, stroke .2s; }
+.zs-wyl.otwarty rect { stroke: var(--sukces); }
+.zs-wyl.otwarty .zs-styk { stroke: var(--sukces); }
+
+.zs-pobudzenie { opacity: .35; transition: opacity .2s; }
+.zs-pobudzenie rect { fill: var(--tlo-3); stroke: var(--kreska-2); stroke-width: 1.5; }
+.zs-pobudzenie text { font-size: 11px; font-weight: 800; text-anchor: middle; fill: var(--atrament-3); }
+.zs-pobudzenie.aktywny { opacity: 1; }
+.zs-pobudzenie.aktywny rect { fill: var(--alarm-tlo); stroke: var(--alarm); }
+.zs-pobudzenie.aktywny text { fill: var(--alarm); }
+
+.zs-blok-tor, .zs-blok-szyna {
+  fill: none; stroke: var(--kreska-2); stroke-width: 2; stroke-dasharray: 6 5;
+  transition: stroke .2s, filter .2s;
+}
+.zs-blok-szyna { stroke-width: 3; }
+.zs-blok-tor.aktywny, .zs-blok-szyna.aktywny {
+  stroke: var(--sukces); filter: drop-shadow(0 0 6px rgba(86, 224, 160, .75));
+}
+.zs-blok-napis { font-size: 11px; text-anchor: middle; fill: var(--atrament-3); }
+
+.zs-luk { display: none; }
+.zs-luk.widoczny { display: block; }
+.zs-luk-tlo { fill: var(--tlo); stroke: var(--alarm); stroke-width: 1.4; opacity: .92; }
+.zs-luk path {
+  fill: var(--alarm); stroke: var(--alarm-tlo); stroke-width: 1;
+  filter: drop-shadow(0 0 8px var(--alarm));
+  animation: zs-migaj .75s ease-in-out infinite;
+}
+@keyframes zs-migaj { 50% { opacity: .62; } }
+
+.zs-plakietka { font-size: 12.5px; font-weight: 700; text-anchor: end; fill: var(--atrament-3); }
+.zs-plakietka.alarm { fill: var(--alarm); }
+.zs-plakietka.ok { fill: var(--sukces); }
+
+/* ---- lista kroków ---- */
+
+.zs-kroki {
+  list-style: none; margin: 0; padding: 10px 14px 14px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.zs-kroki li {
+  display: flex; gap: 10px; align-items: flex-start; margin: 0;
+  padding: 9px 11px; font-size: 13.5px; line-height: 1.5;
+  border: 1px solid transparent; border-radius: var(--promien-s);
+  background: var(--tlo); color: var(--atrament-3);
+  opacity: .5; transition: opacity .2s, border-color .2s, background .2s, color .2s;
+}
+.zs-kroki li::marker { content: none; }
+.zs-kroki li.zrobiony { opacity: .78; }
+.zs-kroki li.teraz {
+  opacity: 1; color: var(--atrament);
+  border-color: var(--roz); background: var(--roz-mgla-2);
+}
+.zs-zacheta { font-style: italic; }
+.zs-czas {
+  flex: 0 0 62px; padding: 3px 0; border-radius: 99px;
+  font-family: var(--czcionka-mono); font-size: 11.5px; font-weight: 800; text-align: center;
+  background: var(--tlo-3); color: var(--atrament-2);
+}
+.zs-czas.alarm { background: var(--alarm-tlo); color: var(--alarm); }
+.zs-czas.ok { background: var(--sukces-tlo); color: var(--sukces); }
+.zs-czas.info { background: var(--roz-mgla); color: var(--roz-jasny); }
+
+/* ---- komunikat wyniku ---- */
+
+.zs-komunikat {
+  margin: 0; padding: 12px 14px; font-size: 13.5px; line-height: 1.6;
+  border-top: 1px solid var(--kreska); color: var(--atrament-2);
+}
+.zs-komunikat.ok { background: var(--sukces-tlo); }
+.zs-komunikat.alarm { background: var(--alarm-tlo); }
+.zs-komunikat strong { color: var(--atrament); }
+
+@media (max-width: 560px) {
+  .zs-rysunek { padding-left: 8px; padding-right: 8px; }
+  .zs-kroki li { font-size: 13px; }
+  .zs-czas { flex-basis: 56px; }
+}
+
 /* ------------------------------------------------------------------- druk */
+
+@media print {
+  .zs-przelaczniki, .zs-sterowanie { display: none !important; }
+  .zs { border: 1px solid #bbb; background: none; page-break-inside: avoid; }
+  .zs-pasek { background: none; border-bottom: 1px solid #ccc; }
+  .zs-znaczek { background: none; color: #000; border: 1px solid #999; }
+  .zs-kroki li { opacity: 1 !important; background: none; border-color: #ddd; color: #000; }
+  .zs-komunikat { background: none !important; }
+  .zs-svg { min-width: 0; }
+  .zs-luk path { animation: none; }
+  .zs-tor-mocny.prad { animation: none; }
+}
 
 @media print {
   .gora, .panel, .na-stronie, .wedrowka, .zaslona, .szukajka, .pasek-narzedzi, .pomin-nawigacje { display: none !important; }

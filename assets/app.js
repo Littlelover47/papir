@@ -51,7 +51,10 @@ const ROZDZIALY = [
         opis: 'Matryce prób sterowania i wyzwalania, automatyki, wzór protokołu.' },
       { plik: '13-procedura-odstawienia-i-zalaczenia-rozdzielni-SN', numer: '13',
         tytul: 'Odstawienie i podanie napięcia',
-        opis: 'Pełna procedura od zera: wyłączanie, prace, próby, podanie napięcia.' }
+        opis: 'Pełna procedura od zera: wyłączanie, prace, próby, podanie napięcia.' },
+      { plik: '14-blokada-logiczna-ZS-symulator', numer: '14',
+        tytul: 'ZS — zabezpieczenie szyn (symulator)',
+        opis: 'Blokada logiczna od podstaw: analogia, bramka AND na żywo, symulacja zwarcia.' }
     ]
   }
 ];
@@ -296,6 +299,9 @@ function upiekszTresc(korzen) {
     naglowek.insertBefore(kotwica, naglowek.firstChild);
   });
 
+  // interaktywne symulatory ZS (rozdział 14) — awaria nie może zabrać treści
+  bezpiecznie(() => zbudujWidgetyZS(korzen), 'symulatory ZS');
+
   // odnośniki do plików .md prowadzą wewnątrz strony, zewnętrzne otwierają nową kartę
   korzen.querySelectorAll('a[href]').forEach(odnosnik => {
     const href = odnosnik.getAttribute('href');
@@ -307,6 +313,362 @@ function upiekszTresc(korzen) {
       odnosnik.rel = 'noopener';
     }
   });
+}
+
+/* ============================================ symulatory ZS (rozdział 14) ==
+   W treści rozdziału wystawiamy tylko puste znaczniki:
+     <div class="zs-widget" data-typ="brama"></div>
+     <div class="zs-widget" data-typ="rozdzielnia"></div>
+   Cała interakcja powstaje tutaj, żeby markdown został czytelny.
+   ========================================================================== */
+
+const ZS_WEJSCIA = [
+  { id: 'zson',  skrot: 'ZS ON = 1',        adres: 'STATE',
+    nazwa: 'Automat ZS ON',         opis: 'funkcja ZS włączona w sterowniku',
+    brak: 'Automat ZS jest wyłączony — cała funkcja nie działa. Szyny są chronione tylko zwykłym czasem 0,8 s.' },
+  { id: 'prad',  skrot: 'I&gt;t.P',          adres: 'A6',
+    nazwa: 'Pobudzenie I&gt;t.P',      opis: 'to pole widzi prąd zwarciowy',
+    brak: 'Brak pobudzenia prądowego — przez to pole nie płynie prąd zwarciowy, więc nie ma czego zgłaszać.' },
+  { id: 'wyl',   skrot: 'W zamkn.',         adres: 'A10',
+    nazwa: 'Wyłącznik zamknięty',   opis: 'W ON.Out — pole pracuje',
+    brak: 'Wyłącznik pola jest otwarty — nic przez to pole nie płynie, więc nie może być źródłem zwarcia i nie ma prawa blokować szyn.' },
+  { id: 'wozek', skrot: 'Wózek praca',      adres: 'A10',
+    nazwa: 'Wózek w pozycji praca', opis: 'nie „próba” — chroni przed fałszywką w czasie testów',
+    brak: 'Wózek jest w pozycji próby — to test zabezpieczenia, a nie prawdziwe zwarcie. Blokada celowo nie wychodzi, żeby test nie zdjął ochrony szyn.' }
+];
+
+function zbudujWidgetyZS(korzen) {
+  korzen.querySelectorAll('.zs-widget').forEach(miejsce => {
+    if (miejsce.dataset.gotowe) return;
+    miejsce.dataset.gotowe = '1';
+    if (miejsce.dataset.typ === 'brama') widgetBramaZS(miejsce);
+    else if (miejsce.dataset.typ === 'rozdzielnia') widgetRozdzielniaZS(miejsce);
+  });
+}
+
+/* --------------------------------------------------- symulator 1: bramka AND */
+
+function widgetBramaZS(miejsce) {
+  const stan = { zson: true, prad: false, wyl: true, wozek: true };
+  const Y = { zson: 45, prad: 80, wyl: 115, wozek: 150 };
+
+  miejsce.classList.add('zs');
+  miejsce.innerHTML = `
+    <div class="zs-pasek">
+      <span class="zs-znaczek">Symulator 1</span>
+      <strong>Bramka AND — kiedy pole odpływowe wysyła blokadę BL_ZS</strong>
+    </div>
+
+    <div class="zs-przelaczniki">
+      ${ZS_WEJSCIA.map(w => `
+        <button type="button" class="zs-przelacznik" data-we="${w.id}" aria-pressed="false">
+          <span class="zs-dioda" aria-hidden="true"></span>
+          <span class="zs-etykieta">
+            <strong>${w.nazwa}</strong>
+            <small>${w.opis}</small>
+          </span>
+          <span class="zs-bit">0</span>
+        </button>`).join('')}
+    </div>
+
+    <div class="zs-rysunek">
+      <svg viewBox="0 0 620 195" class="zs-svg" role="img"
+           aria-label="Schemat logiczny: cztery wejścia, bramka iloczynu, wyjście BL_ZS">
+        ${ZS_WEJSCIA.map(w => `
+          <text class="zs-opis" x="8" y="${Y[w.id] + 4}">${w.skrot}</text>
+          <text class="zs-adres" x="8" y="${Y[w.id] + 19}">${w.adres}</text>
+          <path class="zs-tor" data-tor="${w.id}" d="M168 ${Y[w.id]} H300"/>
+          <circle class="zs-pin" data-tor="${w.id}" cx="300" cy="${Y[w.id]}" r="3.5"/>`).join('')}
+
+        <path class="zs-brama-ksztalt" data-brama d="M300 25 H355 A72.5 72.5 0 0 1 355 170 H300 Z"/>
+        <text class="zs-brama-napis" x="342" y="92">AND</text>
+        <text class="zs-brama-napis mala" x="342" y="112">iloczyn</text>
+
+        <path class="zs-tor" data-tor="wyjscie" d="M427 97.5 H470"/>
+        <rect class="zs-pudlo" data-tor="wyjscie" x="470" y="72" width="142" height="52" rx="8"/>
+        <text class="zs-wy-nazwa" x="541" y="93">BL_ZS (Wy04).Stan</text>
+        <text class="zs-wy-bit"   x="541" y="115" data-wybit>0</text>
+        <text class="zs-adres" x="431" y="90">A11</text>
+      </svg>
+    </div>
+
+    <p class="zs-komunikat" data-kom aria-live="polite"></p>`;
+
+  const svg = miejsce.querySelector('svg');
+  const kom = miejsce.querySelector('[data-kom]');
+
+  function odswiez() {
+    const wynik = ZS_WEJSCIA.every(w => stan[w.id]);
+
+    miejsce.querySelectorAll('.zs-przelacznik').forEach(przycisk => {
+      const wl = stan[przycisk.dataset.we];
+      przycisk.classList.toggle('wlaczony', wl);
+      przycisk.setAttribute('aria-pressed', String(wl));
+      przycisk.querySelector('.zs-bit').textContent = wl ? '1' : '0';
+    });
+
+    ZS_WEJSCIA.forEach(w => {
+      svg.querySelectorAll(`[data-tor="${w.id}"]`).forEach(e => e.classList.toggle('aktywny', stan[w.id]));
+    });
+    svg.querySelectorAll('[data-tor="wyjscie"]').forEach(e => e.classList.toggle('aktywny', wynik));
+    svg.querySelector('[data-brama]').classList.toggle('aktywny', wynik);
+    svg.querySelector('[data-wybit]').textContent = wynik ? '1' : '0';
+    svg.querySelector('[data-wybit]').classList.toggle('aktywny', wynik);
+
+    const braki = ZS_WEJSCIA.filter(w => !stan[w.id]);
+    if (!braki.length) {
+      kom.className = 'zs-komunikat ok';
+      kom.innerHTML = '<strong>BL_ZS = 1 — blokada wychodzi.</strong> Pole odpływowe „podnosi rękę”: ' +
+        'to jego zwarcie. Pole zasilające odstawia stopień ZS i czeka swój normalny czas 0,8 s, ' +
+        'pełniąc już tylko rolę rezerwy. Selektywność zachowana.';
+    } else {
+      kom.className = 'zs-komunikat alarm';
+      kom.innerHTML = `<strong>BL_ZS = 0 — blokada nie wychodzi.</strong> ${braki[0].brak}` +
+        (braki.length > 1 ? ` <em>(Brakuje jeszcze ${braki.length - 1} innych warunków.)</em>` : '') +
+        ' Jeśli tak samo milczą wszystkie odpływy, pole zasilające uzna zwarcie za zwarcie na szynach.';
+    }
+  }
+
+  miejsce.querySelectorAll('.zs-przelacznik').forEach(przycisk => {
+    przycisk.addEventListener('click', () => {
+      stan[przycisk.dataset.we] = !stan[przycisk.dataset.we];
+      odswiez();
+    });
+  });
+
+  odswiez();
+}
+
+/* ------------------------------------------- symulator 2: cała rozdzielnia */
+
+/** Jeden krok scenariusza: czas, opis i stan rysunku do pokazania. */
+const ZS_SCENARIUSZE = {
+  szyny: {
+    nazwa: 'Zwarcie na szynach zbiorczych',
+    kroki: [
+      { t: '0 ms', ton: 'alarm', tekst: 'Zwarcie na szynach. Prąd płynie z transformatora przez pole zasilające prosto w miejsce zwarcia — i tam się kończy.',
+        s: { luk: 'szyny', prad: ['trafo', 'zas', 'szyna'] } },
+      { t: '20 ms', ton: 'info', tekst: 'Pole zasilające pobudza I&gt;. Żaden odpływ nie widzi prądu zwarciowego, bo zwarcie jest przed nimi. Nasłuch blokady się rozpoczyna.',
+        s: { luk: 'szyny', prad: ['trafo', 'zas', 'szyna'], pobZas: true } },
+      { t: '60 ms', ton: 'alarm', tekst: 'Koniec nastawionego okna 40–100 ms. Na szynach okrężnych blokady <strong>cisza</strong>. Dla sterownika to dowód: zwarcie jest w strefie szyn.',
+        s: { luk: 'szyny', prad: ['trafo', 'zas', 'szyna'], pobZas: true, decyzja: 'brak-blokady' } },
+      { t: '60 ms', ton: 'info', tekst: 'Bezzwłoczna komenda wyłączenia na pole zasilające — stopień ZS pomija zwłokę 0,8 s.',
+        s: { luk: 'szyny', prad: ['trafo', 'zas', 'szyna'], pobZas: true, decyzja: 'wylacz' } },
+      { t: '≈120 ms', ton: 'ok', tekst: 'Wyłącznik pola zasilającego otwarty (własny czas ok. 60 ms), łuk zgaszony. Sekcja jest bez napięcia — i o to chodziło.',
+        s: { luk: null, wylZas: 'otw', bezNapiecia: true } }
+    ],
+    podsumowanie: '<strong>Zysk ZS: ok. 120 ms zamiast ok. 860 ms.</strong> Bez ZS pole zasilające ' +
+      'czekałoby pełne 0,8 s + czas wyłącznika. Energia łuku rośnie z czasem, więc to różnica ' +
+      'między przypaloną szyną a rozerwanym przedziałem. Ceny w postaci przekładników i stref ' +
+      'jak w różnicówce szyn nie zapłaciliśmy żadnej.'
+  },
+  odplyw: {
+    nazwa: 'Zwarcie w polu odpływowym nr 2',
+    kroki: [
+      { t: '0 ms', ton: 'alarm', tekst: 'Zwarcie w kablu odpływu 2. Prąd płynie z transformatora przez pole zasilające, <strong>przez szyny</strong> i dalej przez odpływ 2.',
+        s: { luk: 'odplyw', prad: ['trafo', 'zas', 'szyna', 'o2'] } },
+      { t: '20 ms', ton: 'ok', tekst: 'Odpływ 2 pobudza I&gt; i <strong>natychmiast</strong> wystawia BL_ZS na szyny okrężne blokady. Pole zasilające też widzi prąd — ale nie wie jeszcze, gdzie jest zwarcie.',
+        s: { luk: 'odplyw', prad: ['trafo', 'zas', 'szyna', 'o2'], pobZas: true, pobO2: true, blokada: ['o2', 'szyna', 'zas'] } },
+      { t: '35 ms', ton: 'ok', tekst: 'Wejście dwustanowe pola zasilającego odebrało blokadę — jeszcze w oknie 40–100 ms. Stopień ZS zostaje zablokowany, zostaje zwykłe I&gt; = 0,8 s jako rezerwa.',
+        s: { luk: 'odplyw', prad: ['trafo', 'zas', 'szyna', 'o2'], pobZas: true, pobO2: true, blokada: ['o2', 'szyna', 'zas'], decyzja: 'blokada' } },
+      { t: '500 ms', ton: 'info', tekst: 'Odpływ 2 wyłącza własnym czasem 0,5 s. Zwarcie zniknęło razem z nim, więc rezerwa 0,8 s nigdy nie dojdzie do końca.',
+        s: { luk: null, wylO2: 'otw', martwe: ['o2'] } },
+      { t: 'koniec', ton: 'ok', tekst: 'Szyny pod napięciem, odpływy 1 i 3 pracują dalej. Wyłączono dokładnie to jedno pole, które trzeba było.',
+        s: { luk: null, wylO2: 'otw', martwe: ['o2'], normalna: true } }
+    ],
+    podsumowanie: '<strong>Selektywność zachowana.</strong> Ten scenariusz jest tak samo ważny jak ' +
+      'poprzedni: pokazuje, po co w ogóle blokada. Gdyby tor blokady był przerwany, pole zasilające ' +
+      'nie usłyszałoby zgłoszenia i po 60 ms zgasiłoby <em>całą sekcję</em> z powodu zwarcia w jednym ' +
+      'kablu. Dlatego tor blokady sprawdza się dla <em>każdej</em> pary pól.'
+  }
+};
+
+function widgetRozdzielniaZS(miejsce) {
+  const X = { o1: 200, o2: 370, o3: 540 };
+  const stub = { o1: 230, o2: 400, o3: 570 };
+
+  const poleOdplywowe = (id, nr) => `
+    <path class="zs-tor-mocny" data-odc="${id}" d="M${X[id]} 160 V190 M${X[id]} 224 V254"/>
+    <g class="zs-wyl" data-wyl="${id}" transform="translate(${X[id]},207)">
+      <rect x="-11" y="-15" width="22" height="30" rx="3"/>
+      <line class="zs-styk" x1="0" y1="-15" x2="0" y2="15"/>
+    </g>
+    <path class="zs-strzalka" d="M${X[id] - 6} 254 H${X[id] + 6} L${X[id]} 264 Z"/>
+    <text class="zs-pole-nazwa koniec" x="${X[id] - 16}" y="184">Odpływ ${nr}</text>
+    <g class="zs-pobudzenie" data-pob="${id}" transform="translate(${X[id] + 30},190)">
+      <rect x="-17" y="-9" width="34" height="18" rx="9"/>
+      <text y="4">I&gt;</text>
+    </g>
+    <path class="zs-blok-tor" data-blok="${id}" d="M${X[id] + 11} 207 H${stub[id]} V300"/>`;
+
+  miejsce.classList.add('zs');
+  miejsce.innerHTML = `
+    <div class="zs-pasek">
+      <span class="zs-znaczek">Symulator 2</span>
+      <strong>Rozdzielnia w akcji — dwa scenariusze, dwa zupełnie różne czasy</strong>
+    </div>
+
+    <div class="zs-sterowanie">
+      <button type="button" class="zs-btn glowny" data-sc="szyny">Zwarcie na szynach</button>
+      <button type="button" class="zs-btn glowny" data-sc="odplyw">Zwarcie w odpływie 2</button>
+      <button type="button" class="zs-btn" data-akcja="krok" disabled>Krok →</button>
+      <button type="button" class="zs-btn" data-akcja="reset">Reset</button>
+    </div>
+
+    <div class="zs-rysunek">
+      <svg viewBox="0 0 660 330" class="zs-svg zs-svg-stacja" role="img"
+           aria-label="Schemat rozdzielni: transformator, pole zasilające, szyny zbiorcze, trzy odpływy i szyny okrężne blokady">
+        <!-- transformator + pole zasilające -->
+        <circle class="zs-trafo" cx="80" cy="28" r="15"/>
+        <circle class="zs-trafo" cx="80" cy="44" r="15"/>
+        <text class="zs-podpis" x="108" y="30">Transformator</text>
+        <text class="zs-podpis" x="108" y="45">WN/SN</text>
+
+        <path class="zs-tor-mocny" data-odc="trafo" d="M80 59 V78"/>
+        <path class="zs-tor-mocny" data-odc="zas" d="M80 111 V160"/>
+        <g class="zs-wyl" data-wyl="zas" transform="translate(80,94)">
+          <rect x="-11" y="-15" width="22" height="30" rx="3"/>
+          <line class="zs-styk" x1="0" y1="-15" x2="0" y2="15"/>
+        </g>
+        <text class="zs-pole-nazwa start" x="97" y="137">Pole zasilające</text>
+        <g class="zs-pobudzenie" data-pob="zas" transform="translate(126,94)">
+          <rect x="-17" y="-9" width="34" height="18" rx="9"/>
+          <text y="4">I&gt;</text>
+        </g>
+        <path class="zs-blok-tor" data-blok="zas" d="M69 94 H44 V300"/>
+
+        <!-- szyny zbiorcze -->
+        <path class="zs-szyna" data-odc="szyna" d="M62 160 H626"/>
+        <text class="zs-szyna-napis" x="626" y="150">SZYNY ZBIORCZE</text>
+
+        ${poleOdplywowe('o1', 1)}${poleOdplywowe('o2', 2)}${poleOdplywowe('o3', 3)}
+
+        <!-- szyny okrężne blokady -->
+        <path class="zs-blok-szyna" data-blok="szyna" d="M44 300 H570"/>
+        <text class="zs-blok-napis" x="309" y="320">szyny okrężne blokady — sygnał BL_ZS</text>
+
+        <!-- miejsca zwarcia -->
+        <g class="zs-luk" data-luk="szyny" transform="translate(300,160)">
+          <circle class="zs-luk-tlo" r="18"/>
+          <path transform="scale(1.15)" d="M-13 -16 L2 -4 L-6 0 L11 16 L-2 4 L6 0 Z"/>
+        </g>
+        <g class="zs-luk" data-luk="odplyw" transform="translate(370,241)">
+          <circle class="zs-luk-tlo" r="15"/>
+          <path transform="scale(1.15)" d="M-13 -16 L2 -4 L-6 0 L11 16 L-2 4 L6 0 Z"/>
+        </g>
+
+        <text class="zs-plakietka" data-plakietka x="648" y="24"></text>
+      </svg>
+    </div>
+
+    <ol class="zs-kroki" data-kroki aria-live="polite"></ol>
+    <p class="zs-komunikat" data-kom hidden></p>`;
+
+  const svg = miejsce.querySelector('svg');
+  const listaKrokow = miejsce.querySelector('[data-kroki]');
+  const kom = miejsce.querySelector('[data-kom]');
+  const btnKrok = miejsce.querySelector('[data-akcja="krok"]');
+  const plakietka = svg.querySelector('[data-plakietka]');
+
+  let scenariusz = null;
+  let krok = -1;
+  let zegar = null;
+
+  function rysuj(s) {
+    s = s || {};
+    const prad = s.prad || [];
+    const martwe = s.martwe || [];
+    const blokada = s.blokada || [];
+    svg.querySelectorAll('[data-odc]').forEach(e => {
+      e.classList.toggle('prad', prad.includes(e.dataset.odc));
+      e.classList.toggle('martwy', martwe.includes(e.dataset.odc));
+    });
+    svg.querySelectorAll('[data-luk]').forEach(e => e.classList.toggle('widoczny', e.dataset.luk === s.luk));
+    svg.querySelectorAll('[data-blok]').forEach(e => e.classList.toggle('aktywny', blokada.includes(e.dataset.blok)));
+    svg.querySelector('[data-pob="zas"]').classList.toggle('aktywny', !!s.pobZas);
+    svg.querySelector('[data-pob="o2"]').classList.toggle('aktywny', !!s.pobO2);
+
+    const ustawWyl = (id, otwarty) => {
+      const g = svg.querySelector(`[data-wyl="${id}"]`);
+      g.classList.toggle('otwarty', otwarty);
+      g.querySelector('.zs-styk').setAttribute('transform', otwarty ? 'rotate(-34)' : '');
+    };
+    ustawWyl('zas', s.wylZas === 'otw');
+    ustawWyl('o2', s.wylO2 === 'otw');
+    ustawWyl('o1', false);
+    ustawWyl('o3', false);
+
+    svg.classList.toggle('bez-napiecia', !!s.bezNapiecia);
+
+    // SVG nie przyjmuje .className — trzeba przez atrybut
+    const opisz = (tekst, ton) => {
+      plakietka.textContent = tekst;
+      plakietka.setAttribute('class', 'zs-plakietka' + (ton ? ' ' + ton : ''));
+    };
+    if (s.decyzja === 'brak-blokady') opisz('brak blokady → zwarcie jest na szynach', 'alarm');
+    else if (s.decyzja === 'wylacz')  opisz('ZS: wyłącz bezzwłocznie', 'alarm');
+    else if (s.decyzja === 'blokada') opisz('blokada odebrana → ZS odstawione, rezerwa 0,8 s', 'ok');
+    else if (s.bezNapiecia)           opisz('cała sekcja bez napięcia', '');
+    else if (s.normalna)              opisz('praca normalna — wyłączony tylko odpływ 2', 'ok');
+    else                              opisz(s.spoczynek || '', '');
+  }
+
+  function pokazKrok(i) {
+    krok = i;
+    const dane = ZS_SCENARIUSZE[scenariusz];
+    rysuj(dane.kroki[i].s);
+    [...listaKrokow.children].forEach((li, n) => {
+      li.classList.toggle('teraz', n === i);
+      li.classList.toggle('zrobiony', n < i);
+    });
+    listaKrokow.children[i].scrollIntoView({ block: 'nearest' });
+
+    const ostatni = i === dane.kroki.length - 1;
+    btnKrok.disabled = ostatni;
+    if (ostatni) {
+      kom.hidden = false;
+      kom.className = 'zs-komunikat ok';
+      kom.innerHTML = dane.podsumowanie;
+    }
+  }
+
+  function start(nazwa) {
+    clearTimeout(zegar);
+    scenariusz = nazwa;
+    const dane = ZS_SCENARIUSZE[nazwa];
+    kom.hidden = true;
+    miejsce.querySelectorAll('[data-sc]').forEach(b => b.classList.toggle('wybrany', b.dataset.sc === nazwa));
+    listaKrokow.innerHTML = dane.kroki.map(k => `
+      <li><span class="zs-czas ${k.ton}">${k.t}</span><span>${k.tekst}</span></li>`).join('');
+    pokazKrok(0);
+    graj();
+  }
+
+  function graj() {
+    clearTimeout(zegar);
+    const dane = ZS_SCENARIUSZE[scenariusz];
+    if (krok >= dane.kroki.length - 1) return;
+    zegar = setTimeout(() => { pokazKrok(krok + 1); graj(); }, 2300);
+  }
+
+  function reset() {
+    clearTimeout(zegar);
+    scenariusz = null; krok = -1;
+    listaKrokow.innerHTML = '<li class="zs-zacheta teraz">Wybierz scenariusz powyżej. Przebieg odtworzy się sam — albo klikaj „Krok →” we własnym tempie.</li>';
+    kom.hidden = true;
+    btnKrok.disabled = true;
+    miejsce.querySelectorAll('[data-sc]').forEach(b => b.classList.remove('wybrany'));
+    rysuj({ spoczynek: 'praca normalna — wszystko pod napięciem' });
+  }
+
+  miejsce.querySelectorAll('[data-sc]').forEach(b => b.addEventListener('click', () => start(b.dataset.sc)));
+  btnKrok.addEventListener('click', () => {
+    clearTimeout(zegar);
+    if (scenariusz && krok < ZS_SCENARIUSZE[scenariusz].kroki.length - 1) pokazKrok(krok + 1);
+  });
+  miejsce.querySelector('[data-akcja="reset"]').addEventListener('click', reset);
+
+  reset();
 }
 
 /* ------------------------------------------------------------------ trasy */

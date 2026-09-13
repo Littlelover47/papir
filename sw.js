@@ -1,7 +1,7 @@
 /* Tryb offline: po pierwszym wejściu cała treść zapisuje się na urządzeniu.
    Po zmianie plików podnieś numer wersji — stary zapas zostanie usunięty. */
 
-const WERSJA = 'sep-30kv-v2';
+const WERSJA = 'sep-30kv-v3';
 
 const ZAPAS = [
   './',
@@ -26,7 +26,8 @@ const ZAPAS = [
   '10-rozdzielnia-SN-pola-i-obwody-wtorne.md',
   '11-zabezpieczenia-nastawy-i-testowanie.md',
   '12-proby-funkcjonalne-sterowania-i-automatyki.md',
-  '13-procedura-odstawienia-i-zalaczenia-rozdzielni-SN.md'
+  '13-procedura-odstawienia-i-zalaczenia-rozdzielni-SN.md',
+  '14-blokada-logiczna-ZS-symulator.md'
 ];
 
 self.addEventListener('install', zdarzenie => {
