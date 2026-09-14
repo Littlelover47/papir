@@ -56,6 +56,38 @@ const ROZDZIALY = [
         tytul: 'ZS — zabezpieczenie szyn (symulator)',
         opis: 'Blokada logiczna od podstaw: analogia, bramka AND na żywo, symulacja zwarcia.' }
     ]
+  },
+  {
+    grupa: 'Część III — pomiary i diagnostyka SN/WN',
+    pozycje: [
+      { plik: '15-trudne-miejsca-przewodnik', numer: '15',
+        tytul: 'Trudne miejsca — przewodnik',
+        opis: 'Mapa całej części III, ranking trudności, plan nauki i słownik oznaczeń.' },
+      { plik: '16-napiecia-indukowane', numer: '16',
+        tytul: 'Napięcia indukowane w polu równoległym',
+        opis: 'Sprzężenie pojemnościowe i indukcyjne, dlaczego uziemienie jednostronne nie wystarcza.' },
+      { plik: '17-punkt-neutralny-sieci-SN', numer: '17',
+        tytul: 'Punkt neutralny sieci SN',
+        opis: 'Sieć izolowana, kompensowana, rezystorowa; prądy doziemne i zabezpieczenia kierunkowe.' },
+      { plik: '18-uziemienia-w-rozdzielni', numer: '18',
+        tytul: 'Uziemienia w rozdzielni',
+        opis: 'Dlaczego metoda 62 % zawodzi, napięcia rażeniowe, współczynnik redukcyjny.' },
+      { plik: '19-przekladniki-pradowe-i-napieciowe', numer: '19',
+        tytul: 'Przekładniki prądowe i napięciowe',
+        opis: 'Rozwarcie CT, rdzeń pomiarowy a zabezpieczeniowy, punkt kolanowy, biegunowość.' },
+      { plik: '20-rezystancja-izolacji-i-tg-delta', numer: '20',
+        tytul: 'Rezystancja izolacji i tg δ',
+        opis: 'Od pomiaru do diagnozy: DAR, PI, korekta temperaturowa, tip-up, DFR.' },
+      { plik: '21-wyladowania-niezupelne', numer: '21',
+        tytul: 'Wyładowania niezupełne (WNZ)',
+        opis: 'Kalibracja w pC, tło zakłóceń, wzorce PRPD, lokalizacja w kablu.' },
+      { plik: '22-proby-napieciowe-kabli', numer: '22',
+        tytul: 'Próby napięciowe kabli',
+        opis: 'Dlaczego DC niszczy XLPE, VLF, AC rezonansowe, wytrzymałościowa a diagnostyczna.' },
+      { plik: '23-topologia-i-zasilanie-zwrotne', numer: '23',
+        tytul: 'Topologia i zasilanie zwrotne',
+        opis: 'Źródła napięcia, których nie ma na schemacie jednokreskowym; pięć zasad, odległości.' }
+    ]
   }
 ];
 
@@ -301,6 +333,11 @@ function upiekszTresc(korzen) {
 
   // interaktywne symulatory ZS (rozdział 14) — awaria nie może zabrać treści
   bezpiecznie(() => zbudujWidgetyZS(korzen), 'symulatory ZS');
+
+  // symulatory części III (rozdziały 16–23) — kod w assets/diag.js
+  bezpiecznie(() => {
+    if (typeof window.zbudujWidgetyDiag === 'function') window.zbudujWidgetyDiag(korzen);
+  }, 'symulatory diagnostyki');
 
   // odnośniki do plików .md prowadzą wewnątrz strony, zewnętrzne otwierają nową kartę
   korzen.querySelectorAll('a[href]').forEach(odnosnik => {
@@ -966,14 +1003,16 @@ async function pokazStart() {
       <h1>Egzamin SEP — grupa 1 (elektroenergetyczna) do 30 kV</h1>
       <p class="start-wstep">
         Pytania, które realnie padają przed komisją kwalifikacyjną, z rozwiniętymi odpowiedziami.
-        Dodatkowo część inżynierska: ruch rozdzielni SN, zabezpieczenia i próby funkcjonalne.
+        Dodatkowo część inżynierska: ruch rozdzielni SN, zabezpieczenia i próby funkcjonalne,
+        a w części III diagnostyka pomiarowa SN/WN z interaktywnymi symulatorami.
         Cała terminologia po polsku — pełne nazwy zabezpieczeń, bez numerów funkcji.
       </p>
       <div class="tabliczki">
         <span class="tabliczka"><strong>146</strong> pytań testowych</span>
         <span class="tabliczka"><strong>60</strong> pytań ustnych</span>
         <span class="tabliczka"><strong>139</strong> pytań tematycznych</span>
-        <span class="tabliczka"><strong>12</strong> rozdziałów</span>
+        <span class="tabliczka"><strong>${WSZYSTKIE.length}</strong> rozdziałów</span>
+        <span class="tabliczka"><strong>12</strong> symulatorów</span>
         <span class="tabliczka">działa <strong>offline</strong></span>
       </div>
     </div>
@@ -982,6 +1021,8 @@ async function pokazStart() {
     <ul>
       <li><strong>Szukaj</strong> — przycisk lupy u góry albo klawisz <code>/</code>; szukanie obejmuje wszystkie rozdziały i nie wymaga ogonków.</li>
       <li><strong>Tryb nauki</strong> — w rozdziałach 05 i 06 możesz zasłonić odpowiedzi i odkrywać je dotknięciem.</li>
+      <li><strong>Symulatory</strong> — rozdział 14 oraz cała część III mają interaktywne schematy: przesuwaj suwaki
+        i przełączaj warunki, a schemat i liczby przeliczają się na żywo. Działają też bez internetu.</li>
       <li><strong>Postęp</strong> — kółkiem obok rozdziału oznaczasz go jako przeczytany.</li>
       <li><strong>Na telefonie</strong> — dodaj stronę do ekranu głównego; treść zapisuje się na urządzeniu i działa bez internetu.</li>
       <li><strong>PDF</strong> — „Cała książka na jednej stronie”, a potem drukowanie do pliku PDF.</li>

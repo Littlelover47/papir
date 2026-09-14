@@ -1,7 +1,7 @@
 /* Tryb offline: po pierwszym wejściu cała treść zapisuje się na urządzeniu.
    Po zmianie plików podnieś numer wersji — stary zapas zostanie usunięty. */
 
-const WERSJA = 'sep-30kv-v3';
+const WERSJA = 'sep-30kv-v4';
 
 const ZAPAS = [
   './',
@@ -9,6 +9,8 @@ const ZAPAS = [
   'manifest.webmanifest',
   'assets/app.css',
   'assets/app.js',
+  'assets/diag.css',
+  'assets/diag.js',
   'assets/icon.svg',
   'assets/kotek.svg',
   'assets/vendor/marked.js',
@@ -27,7 +29,16 @@ const ZAPAS = [
   '11-zabezpieczenia-nastawy-i-testowanie.md',
   '12-proby-funkcjonalne-sterowania-i-automatyki.md',
   '13-procedura-odstawienia-i-zalaczenia-rozdzielni-SN.md',
-  '14-blokada-logiczna-ZS-symulator.md'
+  '14-blokada-logiczna-ZS-symulator.md',
+  '15-trudne-miejsca-przewodnik.md',
+  '16-napiecia-indukowane.md',
+  '17-punkt-neutralny-sieci-SN.md',
+  '18-uziemienia-w-rozdzielni.md',
+  '19-przekladniki-pradowe-i-napieciowe.md',
+  '20-rezystancja-izolacji-i-tg-delta.md',
+  '21-wyladowania-niezupelne.md',
+  '22-proby-napieciowe-kabli.md',
+  '23-topologia-i-zasilanie-zwrotne.md'
 ];
 
 self.addEventListener('install', zdarzenie => {

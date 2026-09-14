@@ -1,0 +1,366 @@
+/* ==========================================================================
+   Symulatory Części III — diagnostyka i pomiary SN/WN
+   Osobny arkusz, żeby nie ruszać sprawdzonych stylów rozdziału 14 (ZS).
+   Korzysta wyłącznie ze zmiennych zadeklarowanych w app.css.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- pojemnik */
+
+.dg {
+  margin: 26px 0;
+  border: 1px solid var(--kreska);
+  border-radius: var(--promien);
+  background: var(--tlo-2);
+  box-shadow: var(--cien);
+  overflow: hidden;
+}
+
+.dg-pasek {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--kreska);
+  background: linear-gradient(180deg, var(--roz-mgla-2), transparent);
+  font-size: 14.5px;
+}
+
+.dg-znaczek {
+  flex: none;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--roz-mgla);
+  border: 1px solid var(--roz-ciemny);
+  color: var(--roz);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.dg-blad {
+  margin: 0;
+  padding: 16px;
+  color: var(--atrament-3);
+  font-size: 14px;
+}
+
+/* ------------------------------------------------------------- sterowanie */
+
+.dg-sterowanie {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+  gap: 12px 16px;
+  padding: 14px;
+  border-bottom: 1px solid var(--kreska);
+}
+
+.dg-suwak { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+
+.dg-suwak-opis {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--atrament-2);
+  line-height: 1.3;
+}
+
+.dg-suwak-opis b {
+  flex: none;
+  font-family: var(--czcionka-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--roz);
+  font-variant-numeric: tabular-nums;
+}
+
+.dg-suwak input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+.dg-suwak input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px; border-radius: 2px; background: var(--kreska-2);
+}
+.dg-suwak input[type="range"]::-moz-range-track {
+  height: 4px; border-radius: 2px; background: var(--kreska-2);
+}
+.dg-suwak input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px; margin-top: -6px;
+  border: none; border-radius: 50%;
+  background: var(--roz);
+  box-shadow: var(--poswiata-s);
+}
+.dg-suwak input[type="range"]::-moz-range-thumb {
+  width: 16px; height: 16px;
+  border: none; border-radius: 50%;
+  background: var(--roz);
+}
+.dg-suwak input[type="range"]:focus-visible { outline: 2px solid var(--roz); outline-offset: 3px; }
+
+.dg-wybor { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.dg-wybor-opis { font-size: 12.5px; color: var(--atrament-2); line-height: 1.3; }
+.dg-wybor-guziki { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.dg-wybor-guziki button,
+.dg-btn {
+  padding: 6px 11px;
+  border: 1px solid var(--kreska-2);
+  border-radius: 999px;
+  background: var(--tlo-3);
+  color: var(--atrament-2);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.dg-wybor-guziki button:hover,
+.dg-btn:hover { border-color: var(--roz-ciemny); color: var(--atrament); }
+
+.dg-wybor-guziki button.wybrany,
+.dg-btn.wybrany {
+  border-color: var(--roz);
+  background: var(--roz-mgla);
+  color: var(--roz);
+  box-shadow: var(--poswiata-s);
+}
+
+.dg-przyciski { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 14px 0; }
+
+/* ------------------------------------------------------------------ rysunki */
+
+.dg-rysunek { padding: 10px 14px; overflow-x: auto; }
+.dg-svg {
+  display: block;
+  width: 100%;
+  max-width: 780px;
+  height: auto;
+  min-width: 480px;
+  margin-inline: auto;
+}
+.dg-svg text { font-family: var(--czcionka); fill: var(--atrament-2); }
+.dg-svg .dg-t     { font-size: 12px; }
+.dg-svg .dg-t-m   { font-size: 10.5px; fill: var(--atrament-3); }
+.dg-svg .dg-t-b   { font-size: 12.5px; font-weight: 700; fill: var(--atrament); }
+.dg-svg .dg-t-num { font-family: var(--czcionka-mono); font-size: 12.5px; font-weight: 700; }
+.dg-svg .sr  { text-anchor: middle; }
+.dg-svg .kon { text-anchor: end; }
+
+.dg-svg .roz   { fill: var(--roz); }
+.dg-svg .ok    { fill: var(--sukces); }
+.dg-svg .alarm { fill: var(--alarm); }
+.dg-svg .uwaga { fill: var(--ostrzezenie); }
+
+/* wspólne elementy schematów */
+.dg-przewod  { fill: none; stroke: var(--kreska-2); stroke-width: 2.6; }
+.dg-przewod.zywy { stroke: var(--atrament-2); }
+.dg-przewod.prad {
+  stroke: var(--ostrzezenie);
+  stroke-dasharray: 12 10;
+  animation: dg-plyn .65s linear infinite;
+}
+.dg-przewod.grozny { stroke: var(--alarm); filter: drop-shadow(0 0 6px rgba(255, 122, 114, .6)); }
+@keyframes dg-plyn { to { stroke-dashoffset: -44; } }
+
+.dg-ziemia { fill: none; stroke: var(--atrament-3); stroke-width: 2.2; }
+.dg-ziemia.czynna { stroke: var(--sukces); }
+
+.dg-os      { fill: none; stroke: var(--kreska-2); stroke-width: 1.4; }
+.dg-siatka  { fill: none; stroke: var(--kreska); stroke-width: 1; }
+.dg-krzywa  { fill: none; stroke: var(--roz); stroke-width: 2.6; stroke-linejoin: round; }
+.dg-krzywa-2{ fill: none; stroke: var(--atrament-3); stroke-width: 1.8; stroke-dasharray: 5 4; }
+.dg-obszar  { fill: var(--roz-mgla); stroke: none; }
+.dg-punkt   { fill: var(--roz); stroke: var(--tlo-2); stroke-width: 2; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-przewod.prad { animation: none; stroke-dasharray: none; }
+}
+
+/* ------------------------------------------------------------ tabela wyników */
+
+/* Tabele symulatorów powstają już po tym, jak app.js owija tabele z markdown
+   w .tabela-otoczka — więc muszą mieć własne przewijanie w poziomie, inaczej
+   na wąskim ekranie rozepchnęłyby całą stronę. */
+.dg-wyniki {
+  padding: 4px 14px 14px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dg-tab {
+  width: 100%;
+  min-width: 420px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.dg-tab th,
+.dg-tab td {
+  padding: 7px 9px;
+  border-bottom: 1px solid var(--kreska);
+  text-align: left;
+  vertical-align: top;
+}
+.dg-tab th {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--atrament-3);
+}
+.dg-tab td.lb { color: var(--atrament-2); }
+.dg-tab td.wart {
+  font-family: var(--czcionka-mono);
+  font-weight: 700;
+  color: var(--atrament);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.dg-tab td.wart.roz   { color: var(--roz); }
+.dg-tab td.wart.ok    { color: var(--sukces); }
+.dg-tab td.wart.alarm { color: var(--alarm); }
+.dg-tab td.wart.uwaga { color: var(--ostrzezenie); }
+.dg-tab tr.wyrozniony { background: var(--roz-mgla-2); }
+.dg-tab tr:last-child th,
+.dg-tab tr:last-child td { border-bottom: none; }
+
+/* kafelki z odczytami */
+.dg-odczyty {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  padding: 0 14px 14px;
+}
+.dg-odczyt {
+  padding: 9px 11px;
+  border: 1px solid var(--kreska);
+  border-radius: var(--promien-s);
+  background: var(--tlo-3);
+}
+.dg-odczyt span {
+  display: block;
+  font-size: 11.5px;
+  color: var(--atrament-3);
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+.dg-odczyt strong {
+  display: block;
+  font-family: var(--czcionka-mono);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--atrament);
+  font-variant-numeric: tabular-nums;
+}
+.dg-odczyt.roz   strong { color: var(--roz); }
+.dg-odczyt.ok    { border-color: var(--sukces); background: var(--sukces-tlo); }
+.dg-odczyt.ok    strong { color: var(--sukces); }
+.dg-odczyt.alarm { border-color: var(--alarm); background: var(--alarm-tlo); }
+.dg-odczyt.alarm strong { color: var(--alarm); }
+.dg-odczyt.uwaga { border-color: var(--ostrzezenie); background: var(--ostrzezenie-tlo); }
+.dg-odczyt.uwaga strong { color: var(--ostrzezenie); }
+.dg-odczyt small {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--atrament-3);
+  line-height: 1.35;
+}
+
+/* ------------------------------------------------------------- komunikaty */
+
+.dg-kom {
+  margin: 0;
+  padding: 12px 14px;
+  border-top: 1px solid var(--kreska);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--atrament-2);
+}
+.dg-kom strong { color: var(--atrament); }
+.dg-kom.ok    { background: var(--sukces-tlo);      border-top-color: var(--sukces); }
+.dg-kom.alarm { background: var(--alarm-tlo);       border-top-color: var(--alarm); }
+.dg-kom.uwaga { background: var(--ostrzezenie-tlo); border-top-color: var(--ostrzezenie); }
+.dg-kom.info  { background: var(--roz-mgla-2);      border-top-color: var(--roz-ciemny); }
+.dg-kom.ok strong    { color: var(--sukces); }
+.dg-kom.alarm strong { color: var(--alarm); }
+.dg-kom.uwaga strong { color: var(--ostrzezenie); }
+
+.dg-wzor {
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  border-radius: var(--promien-s);
+  background: var(--tlo-kod);
+  border: 1px solid var(--kreska);
+  font-family: var(--czcionka-mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--atrament-2);
+  overflow-x: auto;
+}
+.dg-wzor b { color: var(--roz); font-weight: 700; }
+
+/* --------------------------------------------- polowanie na źródła (rozdz. 23) */
+
+.dg-cel { cursor: pointer; }
+.dg-cel .dg-cel-plama {
+  fill: var(--roz-mgla);
+  stroke: var(--roz);
+  stroke-width: 1.8;
+  stroke-dasharray: 4 3;
+  animation: dg-puls 1.9s ease-in-out infinite;
+}
+.dg-cel:hover .dg-cel-plama { fill: var(--roz-mgla); stroke-width: 2.6; }
+.dg-cel.sprawdzony .dg-cel-plama { animation: none; stroke-dasharray: none; }
+.dg-cel.sprawdzony.zywy  .dg-cel-plama { fill: var(--alarm-tlo);  stroke: var(--alarm); }
+.dg-cel.sprawdzony.martwy .dg-cel-plama { fill: var(--sukces-tlo); stroke: var(--sukces); }
+.dg-cel-znak { font-size: 13px; font-weight: 800; text-anchor: middle; fill: var(--roz); }
+.dg-cel.sprawdzony.zywy   .dg-cel-znak { fill: var(--alarm); }
+.dg-cel.sprawdzony.martwy .dg-cel-znak { fill: var(--sukces); }
+@keyframes dg-puls { 50% { opacity: .45; } }
+
+.dg-lista-zrodel { margin: 0; padding: 0 14px 14px; list-style: none; }
+.dg-lista-zrodel li {
+  display: flex;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--kreska);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.dg-lista-zrodel li:last-child { border-bottom: none; }
+.dg-lista-zrodel .znak {
+  flex: none;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 12px; font-weight: 800;
+}
+.dg-lista-zrodel .znak.zywy   { background: var(--alarm-tlo);  color: var(--alarm);  border: 1px solid var(--alarm); }
+.dg-lista-zrodel .znak.martwy { background: var(--sukces-tlo); color: var(--sukces); border: 1px solid var(--sukces); }
+.dg-lista-zrodel strong { color: var(--atrament); }
+.dg-lista-zrodel small { display: block; color: var(--atrament-3); font-size: 12px; }
+
+/* ------------------------------------------------------------------ telefon */
+
+@media (max-width: 620px) {
+  .dg-sterowanie { grid-template-columns: 1fr; gap: 11px; padding: 12px; }
+  .dg-svg { min-width: 430px; }
+  .dg-odczyty { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+  .dg-odczyt strong { font-size: 15px; }
+}
+
+/* ------------------------------------------------------------------- druk */
+
+@media print {
+  .dg { break-inside: avoid; box-shadow: none; }
+  .dg-sterowanie, .dg-przyciski { display: none; }
+  .dg-przewod.prad { animation: none; }
+}
