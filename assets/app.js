@@ -54,7 +54,7 @@ const ROZDZIALY = [
         opis: 'Pełna procedura od zera: wyłączanie, prace, próby, podanie napięcia.' },
       { plik: '14-blokada-logiczna-ZS-symulator', numer: '14',
         tytul: 'ZS — zabezpieczenie szyn (symulator)',
-        opis: 'Blokada logiczna od podstaw: analogia, bramka AND na żywo, symulacja zwarcia.' }
+        opis: 'Blokada logiczna od podstaw: analogia, bramka AND na żywo, tor blokady, symulacja zwarcia.' }
     ]
   },
   {

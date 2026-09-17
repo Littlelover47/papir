@@ -77,7 +77,7 @@ Zmierzone 500 MΩ przy temperaturze obiektu 35 °C:
 
 $$K_T = 2^{\frac{35-20}{10}} = 2^{1{,}5} = 2{,}83$$
 
-$$R_{20} = 500 \cdot 2{,}83 = 1415\ \text{MΩ}$$
+$$R_{20} = 500 \cdot 2{,}83 = 1415\ \text{M}\Omega$$
 
 Ten sam, zdrowy obiekt zmierzony w +5 °C dałby około 2800 MΩ, a w +35 °C — 500 MΩ.
 

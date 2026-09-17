@@ -1,7 +1,9 @@
 # 14. ZS — zabezpieczenie szyn. Jak to zrozumieć w 10 minut
 
 Rozdział jest po to, żeby „schemat logiczny automatyki ZS” przestał być zbiorem prostokątów.
-Najpierw **jedno zdanie**, potem **analogia**, potem **dwa symulatory**, na końcu **liczby na egzamin**.
+Najpierw **jedno zdanie**, potem **analogia**, potem **bramka AND i pełny opis blokady ZS**
+(czym jest sygnał, jakim torem idzie, co blokuje), potem **symulacja całej rozdzielni**,
+na końcu **liczby na egzamin**.
 
 > **Pamiętaj.** Całe ZS streszcza się w jednym zdaniu:
 > **żaden odpływ się nie zgłosił → zwarcie jest na szynach → pole zasilające wyłącza natychmiast.**
@@ -110,7 +112,153 @@ Poklikaj przełącznikami. Przewody i bramka zmieniają kolor na żywo.
 
 ---
 
-## D. Symulator 2 — cała rozdzielnia i dwa scenariusze
+## D. Blokada ZS — sam sygnał i tor blokady
+
+Punkt C pokazał, **kiedy** pole odpływowe wysyła blokadę. Ten punkt jest o tym, **czym ta blokada
+właściwie jest**: jakim obwodem idzie przez rozdzielnię, co dokładnie wstrzymuje, jak długo trwa
+i co się dzieje, kiedy tor blokady jest uszkodzony.
+
+### D.1 Definicja i zakres działania
+
+**Blokada ZS** (na schematach `BL_ZS`, w dokumentacji także „blokada logiczna”, „sygnał blokujący”;
+w literaturze angielskiej *blocking scheme*, *reverse interlocking*, *logic selectivity*) to
+**sygnał dwustanowy wysyłany z pola odpływowego do pola zasilającego**, o treści:
+*„prąd zwarciowy płynie moim polem”*. Jego jedyne zadanie to **wstrzymać przyspieszony stopień ZS**
+w polu zasilającym na czas, w którym odpływ ma szansę zadziałać sam.
+
+| Blokada ZS **wstrzymuje** | Blokada ZS **nie rusza** |
+|---|---|
+| **wyłącznie przyspieszony stopień ZS** (40–100 ms) w polu zasilającym | zabezpieczeń pola odpływowego — odpływ wyłącza normalnie po 0,5 s |
+| i tylko na czas, w którym sygnał jest obecny na wejściu | normalnego stopnia I> = 0,8 s w polu zasilającym — **rezerwa działa dalej** |
+| | zabezpieczenia różnicowego szyn i łukoochronnego, jeśli są — mają własne, niezależne kryteria |
+| | wyłącznika, sterowania, uziemnika — to **nie jest blokada łączeniowa (ruchowa)** |
+
+> **Pamiętaj.** Blokada nie odbiera szynom ochrony, tylko **przekłada** wyłączenie z pola
+> zasilającego na pole odpływowe, które lepiej wie, co się dzieje. Najgorsze, co robi
+> **fałszywa** blokada, to zabranie szynom przyspieszenia — wracają wtedy do 0,8 s.
+> Najgorsze, co robi **brak** blokady, to zgaszenie całej sekcji przy zwarciu w jednym odpływie.
+
+Dwa różne słowa „blokada”, których komisja lubi nie odróżniać:
+
+| | Blokada ZS (logiczna) | Blokada łączeniowa (ruchowa) |
+|---|---|---|
+| Co blokuje | stopień zabezpieczenia w innym polu | ruch aparatu (wyłącznik, uziemnik, drzwi, wózek) |
+| Nośnik | sygnał dwustanowy w obwodach wtórnych | mechanizm, zamek, styk pomocniczy, elektromagnes |
+| Cel | selektywność i skrócenie czasu wyłączenia szyn | bezpieczeństwo ludzi i kolejność czynności |
+| Trwa | kilkadziesiąt–kilkaset milisekund | tak długo, jak trwa stan aparatu |
+
+### D.2 Tor blokady — co to fizycznie jest
+
+W wykonaniu klasycznym (miedź) blokada to jeden obwód prądu stałego przechodzący przez całą
+rozdzielnię — tak zwane **szyny okrężne blokady**. Każde pole odpływowe wpina do niego **styk
+zwierny** swojego przekaźnika wyjściowego (na schemacie z punktu C: `Wy04`):
+
+```
+   + 220 V DC  (obwód blokad — własny bezpiecznik w rozdzielnicy potrzeb własnych)
+   ───┬───────────────┬───────────────┬──────────────────────────────
+      │ odpływ 1      │ odpływ 2      │ odpływ 3
+   [ Wy04 ]        [ Wy04 ]        [ Wy04 ]   ← styki zwierne,
+      │               │               │         połączone RÓWNOLEGLE
+      └───────────────┴───────────────┴──────►  szyny okrężne blokady
+                                                  (wspólna para przewodów
+                                                   przez wszystkie celki)
+                                                          │
+                                     pole zasilające: wejście We01 = BL_ZS
+                                     + filtr antydrganiowy 10–20 ms
+                                                          │
+   ───────────────────────────────────────────────────────┴──────────
+   − 220 V DC
+```
+
+Zwróć uwagę na dwie różne bramki w tej samej automatyce — to najczęstsze pytanie dodatkowe:
+
+- **W każdym polu odpływowym: iloczyn (AND)** — cztery warunki z punktu C muszą wystąpić razem,
+  żeby styk się zamknął.
+- **Na wspólnych szynach blokady: suma (OR)** — styki są **równolegle**, więc wystarczy, że
+  **jedno** pole podniesie rękę i pole zasilające widzi blokadę. Nie trzeba wiedzieć które —
+  do decyzji „to nie szyny” wystarczy sam fakt, że ktoś się zgłosił.
+
+| Element toru | Typowe wykonanie | Na co uważać |
+|---|---|---|
+| Przekaźnik wyjściowy w odpływie | styk zwierny, czas zamykania 5–15 ms | styk „szybki”, nie sygnalizacyjny; nie obciążać go dodatkowymi funkcjami |
+| Obwód blokad | 220 / 110 / 48 / 24 V DC z baterii stacyjnej, osobny bezpiecznik | zanik tego jednego bezpiecznika = brak blokad w całej rozdzielni; obwód **nadzorowany**, nie „ślepy” |
+| Szyny okrężne | para przewodów przez wszystkie przedziały wtórne, zaciski przelotowe w każdym polu | każde rozkręcenie celki to ryzyko przerwania toru — po pracach **ponowna próba** |
+| Wejście dwustanowe pola zasilającego | We01, próg pobudzenia + filtr antydrganiowy 10–20 ms | filtr wchodzi do budżetu czasu z punktu F — nie wolno o nim zapomnieć przy nastawie |
+| Sygnalizacja | „blokada ZS obecna”, licznik/rejestrator zdarzeń | bez rejestracji nie udowodnisz po awarii, czy blokada przyszła |
+
+### D.3 Jak długo blokada musi trwać
+
+Pobudzenie `I>` w odpływie potrafi zniknąć szybciej, niż pole zasilające odliczy swoje 40–100 ms
+(np. zwarcie przemijające, samoczynne zgaśnięcie łuku, otwarcie wyłącznika odpływu). Gdyby blokada
+odpadła w połowie odliczania, pole zasilające dokończyłoby liczenie i **zgasiłoby sekcję już po
+zlikwidowanym zwarciu**. Dlatego sygnał blokady się **przedłuża**:
+
+```
+   t =   0 ms   zwarcie w odpływie → pobudzenie I> → BL_ZS = 1
+                pole zasilające startuje odliczanie stopnia ZS (nastawa 80 ms)
+   t =  30 ms   łuk gaśnie sam, pobudzenie I> = 0
+                ale BL_ZS = 1 NADAL — trzyma je przedłużenie 150 ms
+   t =  80 ms   stopień ZS kończy odliczanie → widzi blokadę → nie wyłącza
+   t = 180 ms   BL_ZS = 0, automatyka gotowa na kolejne zwarcie
+```
+
+Zasada: **czas przedłużenia blokady > nastawa stopnia ZS**, z zapasem. Typowo 100–200 ms.
+Po zaniku pobudzenia blokada odpada sama — nie ma podtrzymania na stałe (bo to byłaby cicha
+utrata ochrony szyn, patrz D.5).
+
+### D.4 Miedź czy światłowód (GOOSE)
+
+| | Styk + szyny okrężne (miedź) | Komunikat GOOSE (IEC 61850, światłowód) |
+|---|---|---|
+| Czas przesłania | ~0 ms w kablu, ale 5–15 ms styk + 10–20 ms filtr wejścia | 3–5 ms, bez styków i przekaźników |
+| Odporność | prosta, nie zależy od oprogramowania | zależy od przełącznika i konfiguracji zbiorów danych |
+| Nadzór | trzeba dodać (kontrola ciągłości obwodu) | **wbudowany** — brak cyklicznego komunikatu = natychmiastowy alarm |
+| Zachowanie przy awarii łącza | brak blokady → zbędne wyłączenie sekcji | konfigurowalne: alarm + zwykle **przejście na nastawy bez blokady** (zachowawczo, 0,8 s) |
+| Rozbudowa o kolejne pole | nowe przewody w celce | zmiana konfiguracji, bez przekładania kabli |
+
+> **Uwaga.** Przy blokadzie po GOOSE nie testuje się „przewodu”, ale **całą ścieżkę** —
+> od podania prądu w odpływie do pobudzenia wejścia logicznego w polu zasilającym, z odczytem
+> znacznika czasu w rejestratorze. Sama zielona dioda łącza nie jest dowodem.
+
+### D.5 Dwa kierunki uszkodzenia — i dlaczego jeden jest groźniejszy
+
+| Awaria | Objaw w ruchu | Skutek | Czy widać od razu |
+|---|---|---|---|
+| **Przerwa w torze** (luźny zacisk, przepalony bezpiecznik, wyjęty przewód po pracach) | zwarcie w odpływie gasi **całą sekcję** po 40–100 ms | zbędne wyłączenie, utrata selektywności | tak — boleśnie, ale od razu |
+| **Blokada trwała** (zawieszony styk, zwarcie w obwodzie blokad, zapomniany mostek po próbach) | wszystko wygląda normalnie | **szyny bez przyspieszenia** — wracają do 0,8 s, o niczym nie wiedząc | **nie** — dopóki nie wystąpi zwarcie na szynach |
+
+Dlatego w nastawach robi się **nadzór trwałej blokady**: jeśli sygnał `BL_ZS` na wejściu pola
+zasilającego trwa dłużej niż kilka sekund, zabezpieczenie podaje **alarm**. Blokada z natury żyje
+milisekundy — sygnał obecny przez minutę oznacza usterkę, nie zwarcie.
+
+### D.6 „Zablokować ZS” w znaczeniu ruchowym
+
+Osobna sprawa, tak samo nazywana: **odstawienie funkcji ZS**, czyli `ZS ON = 0` (nastawa albo
+klucz funkcyjny w polu zasilającym). Robi się to świadomie, na przykład na czas badań zabezpieczeń
+w polach odpływowych, gdy prąd probierczy fałszowałby obraz.
+
+- Odstawia się **automat ZS**, nigdy nie mostkuje toru blokady ani nie wyjmuje przewodów.
+- Wpis do **książki ruchu** i wiedza dyspozytora są obowiązkowe — na ten czas szyny są chronione
+  dopiero po 0,8 s i ktoś musi o tym wiedzieć.
+- Przywrócenie potwierdza się **próbą**, nie samym przełączeniem nastawy z powrotem.
+
+### D.7 Minimum, które musi znaleźć się w protokole
+
+| Co sprawdzić | Jak | Kryterium |
+|---|---|---|
+| Każda para pól odpływ → zasilanie | prąd probierczy > nastawy `I>` w odpływie, wózek w pozycji praca | blokada obecna na wejściu pola zasilającego, ZS nie wyłącza |
+| Czas dojścia blokady | rejestrator zdarzeń albo dwa kanały testera | czas z zapasem mniejszy od nastawy ZS (patrz punkt F) |
+| Warunek wózka | prąd probierczy przy wózku w pozycji próby | blokada **nie** wychodzi |
+| Warunek wyłącznika | wyłącznik pola otwarty, podany prąd | blokada **nie** wychodzi |
+| Brak blokady = zwarcie na szynach | prąd tylko w polu zasilającym | wyłączenie bezzwłoczne, 40–100 ms |
+| Ciągłość toru i zasilania DC | oględziny, kontrola bezpiecznika, sygnalizacja nadzoru | brak alarmów, tor zamknięty |
+
+Pełną listę ryzyk i pytań kontrolnych masz w punkcie H, a wzór protokołu w rozdziale
+[Próby funkcjonalne sterowania](12-proby-funkcjonalne-sterowania-i-automatyki.md).
+
+---
+
+## E. Symulator 2 — cała rozdzielnia i dwa scenariusze
 
 Teraz to samo, ale z góry: transformator, pole zasilające, szyny, trzy odpływy i wspólna linia
 blokady. Wybierz miejsce zwarcia i puść przebieg. Zwróć uwagę na **czas na dole** — to jest
@@ -130,7 +278,7 @@ Porównanie, do którego warto wrócić po symulacji:
 
 ---
 
-## E. Skąd te 40–100 ms — budżet czasu
+## F. Skąd te 40–100 ms — budżet czasu
 
 Opóźnienie stopnia ZS w polu zasilającym **nie jest przypadkowe** i nie może być zerowe.
 Pole zasilające musi dać odpływom fizyczny czas na to, żeby zdążyły „podnieść rękę”:
@@ -154,7 +302,7 @@ Pole zasilające musi dać odpływom fizyczny czas na to, żeby zdążyły „po
 
 ---
 
-## F. Rozdzielnia sekcjonowana — dlaczego dwa stopnie
+## G. Rozdzielnia sekcjonowana — dlaczego dwa stopnie
 
 Gdy rozdzielnia ma dwie sekcje spięte **łącznikiem szyn (sprzęgłem)**, ZS robi się
 **dwustopniowe** — inny czas w polu łącznika, inny w polu zasilającym:
@@ -176,7 +324,7 @@ zasilające A. Zamiast gasić całą rozdzielnię, gasisz **połowę**.
 
 ---
 
-## G. Ryzyka, o które pyta komisja i inspektor
+## H. Ryzyka, o które pyta komisja i inspektor
 
 - **Tor blokady jest krytyczny.** Przerwany przewód szyn okrężnych, przepalony bezpiecznik
   obwodu blokady, luźny zacisk → blokada nie dojdzie → **pole zasilające zgasi całą sekcję
@@ -198,7 +346,7 @@ zasilające A. Zamiast gasić całą rozdzielnię, gasisz **połowę**.
 
 ---
 
-## H. Odpowiedzi na egzamin — po trzy zdania
+## I. Odpowiedzi na egzamin — po trzy zdania
 
 **Co to jest zabezpieczenie szyn ZS?**
 > To automatyka, która skraca czas wyłączenia zwarcia na szynach zbiorczych, wykorzystując
@@ -211,6 +359,20 @@ zasilające A. Zamiast gasić całą rozdzielnię, gasisz **połowę**.
 > musi być zamknięty i wózek musi być w pozycji praca. To iloczyn logiczny — brak któregokolwiek
 > warunku oznacza brak blokady. Warunki wyłącznika i wózka zabezpieczają przed fałszywą blokadą
 > podczas testów i przy polu odstawionym.
+
+**Co konkretnie blokuje blokada ZS?**
+> Tylko przyspieszony stopień ZS w polu zasilającym i tylko na czas obecności sygnału.
+> Zabezpieczenia pola odpływowego działają normalnie, a stopień I> = 0,8 s w polu zasilającym
+> zostaje jako rezerwa. To nie jest blokada łączeniowa — nie blokuje żadnego aparatu, tylko
+> jedną funkcję zabezpieczenia w innym polu.
+
+**Jak zbudowany jest tor blokady i co się dzieje, gdy zawiedzie?**
+> Klasycznie: styk zwierny przekaźnika wyjściowego w każdym odpływie, wpięty równolegle w wspólne
+> szyny okrężne blokady zasilane z baterii stacyjnej, i wejście dwustanowe w polu zasilającym;
+> nowocześniej komunikat GOOSE po światłowodzie. Przerwa w torze powoduje zbędne wyłączenie całej
+> sekcji przy zwarciu w odpływie, a blokada trwała (zawieszony styk, zapomniany mostek) po cichu
+> odbiera szynom przyspieszenie — dlatego tor jest nadzorowany, a zbyt długo trwająca blokada
+> daje alarm.
 
 **Dlaczego opóźnienie ZS nie może być zerowe?**
 > Bo sygnał blokady potrzebuje czasu na dojście: wykrycie prądu w odpływie, zamknięcie styków
@@ -226,7 +388,7 @@ zasilające A. Zamiast gasić całą rozdzielnię, gasisz **połowę**.
 
 ---
 
-## I. Powiązane rozdziały
+## J. Powiązane rozdziały
 
 - [Rozdzielnia SN — pola i obwody wtórne](10-rozdzielnia-SN-pola-i-obwody-wtorne.md) —
   punkt D.2 (blokada logiczna) i D.4 (różnicowe szyn) w szerszym kontekście współpracy pól
