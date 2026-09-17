@@ -54,6 +54,14 @@ i przekazanie rozdzielni do eksploatacji.
 | **[procedura odstawienia i załączenia rozdzielni SN](13-procedura-odstawienia-i-zalaczenia-rozdzielni-SN.md)** | Pełna sekwencja od zera: planowanie i zabezpieczenie przed załączeniem (zamki i tablice) → przeniesienie obciążenia → kolejność wyłączania → 5 zasad → prace i próby → **lista kontrolna przed podaniem napięcia** → sekwencja podawania napięcia krok po kroku → próby pod napięciem → przekazanie do ruchu; załączniki: obiekt nowy (próby fabryczne i odbiorowe), karta „STOP", najgroźniejsze błędy |
 | **[ZS — zabezpieczenie szyn (symulator)](14-blokada-logiczna-ZS-symulator.md)** | Blokada logiczna zabezpieczenia szyn wyjaśniona od zera: paradoks kaskady czasowej, analogia zamiast schematu, **interaktywna bramka AND** z czterema warunkami wysłania BL_ZS (automat ZS, pobudzenie prądowe, wyłącznik zamknięty, wózek w pozycji praca), **symulacja przebiegu zwarcia** na szynach i w odpływie krok po kroku, budżet czasu 40–100 ms, dwustopniowe ZS w rozdzielni sekcjonowanej, ryzyka toru blokady i zakres prób, odpowiedzi egzaminacyjne |
 
+## Część IV — układy sieci, obliczenia i normy
+
+| Plik | Zawartość |
+|---|---|
+| **[układy sieci i pętla zwarcia](24-uklady-sieci-i-petla-zwarcia.md)** | TN-C, TN-S, TN-C-S, TT, IT na **schematach z zaznaczoną drogą prądu zwarciowego** (galeria pięciu rysunków + symulator z przełączanym uszkodzeniem: zwarcie L–obudowa, przerwa w PE/PEN, drugie zwarcie), dlaczego w TT bezpiecznik nie zadziała, co realnie psuje pętlę w terenie, pytania komisji |
+| **[kalkulator pętli zwarciowej](25-kalkulator-petli-zwarcia.md)** | **Kalkulator** Z_s, I_k i I_a dla własnych przekrojów i długości: transformator, dwa odcinki kabla, Cu/Al, temperatura żył, współczynnik c, wyłączniki B/C/D i wkładki gG, reguła 2/3, spadek napięcia; tabele I_a, przykłady rachunkowe, cztery warunki doboru obwodu |
+| **[normy — rezystancje i uziemienia](26-normy-rezystancje-uziemienia-i-okablowanie.md)** | Wymagania z rozdzieleniem **normy od reguły kciuka**: kryteria rezystancji uziemienia (TT, TN, stacje SN), symulator R_A / I_Δn / napięcie dotykowe, ciągłość PE i kalkulator rezystancji żyły, rezystancja izolacji, minimalne przekroje PE / uziemiających / wyrównawczych, wymiary uziomów, terminy badań |
+
 ## Jak wygląda egzamin (praktycznie)
 
 - Komisja 3-osobowa, egzamin **ustny** (w niektórych komisjach poprzedzony testem pisemnym).

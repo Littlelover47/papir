@@ -88,6 +88,20 @@ const ROZDZIALY = [
         tytul: 'Topologia i zasilanie zwrotne',
         opis: 'Źródła napięcia, których nie ma na schemacie jednokreskowym; pięć zasad, odległości.' }
     ]
+  },
+  {
+    grupa: 'Część IV — układy sieci, obliczenia i normy',
+    pozycje: [
+      { plik: '24-uklady-sieci-i-petla-zwarcia', numer: '24',
+        tytul: 'Układy sieci i pętla zwarcia',
+        opis: 'TN-C, TN-S, TN-C-S, TT, IT na rysunkach: którędy wraca prąd zwarciowy i co go wyłącza.' },
+      { plik: '25-kalkulator-petli-zwarcia', numer: '25',
+        tytul: 'Kalkulator pętli zwarciowej',
+        opis: 'Z_s, I_k, I_a i reguła 2/3 — pełny rachunek z Twoimi przekrojami i długościami.' },
+      { plik: '26-normy-rezystancje-uziemienia-i-okablowanie', numer: '26',
+        tytul: 'Normy — rezystancje i uziemienia',
+        opis: 'Uziemienia, ciągłość PE, izolacja, minimalne przekroje, terminy badań — z podstawą prawną.' }
+    ]
   }
 ];
 
@@ -1004,7 +1018,8 @@ async function pokazStart() {
       <p class="start-wstep">
         Pytania, które realnie padają przed komisją kwalifikacyjną, z rozwiniętymi odpowiedziami.
         Dodatkowo część inżynierska: ruch rozdzielni SN, zabezpieczenia i próby funkcjonalne,
-        a w części III diagnostyka pomiarowa SN/WN z interaktywnymi symulatorami.
+        w części III diagnostyka pomiarowa SN/WN z interaktywnymi symulatorami,
+        a w części IV układy sieci, kalkulator pętli zwarciowej i zestawienie wymagań norm.
         Cała terminologia po polsku — pełne nazwy zabezpieczeń, bez numerów funkcji.
       </p>
       <div class="tabliczki">
@@ -1012,7 +1027,8 @@ async function pokazStart() {
         <span class="tabliczka"><strong>60</strong> pytań ustnych</span>
         <span class="tabliczka"><strong>139</strong> pytań tematycznych</span>
         <span class="tabliczka"><strong>${WSZYSTKIE.length}</strong> rozdziałów</span>
-        <span class="tabliczka"><strong>12</strong> symulatorów</span>
+        <span class="tabliczka"><strong>17</strong> symulatorów</span>
+        <span class="tabliczka"><strong>2</strong> kalkulatory</span>
         <span class="tabliczka">działa <strong>offline</strong></span>
       </div>
     </div>
@@ -1021,8 +1037,10 @@ async function pokazStart() {
     <ul>
       <li><strong>Szukaj</strong> — przycisk lupy u góry albo klawisz <code>/</code>; szukanie obejmuje wszystkie rozdziały i nie wymaga ogonków.</li>
       <li><strong>Tryb nauki</strong> — w rozdziałach 05 i 06 możesz zasłonić odpowiedzi i odkrywać je dotknięciem.</li>
-      <li><strong>Symulatory</strong> — rozdział 14 oraz cała część III mają interaktywne schematy: przesuwaj suwaki
+      <li><strong>Symulatory</strong> — rozdział 14 oraz części III i IV mają interaktywne schematy: przesuwaj suwaki
         i przełączaj warunki, a schemat i liczby przeliczają się na żywo. Działają też bez internetu.</li>
+      <li><strong>Kalkulatory</strong> — w rozdziale 25 policzysz impedancję pętli zwarciowej dla własnych
+        przekrojów i długości, a w rozdziale 26 sprawdzisz rezystancję żyły i wymagania dla uziemienia w TT.</li>
       <li><strong>Postęp</strong> — kółkiem obok rozdziału oznaczasz go jako przeczytany.</li>
       <li><strong>Na telefonie</strong> — dodaj stronę do ekranu głównego; treść zapisuje się na urządzeniu i działa bez internetu.</li>
       <li><strong>PDF</strong> — „Cała książka na jednej stronie”, a potem drukowanie do pliku PDF.</li>

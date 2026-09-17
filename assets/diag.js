@@ -53,6 +53,7 @@ const ucieczka = t => String(t).replace(/[&<>"]/g, z => ({ '&': '&amp;', '<': '&
  * Rodzaje pozycji:
  *   { typ:'suwak', id, etykieta, min, max, krok, wartosc }
  *   { typ:'wybor', id, etykieta, wartosc, opcje:[{w, t}] }
+ *   { typ:'pole',  id, etykieta, min, max, krok, wartosc, jednostka }
  */
 function sterowanie(spec) {
   const pozycje = spec.map(s => {
@@ -62,6 +63,20 @@ function sterowanie(spec) {
         <input type="range" data-we="${s.id}" min="${s.min}" max="${s.max}"
                step="${s.krok}" value="${s.wartosc}"
                aria-label="${ucieczka(s.etykieta.replace(/<[^>]*>/g, ''))}">
+      </label>`;
+    }
+    if (s.typ === 'pole') {
+      return `<label class="dg-pole">
+        <span class="dg-pole-opis">${s.etykieta}</span>
+        <span class="dg-pole-wiersz">
+          <input type="number" data-we="${s.id}" value="${s.wartosc}"
+                 ${s.min !== undefined ? `min="${s.min}"` : ''}
+                 ${s.max !== undefined ? `max="${s.max}"` : ''}
+                 ${s.krok !== undefined ? `step="${s.krok}"` : ''}
+                 inputmode="decimal" autocomplete="off"
+                 aria-label="${ucieczka(s.etykieta.replace(/<[^>]*>/g, ''))}">
+          ${s.jednostka ? `<i>${s.jednostka}</i>` : ''}
+        </span>
       </label>`;
     }
     return `<div class="dg-wybor" role="group" aria-label="${ucieczka(s.etykieta)}">
@@ -80,17 +95,25 @@ function sterowanie(spec) {
 function stanZeSpec(spec) {
   const stan = {};
   spec.forEach(s => {
-    stan[s.id] = s.typ === 'suwak' ? Number(s.wartosc) : s.wartosc;
+    stan[s.id] = (s.typ === 'suwak' || s.typ === 'pole') ? Number(s.wartosc) : s.wartosc;
   });
   return stan;
 }
 
-/** Podłącza suwaki i przyciski wyboru do stanu; po każdej zmianie woła odswiez(). */
+/** Podłącza suwaki, pola liczbowe i przyciski wyboru do stanu; po zmianie woła odswiez(). */
 function podlacz(miejsce, stan, odswiez) {
   miejsce.querySelectorAll('input[type="range"][data-we]').forEach(pole => {
     pole.addEventListener('input', () => {
       stan[pole.dataset.we] = Number(pole.value);
       odswiez();
+    });
+  });
+  miejsce.querySelectorAll('input[type="number"][data-we]').forEach(pole => {
+    pole.addEventListener('input', () => {
+      // puste pole nie może wywalić obliczeń — traktujemy je jak zero
+      const v = pole.value.replace(',', '.').trim();
+      stan[pole.dataset.we] = v === '' ? 0 : Number(v);
+      if (isFinite(stan[pole.dataset.we])) odswiez();
     });
   });
   miejsce.querySelectorAll('.dg-wybor-guziki button[data-we]').forEach(guzik => {
@@ -1951,5 +1974,12 @@ window.zbudujWidgetyDiag = function (korzen) {
 };
 
 window.DIAG_BUDOWNICZY = BUDOWNICZY;
+
+/* Narzędzia udostępnione dla assets/oblicz.js (część IV) — jeden zestaw pomocników
+   na cały serwis, żeby symulatory wyglądały i zachowywały się identycznie. */
+window.DIAG_NARZEDZIA = {
+  lz, napiecie, ucieczka, losowacz,
+  sterowanie, stanZeSpec, podlacz, pokaz, dane, komunikat, odczyt, sciezka
+};
 
 })();
