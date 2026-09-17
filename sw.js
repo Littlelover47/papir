@@ -1,7 +1,7 @@
 /* Tryb offline: po pierwszym wejściu cała treść zapisuje się na urządzeniu.
    Po zmianie plików podnieś numer wersji — stary zapas zostanie usunięty. */
 
-const WERSJA = 'sep-30kv-v6';
+const WERSJA = 'sep-30kv-v7';
 
 const ZAPAS = [
   './',
