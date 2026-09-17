@@ -819,7 +819,7 @@ function widgetKalkulatorPetli(miejsce) {
         spelnia ? (zapas > 25 ? 'ok' : 'uwaga') : 'alarm',
         'o ile I_k przewyższa I_a'),
       odczyt('Spadek napięcia przy I_n', `${lz(dU, 1)} %`,
-        dU <= 4 ? 'ok' : 'uwaga', 'orientacyjnie, cos φ = 1, tylko rezystancja')
+        dU <= 4 ? 'ok' : 'uwaga', 'orientacyjnie: cos φ = 1, tylko rezystancja, S_N = S_PE')
     ].join('');
 
     /* ---------- tabela składników ---------- */
@@ -830,8 +830,9 @@ function widgetKalkulatorPetli(miejsce) {
       <td class="wart roz">${lz(Zs, 3)}</td>
       <td class="lb">${lz(Zs > 0 ? 100 * Zs / Zs : 0, 0)} %</td></tr>`;
     dane(miejsce, 'tabela').innerHTML = `
-      <caption class="dg-tab-podpis">Rozbicie impedancji pętli na składniki</caption>
-      <tr><th>Składnik</th><th>R [Ω]</th><th>X [Ω]</th><th>Z [Ω]</th><th>udział</th></tr>
+      <caption class="dg-tab-podpis">Rozbicie impedancji pętli na składniki
+        — udziały nie sumują się dokładnie do 100 %, bo składniki dodają się wektorowo</caption>
+      <tr><th>Składnik</th><th>R [Ω]</th><th>X [Ω]</th><th>Z [Ω]</th><th>udział |Z|</th></tr>
       ${skladniki.map(s => `<tr>
         <td class="lb">${s.nazwa}</td>
         <td class="wart">${lz(s.R, 3)}</td>
@@ -1091,8 +1092,8 @@ function widgetUziemienieTT(miejsce) {
       <text class="dg-t-m sr" x="${(40 + wA / 2).toFixed(1)}" y="82">na R_A = ${RA} Ω → to jest napięcie na obudowie</text>
       <text class="dg-t-m sr" x="${(40 + wA + (szer - wA) / 2).toFixed(1)}" y="82">na R_B = ${RB} Ω</text>
       <path class="dg-os" style="stroke:var(--alarm);stroke-dasharray:5 4"
-            d="M${(40 + szer * UL / U0).toFixed(1)} 32 V96"/>
-      <text class="dg-t-m alarm" x="${(44 + szer * UL / U0).toFixed(1)}" y="30">granica U_L = ${UL} V</text>
+            d="M${(40 + szer * UL / U0).toFixed(1)} 34 V102"/>
+      <text class="dg-t-m alarm" x="${(44 + szer * UL / U0).toFixed(1)}" y="100">granica U_L = ${UL} V</text>
       <text class="dg-t-m" x="8" y="124">Prąd zwarciowy w pętli przez grunt: <tspan class="dg-t-num roz">${lz(Ik, 1)} A</tspan>
         — dla porównania prąd wyzwalania B${lz(stan.in, 0)}: <tspan class="dg-t-num alarm">${lz(IaB, 0)} A</tspan>,
         prąd różnicowy: <tspan class="dg-t-num ok">${lz(IDn * 1000, 0)} mA</tspan></text>
