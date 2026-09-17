@@ -161,6 +161,12 @@ html[data-motyw="jasny"] a:hover { color: var(--roz-ciemny); }
 
 svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 
+/* Reguła powyżej jest dla ikon (kreska w kolorze tekstu). Podpisy na rysunkach i w symulatorach
+   dziedziczyły z niej obrys 1,9 px w kolorze wypełnienia — przy tekście 7–12 px obrys zalewał
+   wnętrza liter i napisy wyglądały na rozmazane, najmocniej na telefonie. Tekst rysujemy
+   wyłącznie wypełnieniem. */
+svg text, svg tspan { stroke: none; }
+
 :focus-visible { outline: 2px solid var(--roz); outline-offset: 2px; border-radius: 6px; }
 
 .pomin-nawigacje {
@@ -462,6 +468,15 @@ html[data-motyw="jasny"] .proza code { color: var(--roz-ciemny); }
 .proza blockquote.uwaga strong { color: var(--ostrzezenie); }
 .proza blockquote.groza strong { color: var(--alarm); }
 .proza blockquote.odpowiedz strong { color: var(--sukces); }
+
+/* Długi wzór w osobnej linii bywa szerszy niż ekran telefonu. Bez tego rozpychał całą stronę
+   (dało się nią przesuwać w bok) — teraz przewija się sam wzór. */
+.proza .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 1px 6px;
+  -webkit-overflow-scrolling: touch;
+}
 
 /* tabele */
 .tabela-otoczka {
@@ -780,8 +795,10 @@ html[data-motyw="jasny"] .na-stronie li a.aktywny { color: var(--roz-ciemny); }
 /* ---- rysunki ---- */
 
 .zs-rysunek { padding: 8px 14px 12px; overflow-x: auto; }
-.zs-svg { display: block; width: 100%; max-width: 760px; height: auto; min-width: 470px; margin-inline: auto; }
-.zs-svg-stacja { min-width: 560px; }
+/* min-width = szerokość viewBox, żeby podpisy nie były pomniejszane na telefonie.
+   Kontener .zs-rysunek przewija się w poziomie. */
+.zs-svg { display: block; width: 100%; max-width: 760px; height: auto; min-width: 620px; margin-inline: auto; }
+.zs-svg-stacja { min-width: 660px; }
 .zs-svg text { font-family: var(--czcionka); fill: var(--atrament-2); }
 
 .zs-opis { font-size: 13px; font-weight: 650; fill: var(--atrament); }
