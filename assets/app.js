@@ -102,6 +102,14 @@ const ROZDZIALY = [
         tytul: 'Normy — rezystancje i uziemienia',
         opis: 'Uziemienia, ciągłość PE, izolacja, minimalne przekroje, terminy badań — z podstawą prawną.' }
     ]
+  },
+  {
+    grupa: 'Dodatek — poza egzaminem',
+    pozycje: [
+      { plik: '30-kalkulator-portfela-etf', numer: '30',
+        tytul: 'Kalkulator portfela ETF',
+        opis: 'Podział wpłaty na ETF-y w euro: całe sztuki, prowizje minimalne, wagi docelowe i dopłaty.' }
+    ]
   }
 ];
 

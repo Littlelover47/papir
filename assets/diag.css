@@ -497,6 +497,7 @@
 .dg-slupek { fill: var(--roz); opacity: .85; }
 .dg-slupek.ok    { fill: var(--sukces); }
 .dg-slupek.alarm { fill: var(--alarm); }
+.dg-slupek.uwaga { fill: var(--ostrzezenie); }
 .dg-slupek.roz   { fill: var(--roz); }
 
 /* ------------------------------------------------------------------ legenda */
