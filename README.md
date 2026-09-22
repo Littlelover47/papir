@@ -86,6 +86,12 @@ pomiarowca. Dziewięć rozdziałów, każdy z **symulatorem**, listą kontrolną
 | **[kalkulator pętli zwarciowej](25-kalkulator-petli-zwarcia.md)** | **Kalkulator** Z_s, I_k i I_a dla własnych przekrojów i długości: transformator, dwa odcinki kabla, Cu/Al, temperatura żył, współczynnik c, wyłączniki B/C/D i wkładki gG, reguła 2/3, spadek napięcia; tabele I_a, przykłady rachunkowe, cztery warunki doboru obwodu |
 | **[normy — rezystancje i uziemienia](26-normy-rezystancje-uziemienia-i-okablowanie.md)** | Wymagania z rozdzieleniem **normy od reguły kciuka**: kryteria rezystancji uziemienia (TT, TN, stacje SN), symulator R_A / I_Δn / napięcie dotykowe, ciągłość PE i kalkulator rezystancji żyły, rezystancja izolacji, minimalne przekroje PE / uziemiających / wyrównawczych, wymiary uziomów, terminy badań |
 
+## Dodatek — poza egzaminem
+
+| Plik | Zawartość |
+|---|---|
+| **[kalkulator portfela ETF](30-kalkulator-portfela-etf.md)** | **Kalkulator** podziału wpłaty w złotych na ETF-y notowane w euro: wagi docelowe, całe sztuki, kurs efektywny z narzutem na przewalutowanie, prowizja minimalna od każdego zlecenia, tryb dopłat z uwzględnieniem posiadanych sztuk, odchyłki od wag i plan zleceń z limitami |
+
 ## Jak wygląda egzamin (praktycznie)
 
 - Komisja 3-osobowa, egzamin **ustny** (w niektórych komisjach poprzedzony testem pisemnym).

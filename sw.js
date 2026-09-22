@@ -1,7 +1,7 @@
 /* Tryb offline: po pierwszym wejściu cała treść zapisuje się na urządzeniu.
    Po zmianie plików podnieś numer wersji — stary zapas zostanie usunięty. */
 
-const WERSJA = 'sep-30kv-v7';
+const WERSJA = 'sep-30kv-v8';
 
 const ZAPAS = [
   './',
@@ -12,6 +12,7 @@ const ZAPAS = [
   'assets/diag.css',
   'assets/diag.js',
   'assets/oblicz.js',
+  'assets/portfel.js',
   'assets/icon.svg',
   'assets/kotek.svg',
   'assets/vendor/marked.js',
@@ -42,7 +43,8 @@ const ZAPAS = [
   '23-topologia-i-zasilanie-zwrotne.md',
   '24-uklady-sieci-i-petla-zwarcia.md',
   '25-kalkulator-petli-zwarcia.md',
-  '26-normy-rezystancje-uziemienia-i-okablowanie.md'
+  '26-normy-rezystancje-uziemienia-i-okablowanie.md',
+  '30-kalkulator-portfela-etf.md'
 ];
 
 self.addEventListener('install', zdarzenie => {
