@@ -606,3 +606,81 @@
   .dg-galeria { grid-template-columns: 1fr 1fr; }
   .dg-galeria-poz { break-inside: avoid; }
 }
+
+/* ------------------------------------ zabezpieczenie łukowe (rozdz. 14a, luk.js) */
+
+.lk-svg .dg-przewod,
+.lk-svg .lk-wyl,
+.lk-svg .lk-luk,
+.lk-svg .lk-trafo,
+.lk-svg .lk-bezp,
+.lk-svg .lk-grot,
+.lk-svg text { pointer-events: none; }
+
+.lk-przedzial {
+  fill: var(--tlo-3);
+  stroke: var(--kreska-2);
+  stroke-width: 1.2;
+  cursor: pointer;
+  transition: fill .15s, stroke .15s;
+}
+.lk-przedzial:hover { fill: var(--roz-mgla-2); stroke: var(--roz-ciemny); }
+.lk-przedzial:focus-visible { outline: none; stroke: var(--roz); stroke-width: 2.2; }
+.lk-przedzial.wybrany { fill: var(--alarm-tlo); stroke: var(--alarm); stroke-width: 2; }
+
+.lk-szyna { stroke-width: 4.5; }
+.lk-trafo { fill: none; stroke: var(--kreska-2); stroke-width: 2.2; }
+.lk-trafo.zywy { stroke: var(--atrament-2); }
+.lk-bezp { fill: var(--tlo-2); stroke: var(--kreska-2); stroke-width: 2; }
+.lk-bezp.zywy { stroke: var(--atrament-2); }
+.lk-grot { fill: var(--kreska-2); }
+.lk-grot.zywy { fill: var(--atrament-2); }
+
+.lk-wyl rect { fill: var(--tlo-2); stroke: var(--atrament-2); stroke-width: 2; }
+.lk-wyl .lk-styk { stroke: var(--atrament); stroke-width: 2.4; transition: transform .25s; }
+.lk-wyl.otwarty rect { stroke: var(--atrament-3); stroke-dasharray: 3 2; }
+.lk-wyl.otwarty .lk-styk { stroke: var(--atrament-3); }
+.lk-wyl.wyl rect,
+.lk-wyl.lrw rect { stroke: var(--roz); stroke-dasharray: none; fill: var(--roz-mgla); filter: drop-shadow(0 0 5px rgba(255, 77, 151, .6)); }
+.lk-wyl.wyl .lk-styk,
+.lk-wyl.lrw .lk-styk { stroke: var(--roz); }
+.lk-wyl.odmowa rect { stroke: var(--ostrzezenie); fill: var(--ostrzezenie-tlo); stroke-width: 2.6; }
+.lk-wyl.odmowa .lk-styk { stroke: var(--ostrzezenie); }
+.lk-wyl.bylo rect { stroke: var(--atrament-3); }
+
+.lk-svg .lk-napis { font-size: 9.5px; font-weight: 700; fill: var(--roz); }
+.lk-svg .lk-napis.odmowa { fill: var(--ostrzezenie); }
+.lk-svg .lk-napis.bylo { fill: var(--atrament-3); font-weight: 400; }
+.lk-svg .lk-stan-pola { font-size: 10px; font-weight: 700; }
+.lk-svg .lk-legenda { font-size: 11px; font-weight: 800; fill: var(--atrament-3); }
+
+.lk-luk { display: none; }
+.lk-luk.widoczny { display: inline; }
+.lk-luk .lk-luk-tlo { fill: var(--alarm-tlo); stroke: var(--alarm); stroke-width: 1.5; }
+.lk-luk path { fill: var(--ostrzezenie); }
+.lk-luk.trwa .lk-luk-tlo { animation: dg-puls .6s ease-in-out infinite; }
+.lk-luk.blysk .lk-luk-tlo { fill: rgba(255, 255, 255, .1); stroke: var(--atrament-2); stroke-dasharray: 3 2; }
+.lk-luk.blysk path { fill: var(--atrament-2); }
+
+.lk-podpis {
+  margin: 0;
+  padding: 0 14px 12px;
+  font-size: 12px;
+  color: var(--atrament-3);
+  line-height: 1.5;
+}
+.lk-tab .alarm  { color: var(--roz); font-weight: 700; }
+.lk-tab .uwaga  { color: var(--ostrzezenie); font-weight: 700; }
+.dg-kom .lk-miejsce {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--atrament-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lk-luk.trwa .lk-luk-tlo { animation: none; }
+}

@@ -1,7 +1,7 @@
 /* Tryb offline: po pierwszym wejściu cała treść zapisuje się na urządzeniu.
    Po zmianie plików podnieś numer wersji — stary zapas zostanie usunięty. */
 
-const WERSJA = 'sep-30kv-v8';
+const WERSJA = 'sep-30kv-v9';
 
 const ZAPAS = [
   './',
@@ -13,6 +13,7 @@ const ZAPAS = [
   'assets/diag.js',
   'assets/oblicz.js',
   'assets/portfel.js',
+  'assets/luk.js',
   'assets/icon.svg',
   'assets/kotek.svg',
   'assets/vendor/marked.js',
@@ -32,6 +33,7 @@ const ZAPAS = [
   '12-proby-funkcjonalne-sterowania-i-automatyki.md',
   '13-procedura-odstawienia-i-zalaczenia-rozdzielni-SN.md',
   '14-blokada-logiczna-ZS-symulator.md',
+  '14a-zabezpieczenie-lukowe.md',
   '15-trudne-miejsca-przewodnik.md',
   '16-napiecia-indukowane.md',
   '17-punkt-neutralny-sieci-SN.md',

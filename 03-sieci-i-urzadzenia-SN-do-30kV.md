@@ -276,7 +276,8 @@ w torach telekomunikacyjnych.
 - **SPZ (samoczynne ponowne załączanie)** — dla linii napowietrznych, likwiduje zwarcia
   przemijające; **SZR (samoczynne załączanie rezerwy)** — przełączenie na zasilanie rezerwowe,
 - zabezpieczenia napięciowe (U<, U>), częstotliwościowe (f<), od asymetrii, od zaniku fazy,
-- **zabezpieczenie łukoochronne (arc-protection)** w rozdzielnicach.
+- **zabezpieczenie łukoochronne (arc-protection)** w rozdzielnicach — zasada działania i to, które
+  pola wyłącza zależnie od miejsca łuku: [rozdział 14a](14a-zabezpieczenie-lukowe.md).
 
 ### 31. Jakie wymagania stawia się zabezpieczeniom?
 **Selektywność (wybiórczość)**, **szybkość działania**, **czułość** (odpowiedni współczynnik

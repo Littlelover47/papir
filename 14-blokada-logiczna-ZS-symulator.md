@@ -390,6 +390,8 @@ zasilające A. Zamiast gasić całą rozdzielnię, gasisz **połowę**.
 
 ## J. Powiązane rozdziały
 
+- [Zabezpieczenie łukowe (symulator)](14a-zabezpieczenie-lukowe.md) — jeszcze szybsza ochrona
+  szyn: światło + prąd w kilka milisekund i wyłączenie zależne od przedziału celki
 - [Rozdzielnia SN — pola i obwody wtórne](10-rozdzielnia-SN-pola-i-obwody-wtorne.md) —
   punkt D.2 (blokada logiczna) i D.4 (różnicowe szyn) w szerszym kontekście współpracy pól
 - [Zabezpieczenia — nastawy i badania](11-zabezpieczenia-nastawy-i-testowanie.md) —

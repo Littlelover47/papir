@@ -54,7 +54,10 @@ const ROZDZIALY = [
         opis: 'Pełna procedura od zera: wyłączanie, prace, próby, podanie napięcia.' },
       { plik: '14-blokada-logiczna-ZS-symulator', numer: '14',
         tytul: 'ZS — zabezpieczenie szyn (symulator)',
-        opis: 'Blokada logiczna od podstaw: analogia, bramka AND na żywo, tor blokady, symulacja zwarcia.' }
+        opis: 'Blokada logiczna od podstaw: analogia, bramka AND na żywo, tor blokady, symulacja zwarcia.' },
+      { plik: '14a-zabezpieczenie-lukowe', numer: '14a',
+        tytul: 'Zabezpieczenie łukowe (symulator)',
+        opis: 'Światło + prąd w kilka ms; które pola wyłącza zależnie od przedziału celki, LRW, próby.' }
     ]
   },
   {
@@ -1035,7 +1038,7 @@ async function pokazStart() {
         <span class="tabliczka"><strong>60</strong> pytań ustnych</span>
         <span class="tabliczka"><strong>139</strong> pytań tematycznych</span>
         <span class="tabliczka"><strong>${WSZYSTKIE.length}</strong> rozdziałów</span>
-        <span class="tabliczka"><strong>17</strong> symulatorów</span>
+        <span class="tabliczka"><strong>18</strong> symulatorów</span>
         <span class="tabliczka"><strong>2</strong> kalkulatory</span>
         <span class="tabliczka">działa <strong>offline</strong></span>
       </div>
@@ -1045,7 +1048,7 @@ async function pokazStart() {
     <ul>
       <li><strong>Szukaj</strong> — przycisk lupy u góry albo klawisz <code>/</code>; szukanie obejmuje wszystkie rozdziały i nie wymaga ogonków.</li>
       <li><strong>Tryb nauki</strong> — w rozdziałach 05 i 06 możesz zasłonić odpowiedzi i odkrywać je dotknięciem.</li>
-      <li><strong>Symulatory</strong> — rozdział 14 oraz części III i IV mają interaktywne schematy: przesuwaj suwaki
+      <li><strong>Symulatory</strong> — rozdziały 14 i 14a oraz części III i IV mają interaktywne schematy: przesuwaj suwaki
         i przełączaj warunki, a schemat i liczby przeliczają się na żywo. Działają też bez internetu.</li>
       <li><strong>Kalkulatory</strong> — w rozdziale 25 policzysz impedancję pętli zwarciowej dla własnych
         przekrojów i długości, a w rozdziale 26 sprawdzisz rezystancję żyły i wymagania dla uziemienia w TT.</li>

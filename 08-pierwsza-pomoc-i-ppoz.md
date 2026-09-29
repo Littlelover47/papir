@@ -104,7 +104,7 @@ oznakowanego, dostępnego dla ekip ratowniczych.
 - **Kable** — rozprzestrzenianie pożaru kanałami kablowymi; przegrody i uszczelnienia ogniowe,
   kable o ograniczonym wydzielaniu dymu (HFFR/B2ca).
 - **Rozdzielnice** — łuk wewnętrzny; rozdzielnice z odprowadzeniem gazów łukowych,
-  zabezpieczenia łukoochronne.
+  zabezpieczenia łukoochronne ([rozdział 14a](14a-zabezpieczenie-lukowe.md)).
 - **SF₆** — nie pali się, ale rozkłada do toksycznych związków; wypiera tlen.
 
 ### 11. Wyposażenie stacji/rozdzielni w sprzęt

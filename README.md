@@ -14,8 +14,8 @@ Wygodniejsza niż pliki na GitHubie — zwłaszcza na telefonie:
 - **tryb nauki** w rozdziałach 05 i 06 — zasłania odpowiedzi, odkrywasz je dotknięciem,
 - **działające listy kontrolne** w rozdziałach 12 i 13 — odhaczasz pozycje procedury,
   a stan zostaje zapisany na urządzeniu (z licznikiem i możliwością wyczyszczenia),
-- **17 interaktywnych symulatorów i kalkulatorów** wbudowanych w rozdziały: bramka blokady ZS
-  i przebieg zwarcia w rozdzielni (14), napięcia indukowane (16), punkt neutralny (17), pomiar
+- **18 interaktywnych symulatorów i kalkulatorów** wbudowanych w rozdziały: bramka blokady ZS
+  i przebieg zwarcia w rozdzielni (14), wyłączenia zabezpieczenia łukowego zależnie od przedziału (14a), napięcia indukowane (16), punkt neutralny (17), pomiar
   uziemienia (18), przekładnik prądowy (19), krzywa izolacji i tg δ (20), wzorce WNZ i lokalizacja
   w kablu (21), dobór próby napięciowej (22), polowanie na zasilanie zwrotne (23), układy sieci
   z drogą prądu zwarciowego (24), kalkulator pętli zwarciowej (25), rezystancja żyły i uziemienie
@@ -59,6 +59,7 @@ i przekazanie rozdzielni do eksploatacji.
 | **[próby funkcjonalne sterowania i automatyki](12-proby-funkcjonalne-sterowania-i-automatyki.md)** | Piramida prób, przygotowanie, kontrola punkt–punkt, **matryca 15 prób sterowania wyłącznikiem**, matryca wyzwalania, próby blokady logicznej, samoczynnego załączania rezerwy scenariuszami, kontroli synchronizmu, zabezpieczenia łukoochronnego, lokalnego rezerwowania wyłącznika, automatycznej regulacji napięcia, komunikacji stacyjnej, próba zintegrowana, **wzór protokołu**, 10 pułapek |
 | **[procedura odstawienia i załączenia rozdzielni SN](13-procedura-odstawienia-i-zalaczenia-rozdzielni-SN.md)** | Pełna sekwencja od zera: planowanie i zabezpieczenie przed załączeniem (zamki i tablice) → przeniesienie obciążenia → kolejność wyłączania → 5 zasad → prace i próby → **lista kontrolna przed podaniem napięcia** → sekwencja podawania napięcia krok po kroku → próby pod napięciem → przekazanie do ruchu; załączniki: obiekt nowy (próby fabryczne i odbiorowe), karta „STOP", najgroźniejsze błędy |
 | **[ZS — zabezpieczenie szyn (symulator)](14-blokada-logiczna-ZS-symulator.md)** | Blokada logiczna zabezpieczenia szyn wyjaśniona od zera: paradoks kaskady czasowej, analogia zamiast schematu, **interaktywna bramka AND** z czterema warunkami wysłania BL_ZS (automat ZS, pobudzenie prądowe, wyłącznik zamknięty, wózek w pozycji praca), **pełny opis blokady**: co dokładnie wstrzymuje (i czym różni się od blokady łączeniowej), tor blokady na szynach okrężnych prądu stałego, iloczyn w polu a suma na szynach, czas przedłużenia sygnału, miedź a GOOSE, przerwa w torze a blokada trwała, odstawienie funkcji ZS; **symulacja przebiegu zwarcia** na szynach i w odpływie krok po kroku, budżet czasu 40–100 ms, dwustopniowe ZS w rozdzielni sekcjonowanej, zakres prób i protokół, odpowiedzi egzaminacyjne |
+| **[zabezpieczenie łukowe (symulator)](14a-zabezpieczenie-lukowe.md)** | Zabezpieczenie łukoochronne od zasady: energia łuku a czas, **iloczyn światło + prąd**, czujniki punktowe a pętla światłowodowa, trzy przedziały celki i granica przez wyłącznik pola, **tabela „gdzie łuk → które wyłączniki”** dla wszystkich typów pól (odpływ, pole zasilające, sprzęgło, pomiar napięcia, potrzeby własne), sygnał do wyłącznika 110 kV, **symulator rozdzielnicy dwusekcyjnej** z klikanymi przedziałami, trybem „samo światło”, zamkniętym sprzęgłem i odmową wyłącznika, **LRW**, porównanie z ZS i różnicowym szyn, próby i odpowiedzi egzaminacyjne |
 
 ## Część III — pomiary i diagnostyka SN/WN (poziom inżynierski)
 
