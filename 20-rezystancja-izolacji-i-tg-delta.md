@@ -299,5 +299,5 @@ Poszczególne zjawiska ujawniają się w różnych zakresach częstotliwości:
 
 ---
 
-**Poprzedni:** [19. Przekładniki prądowe i napięciowe](19-przekladniki-pradowe-i-napieciowe.md) ·
+**Poprzedni:** [19a. Przekładniki prądowe — podłączenie i kierunkowość](19a-przekladniki-pradowe-podlaczenie-i-kierunkowosc.md) ·
 **Następny:** [21. Wyładowania niezupełne (WNZ)](21-wyladowania-niezupelne.md)

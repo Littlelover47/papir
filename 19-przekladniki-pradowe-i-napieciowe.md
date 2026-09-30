@@ -238,6 +238,12 @@ Rozważ tę samą usterkę (odwrócone zaciski S1/S2 jednego przekładnika) w dw
 
 ---
 
+> **Dalej:** jak prawidłowo podłączyć przekładnik, jak zamontować przekładnik Ferrantiego
+> i wszystkie czynniki, które odwracają kierunek zabezpieczenia ziemnozwarciowego — z symulatorem
+> wykresu wskazowego: [rozdział 19a](19a-przekladniki-pradowe-podlaczenie-i-kierunkowosc.md).
+
+---
+
 ## I. Pytania kontrolne
 
 1. Dlaczego rozwarcie obwodu wtórnego przekładnika prądowego daje napięcie kilku kV,
@@ -259,4 +265,4 @@ Rozważ tę samą usterkę (odwrócone zaciski S1/S2 jednego przekładnika) w dw
 ---
 
 **Poprzedni:** [18. Uziemienia w rozdzielni](18-uziemienia-w-rozdzielni.md) ·
-**Następny:** [20. Rezystancja izolacji i tg δ](20-rezystancja-izolacji-i-tg-delta.md)
+**Następny:** [19a. Przekładniki prądowe — podłączenie i kierunkowość](19a-przekladniki-pradowe-podlaczenie-i-kierunkowosc.md)

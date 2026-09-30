@@ -684,3 +684,17 @@
 @media (prefers-reduced-motion: reduce) {
   .lk-luk.trwa .lk-luk-tlo { animation: none; }
 }
+
+/* ---- symulator kierunkowości 67N (rozdział 19a, assets/kierunek.js) ---- */
+.dg-svg.kr-svg { min-width: 290px; max-width: 460px; }
+.kr-tytul { margin: 0 0 6px; font-size: 13px; font-weight: 700; color: var(--atrament); text-align: center; }
+.kr-legenda {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px;
+  margin-top: 8px; font-size: 12px; color: var(--atrament-3);
+}
+.kr-legenda span { display: inline-flex; align-items: center; gap: 6px; }
+.kr-legenda i { width: 14px; height: 10px; border-radius: 2px; border: 1px solid var(--kreska-2); }
+.kr-legenda .kr-os { flex-basis: 100%; justify-content: center; text-align: center; }
+.kr-legenda strong { flex-basis: 100%; text-align: center; font-size: 13px; }
+.kr-legenda .kr-ok { color: var(--sukces); }
+.kr-legenda .kr-zle { color: var(--alarm); }

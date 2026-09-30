@@ -246,6 +246,10 @@ musi być dobrana do **sposobu pracy punktu neutralnego**, bo charakter prądu j
 > które **nie zadziała albo zadziała odwrotnie** — a w ruchu normalnym nie widać po nim niczego.
 > To najczęstsza „cicha" wada nastaw w sieciach SN.
 
+Pełna lista czynników, które odwracają lub zakłócają kierunek (biegunowość przekładnika,
+punkt gwiazdowy, polaryzacja U₀, ekran, błąd kątowy, konwencja kąta), razem z symulatorem
+wykresu wskazowego przekaźnika: [rozdział 19a](19a-przekladniki-pradowe-podlaczenie-i-kierunkowosc.md).
+
 ### F.4 Metody dla sieci kompensowanych, gdzie prąd resztkowy jest bardzo mały
 
 - **Admitancyjne** — pomiar $Y_0 = 3I_0 / U_0$ i ocena w płaszczyźnie zespolonej. Najbardziej

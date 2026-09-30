@@ -14,9 +14,9 @@ Wygodniejsza niż pliki na GitHubie — zwłaszcza na telefonie:
 - **tryb nauki** w rozdziałach 05 i 06 — zasłania odpowiedzi, odkrywasz je dotknięciem,
 - **działające listy kontrolne** w rozdziałach 12 i 13 — odhaczasz pozycje procedury,
   a stan zostaje zapisany na urządzeniu (z licznikiem i możliwością wyczyszczenia),
-- **18 interaktywnych symulatorów i kalkulatorów** wbudowanych w rozdziały: bramka blokady ZS
+- **19 interaktywnych symulatorów i kalkulatorów** wbudowanych w rozdziały: bramka blokady ZS
   i przebieg zwarcia w rozdzielni (14), wyłączenia zabezpieczenia łukowego zależnie od przedziału (14a), napięcia indukowane (16), punkt neutralny (17), pomiar
-  uziemienia (18), przekładnik prądowy (19), krzywa izolacji i tg δ (20), wzorce WNZ i lokalizacja
+  uziemienia (18), przekładnik prądowy (19), kierunkowość zabezpieczenia ziemnozwarciowego (19a), krzywa izolacji i tg δ (20), wzorce WNZ i lokalizacja
   w kablu (21), dobór próby napięciowej (22), polowanie na zasilanie zwrotne (23), układy sieci
   z drogą prądu zwarciowego (24), kalkulator pętli zwarciowej (25), rezystancja żyły i uziemienie
   w układzie TT (26),
@@ -65,7 +65,7 @@ i przekazanie rozdzielni do eksploatacji.
 
 Trudne miejsca pomiarów, w których „zrobione zgodnie z instrukcją” wciąż daje **błędny wynik**:
 zjawiska fizyczne psujące pomiar, interpretacja wyników zamiast samego odczytu, i bezpieczeństwo
-pomiarowca. Dziewięć rozdziałów, każdy z **symulatorem**, listą kontrolną i pytaniami kontrolnymi.
+pomiarowca. Dziesięć rozdziałów, każdy z **symulatorem**, listą kontrolną i pytaniami kontrolnymi.
 
 | Plik | Zawartość |
 |---|---|
@@ -74,6 +74,7 @@ pomiarowca. Dziewięć rozdziałów, każdy z **symulatorem**, listą kontrolną
 | **[punkt neutralny sieci SN](17-punkt-neutralny-sieci-SN.md)** | Sieć izolowana, kompensowana (dławik gaszący/Petersena), rezystorowa i uziemiona skutecznie w jednej tabeli, **symulator prądu doziemnego** i napięcia składowej zerowej, dobór kompensacji, zabezpieczenia ziemnozwarciowe zerowoprądowe i kierunkowe — najtrudniejszy fragment całej diagnostyki SN, lista kontrolna |
 | **[uziemienia w rozdzielni](18-uziemienia-w-rozdzielni.md)** | Dlaczego metoda 62 % zawodzi przy rozległych uziomach kratowych, **symulator krzywej pomiarowej** pokazujący brak plateau, co naprawdę mierzysz w czynnej stacji (uziom obcy, żyły powrotne kabli), współczynnik redukcyjny, metody pomiarowe i ich zakres stosowania, **napięcia rażeniowe dotykowe i krokowe** jako kryterium rzeczywiste, lista kontrolna |
 | **[przekładniki prądowe i napięciowe](19-przekladniki-pradowe-i-napieciowe.md)** | Dlaczego rozwarcie obwodu wtórnego przekładnika prądowego zabija, rdzeń pomiarowy a zabezpieczeniowy jako dwa przeciwne wymagania, punkt kolanowy i charakterystyka magnesowania, **symulator obciążenia wtórnego i nasycenia**, obciążenie długiej trasy przewodów, zakres badań, specyfika przekładnika napięciowego, **biegunowość** — najgroźniejszy błąd w całej części III |
+| **[przekładniki prądowe — podłączenie i kierunkowość](19a-przekladniki-pradowe-podlaczenie-i-kierunkowosc.md)** | Oznaczenia P1/P2, S1/S2 i **reguła biegunowości**, dziesięć zasad podłączenia obwodu wtórnego (zaciski probiercze, **uziemienie w jednym punkcie**, nieużywany rdzeń a nieużywany odczep), układy gwiazda / V / Holmgren / Ferranti, **punkt gwiazdowy a nastawa przekaźnika**, montaż przekładnika Ferrantiego i **przewód ekranu przez okno**, fizyka kierunku w sieci izolowanej, kompensowanej i z rezystorem, konwencja kąta U₀ / −U₀, **15 czynników wpływających na kierunkowość 67N**, kolejność prób, **symulator wykresu wskazowego przekaźnika** z odwróceniami, ekranem, błędem kątowym i filtrem Holmgreena |
 | **[rezystancja izolacji i tg δ](20-rezystancja-izolacji-i-tg-delta.md)** | Od odczytu do diagnozy: składowe prądu pomiarowego, wskaźniki DAR i PI jako **kształt krzywej**, a nie punkt, **korekta temperaturowa** (najczęściej pomijane źródło błędu), warunki psujące pomiar, **symulator krzywej R(t)** oraz **symulator tg δ** z efektem tip-up i rozrzutem faz, czytanie trzech wskaźników razem, trendowanie, metody nowoczesne (DFR), lista kontrolna |
 | **[wyładowania niezupełne (WNZ)](21-wyladowania-niezupelne.md)** | Zjawisko i jego mechanizm, pomiar elektryczny wg IEC 60270 z **pułapką kalibracji w pC**, poziom tła zakłóceń jako realna bariera, metody bezelektryczne (akustyczna, UV, UHF), **symulator wzorców PRPD** (wtrącina gazowa, wyładowania powierzchniowe, ostrze) i **symulator lokalizacji WNZ w kablu**, OWTS/DAC jako standard dla kabli SN, lista kontrolna |
 | **[próby napięciowe kabli](22-proby-napieciowe-kabli.md)** | Dlaczego napięcie stałe niszczy izolację XLPE, próba bardzo niskiej częstotliwości (VLF), próba AC rezonansowa, **symulator mocy probierczej i doboru metody** dla zadanej długości i pojemności kabla, rozdzielenie próby **wytrzymałościowej od diagnostycznej**, organizacja i bezpieczeństwo próby, energia zgromadzona w kablu, lista kontrolna |

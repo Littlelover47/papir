@@ -78,6 +78,9 @@ const ROZDZIALY = [
       { plik: '19-przekladniki-pradowe-i-napieciowe', numer: '19',
         tytul: 'Przekładniki prądowe i napięciowe',
         opis: 'Rozwarcie CT, rdzeń pomiarowy a zabezpieczeniowy, punkt kolanowy, biegunowość.' },
+      { plik: '19a-przekladniki-pradowe-podlaczenie-i-kierunkowosc', numer: '19a',
+        tytul: 'Przekładniki prądowe — podłączenie i kierunkowość',
+        opis: 'P1/S1, jeden punkt uziemienia, Ferranti i ekran, wszystko, co odwraca kierunek 67N; symulator.' },
       { plik: '20-rezystancja-izolacji-i-tg-delta', numer: '20',
         tytul: 'Rezystancja izolacji i tg δ',
         opis: 'Od pomiaru do diagnozy: DAR, PI, korekta temperaturowa, tip-up, DFR.' },
@@ -1038,7 +1041,7 @@ async function pokazStart() {
         <span class="tabliczka"><strong>60</strong> pytań ustnych</span>
         <span class="tabliczka"><strong>139</strong> pytań tematycznych</span>
         <span class="tabliczka"><strong>${WSZYSTKIE.length}</strong> rozdziałów</span>
-        <span class="tabliczka"><strong>18</strong> symulatorów</span>
+        <span class="tabliczka"><strong>19</strong> symulatorów</span>
         <span class="tabliczka"><strong>2</strong> kalkulatory</span>
         <span class="tabliczka">działa <strong>offline</strong></span>
       </div>

@@ -1,7 +1,7 @@
 /* Tryb offline: po pierwszym wejściu cała treść zapisuje się na urządzeniu.
    Po zmianie plików podnieś numer wersji — stary zapas zostanie usunięty. */
 
-const WERSJA = 'sep-30kv-v9';
+const WERSJA = 'sep-30kv-v10';
 
 const ZAPAS = [
   './',
@@ -14,6 +14,7 @@ const ZAPAS = [
   'assets/oblicz.js',
   'assets/portfel.js',
   'assets/luk.js',
+  'assets/kierunek.js',
   'assets/icon.svg',
   'assets/kotek.svg',
   'assets/vendor/marked.js',
@@ -39,6 +40,7 @@ const ZAPAS = [
   '17-punkt-neutralny-sieci-SN.md',
   '18-uziemienia-w-rozdzielni.md',
   '19-przekladniki-pradowe-i-napieciowe.md',
+  '19a-przekladniki-pradowe-podlaczenie-i-kierunkowosc.md',
   '20-rezystancja-izolacji-i-tg-delta.md',
   '21-wyladowania-niezupelne.md',
   '22-proby-napieciowe-kabli.md',
